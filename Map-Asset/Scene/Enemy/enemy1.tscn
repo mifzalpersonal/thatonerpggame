@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bqk0gkryxb0nm"]
+
+[ext_resource type="Texture2D" uid="uid://divy6238su4ah" path="res://icon.svg" id="1_45pq5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4kxuq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_45pq5")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_mti6b"]
+radius = 0.7608084
+
+[node name="musuhbody" type="CharacterBody3D" unique_id=404111702]
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=1135376981]
+sprite_frames = SubResource("SpriteFrames_4kxuq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1994943877]
+shape = SubResource("SphereShape3D_mti6b")

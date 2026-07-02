@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://6cxtuv7cy8bn"]
+
+[ext_resource type="Script" uid="uid://b30ke6p2ep50f" path="res://weapon_chest.gd" id="1_7bm33"]
+[ext_resource type="PackedScene" uid="uid://cagi0ho2inv22" path="res://Chest-Asset/Mesh/Old Chest.fbx" id="1_dq3hi"]
+[ext_resource type="Texture2D" uid="uid://drnwj3i4x0j55" path="res://Chest-Asset/Textur/Old Chest Albedo.png" id="2_1i828"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4kxuq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1i828"]
+albedo_texture = ExtResource("2_1i828")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7bm33"]
+albedo_texture = ExtResource("2_1i828")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1i828"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mti6b"]
+
+[node name="WeaponChest" type="Node3D" unique_id=1020326057]
+
+[node name="WeaponChest" type="Area3D" parent="." unique_id=461675113]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WeaponChest" unique_id=1260003157]
+shape = SubResource("BoxShape3D_4kxuq")
+
+[node name="Old Chest" parent="WeaponChest" unique_id=793999235 instance=ExtResource("1_dq3hi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01120688, 0.068238735, -0.01855728)
+
+[node name="chest " parent="WeaponChest/Old Chest" index="0" unique_id=780167821]
+material_override = SubResource("StandardMaterial3D_1i828")
+
+[node name="chest cover" parent="WeaponChest/Old Chest" index="1" unique_id=1820551095]
+material_override = SubResource("StandardMaterial3D_7bm33")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="WeaponChest" unique_id=210052126]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WeaponChest/StaticBody3D" unique_id=126761633]
+shape = SubResource("BoxShape3D_1i828")
+
+[node name="Area3D" type="Area3D" parent="WeaponChest" unique_id=1681130106]
+script = ExtResource("1_7bm33")
+
+[node name="PetunjukE" type="Label3D" parent="WeaponChest/Area3D" unique_id=423427748]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6571326, 0)
+text = "[E] Open the chest"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WeaponChest/Area3D" unique_id=1418380384]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+shape = SubResource("BoxShape3D_mti6b")
+
+[editable path="WeaponChest/Old Chest"]

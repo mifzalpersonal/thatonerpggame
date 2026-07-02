@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://c0fvbqgnv7m07"]
+
+[ext_resource type="PackedScene" uid="uid://cbl8w4dqdwyk7" path="res://Weapon-Asset/Meshes/PP_Theme_04_Scythe_001.fbx" id="1_1o43j"]
+[ext_resource type="Texture2D" uid="uid://b752mmy0smvbq" path="res://Weapon-Asset/Textures/PP_Color_Palette.png" id="2_65lcu"]
+[ext_resource type="Script" uid="uid://yi1nxs72uhog" path="res://weapon_drop.gd" id="3_65lcu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4kxuq"]
+size = Vector3(1, 1.8761597, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v4uqy"]
+albedo_texture = ExtResource("2_65lcu")
+
+[node name="WeaponDrop" type="RigidBody3D" unique_id=1805025040]
+script = ExtResource("3_65lcu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1830204870]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 1, 0)
+shape = SubResource("BoxShape3D_4kxuq")
+
+[node name="PP_Theme_04_Scythe_001" parent="CollisionShape3D" unique_id=2138100423 instance=ExtResource("1_1o43j")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="PP_Theme_04_Scythe_001" parent="CollisionShape3D/PP_Theme_04_Scythe_001" index="0" unique_id=806699865]
+material_override = SubResource("StandardMaterial3D_v4uqy")
+
+[node name="AmbilArea" type="Area3D" parent="." unique_id=424121425]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AmbilArea" unique_id=485980935]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 1, 0)
+shape = SubResource("BoxShape3D_4kxuq")
+
+[editable path="CollisionShape3D/PP_Theme_04_Scythe_001"]
