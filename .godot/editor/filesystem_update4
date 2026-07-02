@@ -1,7 +1,10 @@
-res://Map-Asset/Tres/Building.tres
 res://slash.tscn
-res://SabetanScythe.gd
-res://WeaponDrop.tscn
-res://weapon_drop.gd
+res://Map-Asset/Tres/Building.tres
+res://Map-Asset/Scene/Main.tscn
+res://katana.gd
+res://Slash.gd
+res://katana.tscn
 res://Map-Asset/Scene/Char3.tscn
 res://Map-Asset/Scene/Player/walk.gd
+res://KatanaSlash.tscn
+res://katana_slash.gd

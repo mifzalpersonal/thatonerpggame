@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bgj33in0wwqat" path="res://SlashVFX-Asset/Textures/Noise_GrayScale/T_Lu_Noise_10.png" id="2_tocf0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4kxuq"]
+size = Vector3(1, 1, 0.27856445)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_glx33"]
 albedo_texture = ExtResource("2_tocf0")
@@ -13,7 +14,7 @@ albedo_texture = ExtResource("2_tocf0")
 script = ExtResource("1_glx33")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=807344370]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 3.5221274, 0)
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 3.5221274, -0.15185547)
 shape = SubResource("BoxShape3D_4kxuq")
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=697894969]
@@ -21,7 +22,7 @@ shape = SubResource("BoxShape3D_4kxuq")
 [node name="Slash Projectile" parent="Sprite3D" unique_id=2056317538 instance=ExtResource("1_bf50k")]
 transform = Transform3D(1.6069689, -3.9035626e-08, -1.9151111, -1.9151111, -8.3712166e-08, -1.6069689, -3.9035626e-08, 2.5, -8.3712166e-08, 0, 3, 0)
 
-[node name="Slash Projectile" parent="Sprite3D/Slash Projectile" index="0" unique_id=2037480013]
+[node name="Slash Projectile" parent="Sprite3D/Slash Projectile" index="0" unique_id=1923143042]
 material_override = SubResource("StandardMaterial3D_glx33")
 
 [editable path="Sprite3D/Slash Projectile"]
