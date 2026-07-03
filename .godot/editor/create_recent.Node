@@ -1,14 +1,14 @@
+Area3D
+CollisionShape3D
+AnimatedSprite3D
 AnimationPlayer
 DirectionalLight3D
 Camera3D
 Marker3D
-CollisionShape3D
 Sprite3D
-Area3D
 Area2D
 Node3D
 GridMap
 Node
-AnimatedSprite3D
 CharacterBody3D
 WorldEnvironment
