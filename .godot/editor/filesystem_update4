@@ -1,9 +1,7 @@
 res://Map-Asset/Tres/Building.tres
-res://sword_slim.tscn
-res://BasicSlash.tscn
-res://basic_slash.gd
-res://sword_slim.gd
-res://sword_slim_nature.tscn
-res://NatureWeapon.gd
-res://nature_slash.tscn
-res://nature_slash.gd
+res://hugs.tscn
+res://hugs.gd
+res://hugs_fire.tscn
+res://hugs_fire.gd
+res://fire_slash.tscn
+res://fire_slash.gd
