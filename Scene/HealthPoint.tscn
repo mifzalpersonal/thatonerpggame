@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bix4huq8vk512"]
+
+[ext_resource type="Script" uid="uid://bnsxj7ntidn4e" path="res://GUI/Script/HudHealth.gd" id="1_o0e71"]
+
+[node name="GameUI" type="Control" unique_id=651630163]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_o0e71")
+
+[node name="HeartContainer" type="HBoxContainer" parent="." unique_id=1674056869]
+custom_minimum_size = Vector2(1.64, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
