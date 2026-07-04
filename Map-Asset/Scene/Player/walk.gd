@@ -38,14 +38,30 @@ func _physics_process(delta):
 		# Utamakan animasi horizontal jika bergerak diagonal, atau sesuaikan seleramu
 		if abs(input_dir.x) > abs(input_dir.z):
 			if input_dir.x > 0:
-				anim.play("Idle_Right")
+				anim.play("Idle_Right") #aslinya mah kiri jir
+				node_tangan.position.x = 3.0
+				node_tangan.position.y = -3.0
+				node_tangan.position.z = 1.5
+				node_tangan.rotation_degrees.y = 0
 			else:
-				anim.play("Idle_Left")
+				anim.play("Idle_Left") #aslinya mah kanan jir
+				node_tangan.position.x = -3.0
+				node_tangan.position.y = -3.0
+				node_tangan.position.z = -1.5
+				node_tangan.rotation_degrees.y = -180.0
 		else:
 			if input_dir.z > 0:
 				anim.play("Idle_Up")
+				node_tangan.position.x = -1.5
+				node_tangan.position.y = -3.0
+				node_tangan.position.z = 2.5 
+				node_tangan.rotation_degrees.y = -90.0
 			else:
 				anim.play("Walk_Down")
+				node_tangan.position.x = 1.5
+				node_tangan.position.y = -3.0
+				node_tangan.position.z = -2.5
+				node_tangan.rotation_degrees.y = 90.0
 
 	# Catatan: Baris flip_h di bawah ini dihapus karena kamu sudah punya 
 	# animasi "Walk_Left" dan "Walk_Right" terpisah di AnimatedSprite3D.
