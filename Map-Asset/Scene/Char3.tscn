@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cvru37rfkvj2s" path="res://Character-Asset/Player Vampire/player_left.png" id="3_mnfyg"]
 [ext_resource type="Texture2D" uid="uid://ckx8udipwb2up" path="res://Character-Asset/Player Vampire/player_right.png" id="4_uppxc"]
 [ext_resource type="Texture2D" uid="uid://d2fnnuxk5wdgm" path="res://Character-Asset/Player Vampire/Player_back.png" id="5_pijae"]
+[ext_resource type="Script" uid="uid://c733gulhvmtpw" path="res://weapon_manager.gd" id="6_mnfyg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rggs0"]
 atlas = ExtResource("2_xw6ye")
@@ -100,9 +101,9 @@ script = ExtResource("1_he2yi")
 [node name="CameraPivot" type="Node3D" parent="." unique_id=59797104]
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=1662372830]
-transform = Transform3D(-1, -5.0143647e-08, 7.161255e-08, 0, 0.81915206, 0.57357645, -8.742278e-08, 0.57357645, -0.81915206, 0, 5, -8.938)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0.7317734, -11.20923)
 current = true
-fov = 90.0
+fov = 80.0
 near = 0.001
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=1933847049]
@@ -117,3 +118,5 @@ transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 shape = SubResource("SphereShape3D_owrxk")
 
 [node name="Tangan" type="Marker3D" parent="." unique_id=1091863885]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1799307, 0, -2.2675097)
+script = ExtResource("6_mnfyg")

@@ -16,7 +16,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5839884, 2.9700055, -3.0101
 script = ExtResource("2_d6kqq")
 
 [node name="musuhbody" parent="." unique_id=404111702 instance=ExtResource("3_75v3i")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.747089, 1.2013508, -2.7459278)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.908783, 1.2013508, -2.7459278)
 script = ExtResource("4_sbhub")
 
 [node name="City" parent="." unique_id=1536287669 instance=ExtResource("1_on550")]
@@ -24,3 +24,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.209048, -4.060136, 0)
 
 [node name="WeaponChest" parent="." unique_id=1020326057 instance=ExtResource("6_bn8b8")]
 transform = Transform3D(-0.99999994, 0, 8.742277e-08, 0, 1, 0, -8.742277e-08, 0, -0.99999994, -12.53976, 0.9479082, -17.611584)
+
+[node name="WeaponChest2" parent="." unique_id=1263186401 instance=ExtResource("6_bn8b8")]
+transform = Transform3D(0.9999998, 0, -1.7484551e-07, 0, 1, 0, 1.7484551e-07, 0, 0.9999998, 0.5026283, 1.3035408, -16.612377)
+
+[node name="WeaponChest4" parent="." unique_id=1450699271 instance=ExtResource("6_bn8b8")]
+transform = Transform3D(0.99999976, 0, -3.4969102e-07, 0, 1, 0, 3.4969102e-07, 0, 0.99999976, -23.423153, 2.302278, 20.136898)
+
+[node name="WeaponChest3" parent="." unique_id=124454276 instance=ExtResource("6_bn8b8")]
+transform = Transform3D(0.9999999, 0, -1.7484552e-07, 0, 1, 0, 1.7484552e-07, 0, 0.9999999, -12.152057, 1.9733492, 6.8817363)
+
+[editable path="musuhbody"]

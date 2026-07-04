@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var speed = 3.0
+@export var speed = 0.0
 @onready var musuh = $AnimatedSprite3D
 
 var player_node : CharacterBody3D

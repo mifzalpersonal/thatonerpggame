@@ -2,6 +2,14 @@ extends Area3D
 
 const weapon_drop = preload("res://WeaponDrop.tscn")
 
+const daftar_senjata = [
+	"hugs",
+	"hugs_fire",
+	"katana",
+	"sword_slim",
+	"sword_slim_nature",
+]
+
 var udah_kebuka : bool = false
 var player_deket : CharacterBody3D = null
 
@@ -35,8 +43,17 @@ func _kalokeluar(body : Node3D) -> void:
 func buka_peti() -> void:
 	udah_kebuka = true
 	$PetunjukE.visible = false
+	
+	var indeks_acak = randi() % daftar_senjata.size()
+	print(indeks_acak)
+	var senjata_terpilih = daftar_senjata[indeks_acak]
+	print(senjata_terpilih)
+	
 	var hasil_gacha = weapon_drop.instantiate()
 	hasil_gacha.global_position = global_position + Vector3(0, 1.0, 0)
+	hasil_gacha.nama_senjata = senjata_terpilih
+	
+	
 	get_tree().current_scene.add_child(hasil_gacha)
 	print("you just opened a chest")
 	
