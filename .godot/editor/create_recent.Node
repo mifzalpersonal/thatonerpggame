@@ -1,3 +1,7 @@
+Label
+Button
+HBoxContainer
+CanvasLayer
 Area3D
 CollisionShape3D
 AnimatedSprite3D
@@ -9,6 +13,3 @@ Sprite3D
 Area2D
 Node3D
 GridMap
-Node
-CharacterBody3D
-WorldEnvironment

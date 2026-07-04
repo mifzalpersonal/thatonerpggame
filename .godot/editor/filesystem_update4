@@ -1,5 +1,5 @@
 res://Map-Asset/Scene/Main.tscn
 res://Map-Asset/Tres/Building.tres
-res://Map-Asset/Scene/Player/darah.gd
-res://Map-Asset/Scene/Enemy/enemy.gd
-res://Map-Asset/Scene/Player/walk.gd
+res://Map-Asset/Scene/Char3.tscn
+res://DeathScene.tscn
+res://DeathScene.gd
