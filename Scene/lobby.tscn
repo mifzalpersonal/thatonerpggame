@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://d2fnnuxk5wdgm" path="res://Character-Asset/Player Vampire/Player_back.png" id="6_v0o1u"]
 [ext_resource type="Script" uid="uid://c733gulhvmtpw" path="res://weapon_manager.gd" id="7_pogwf"]
 [ext_resource type="Texture2D" uid="uid://b3st7dml2383b" path="res://GUI/Asset/Point.png" id="9_q8xwb"]
+[ext_resource type="FontFile" uid="uid://c3uilcykbd6n0" path="res://Font/Rubik/static/Rubik-Regular.ttf" id="10_sbj8c"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rggs0"]
 atlas = ExtResource("3_yy83c")
@@ -311,7 +312,7 @@ offset_top = 108.0
 offset_right = 265.0
 offset_bottom = 196.0
 theme_override_font_sizes/font_size = 32
-text = "La Tittle"
+text = "BrinForest"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -321,8 +322,9 @@ offset_left = 17.0
 offset_top = 184.0
 offset_right = 265.0
 offset_bottom = 272.0
+theme_override_fonts/font = ExtResource("10_sbj8c")
 theme_override_font_sizes/font_size = 16
-text = "Auuuu"
+text = "Kopi kapal api"
 horizontal_alignment = 1
 vertical_alignment = 1
 

@@ -1,5 +1,6 @@
 78098b89c88a74ebe8c20117b8754620
-::res://::1783244678
+::res://::1783260700
+Additional1.gd::GDScript::9062246153642246934::1783257027::0::1::::<>Camera3D<><>0<>0<><>::
 BasicSlash.tscn::PackedScene::8159854100410608896::1783174362::0::1::::<><><>0<>0<><>::uid://bm1a0e5v35d66::::res://basic_slash.gd<>uid://diw4wdbfcfisb::::res://Weapon-Asset/sword_slim/Slash2.png
 basic_slash.gd::GDScript::3282405531232944281::1783174362::0::1::::<>Area3D<><>0<>0<><>::
 DeathScene.gd::GDScript::2333846295023522944::1783176527::0::1::::<>Control<><>0<>0<><>::
@@ -15,16 +16,18 @@ katana.gd::GDScript::8414539756612056910::1783174363::0::1::::<>Node3D<><>0<>0<>
 katana.tscn::PackedScene::848045036802916507::1783174363::0::1::::<><><>0<>0<><>::uid://dr5cif6e5dapy::::res://katana.gd<>uid://dphwl4hg7mpqy::::res://Weapon-Asset/Katana/Katana.gltf
 KatanaSlash.tscn::PackedScene::4542405527312765173::1783174362::0::1::::<><><>0<>0<><>::uid://c5m04bobj30fh::::res://katana_slash.gd<>uid://bmr8l4nyfqa3g::::res://Slash1.png
 katana_slash.gd::GDScript::6904848996627498533::1783174363::0::1::::<>Area3D<><>0<>0<><>::
-main_menu.gd::GDScript::4200249887929207900::1783241997::0::1::::<>Control<><>0<>0<><>::
-main_menu.tscn::PackedScene::2301543752185310110::1783241997::0::1::::<><><>0<>0<><>::uid://b03vrckhk0flk::::res://main_menu.gd
+main_menu.gd::GDScript::4200249887929207900::1783249872::0::1::::<>Control<><>0<>0<><>::
+main_menu.tscn::PackedScene::2301543752185310110::1783252191::0::1::::<><><>0<>0<><>::uid://b03vrckhk0flk::::res://main_menu.gd<>uid://cbb7j4stp7652::::res://GUI/Asset/ArrowButton.png<>uid://c3uilcykbd6n0::::res://Font/Rubik/static/Rubik-Regular.ttf
+main_menu_model.gdshader::Shader::1578106035739689629::1783260254::0::1::::<><><>0<>0<><>::
+main_menu_model.tscn::PackedScene::1406503646886710769::1783260298::0::1::::<><><>0<>0<><>::uid://cr3hxymg5jjeg::::res://Weapon-Asset/MainMenu_0.png<>uid://d2d24t48cxxpe::::res://Additional1.gd<>uid://bqvekcc37tooc::::res://Weapon-Asset/MainMenu_1.png<>uid://715dbjmtuq7o::::res://main_menu.tscn<>uid://b8c6nrsost0rg::::res://Weapon-Asset/MainMenu_2.png<>uid://ct2sho1udlgvw::::res://Weapon-Asset/MainMenu_3.png<>uid://jsomggbg40mr::::res://Weapon-Asset/MainMenu_4.png<>uid://ctac0f77dxipd::::res://Weapon-Asset/MainMenu_5.png<>uid://dah6f85owxy03::::res://Weapon-Asset/MainMenu_6.png<>uid://qlbects53826::::res://Weapon-Asset/MainMenu_7.png<>uid://bjwmw8ft0v0jb::::res://Weapon-Asset/MainMenu_8.png<>uid://bv14vgrdfskc5::::res://Weapon-Asset/MainMenu_9.png<>uid://baqio8eqp52at::::res://Weapon-Asset/MainMenu_10.png<>uid://wqpf8jnjnfqr::::res://main_menu_model.gdshader
 NatureWeapon.gd::GDScript::747860860839677797::1783174362::0::1::::<>Node3D<><>0<>0<><>::
 nature_slash.gd::GDScript::3588948404161265303::1783174363::0::1::::<>Area3D<><>0<>0<><>::
 nature_slash.tscn::PackedScene::5185470007189756106::1783174363::0::1::::<><><>0<>0<><>::uid://brerpq8kj6unf::::res://nature_slash.gd<>uid://ctvtb0qwrdicg::::res://Weapon-Asset/sword_slim/nature_ver/Slash3.png
 new_map.tscn::PackedScene::2988190125080209042::1783222590::0::1::::<><><>0<>0<><>::uid://dcmrsyis72vko::::res://Map-Asset/NewMapAsset/floor1_0.png<>uid://b5haibem6tskm::::res://Map-Asset/NewMapAsset/floor2_0.png<>uid://cykseiwq7r0rt::::res://Map-Asset/NewMapAsset/floor3_0.png<>uid://c842g1u2yyy32::::res://Map-Asset/NewMapAsset/floor4_0.png
 PEMISAH DOANG FILE GAGUNA.gd::GDScript::5954779439704787292::1783174362::0::1::::<>Camera3D<><>0<>0<><>::
 README.md::TextFile::-1::1783004158::0::1::::<><><>0<>0<><>::
-scene_changer.gd::GDScript::5529521813426535298::1783237505::0::1::::<>CanvasLayer<><>0<>0<><>::
-scene_changer.tscn::PackedScene::2695801263817766785::1783242059::0::1::::<><><>0<>0<><>::uid://ck1sofl7e3j83::::res://scene_changer.gd<>uid://csfuehbc5me4j::::res://GUI/Asset/LoadingAnimation.png
+scene_changer.gd::GDScript::5529521813426535298::1783245221::0::1::::<>CanvasLayer<><>0<>0<><>::
+scene_changer.tscn::PackedScene::2695801263817766785::1783245221::0::1::::<><><>0<>0<><>::uid://ck1sofl7e3j83::::res://scene_changer.gd<>uid://csfuehbc5me4j::::res://GUI/Asset/LoadingAnimation.png
 Slash1.png::CompressedTexture2D::3265806078020126286::1783174362::1783174432::1::::<><><>0<>0<>f179398e1dc150f708009330e3a557ff<>res://.godot/imported/Slash1.png-ce32c15136aa318fcb9643ad501faba2.ctex::
 Slash.gd::GDScript::505909992934506513::1783174362::0::1::::<>RefCounted<><>0<>0<><>::
 sword_slim.gd::GDScript::6755254773001048041::1783174363::0::1::::<>Node3D<><>0<>0<><>::
@@ -75,9 +78,44 @@ Stone Chest.fbx::PackedScene::4828900954099349958::1783004158::1783004272::1::::
 Gold Chest Albedo.png::CompressedTexture2D::362654564466440942::1783004158::1783004249::1::::<><><>0<>0<>260f83bd51f2c405d789a4a37421e803<>res://.godot/imported/Gold Chest Albedo.png-1c93e2460af129c1cfe9428afbccd48e.ctex::
 Old Chest Albedo.png::CompressedTexture2D::8380662634076233494::1783004158::1783004247::1::::<><><>0<>0<>548921a5bb2f51536ce98faaf34389f4<>res://.godot/imported/Old Chest Albedo.png-633dbbe750e5e3f7aadb397c7f628dbc.s3tc.ctex::
 Stone Chest.png::CompressedTexture2D::8805059689625077175::1783004158::1783004249::1::::<><><>0<>0<>e1be79adfeddf1c212bbcbf0ed19f054<>res://.godot/imported/Stone Chest.png-ee1842eed7e800ed5a393e5814edccef.ctex::
+::res://Font/::1783251799
+Arimo-Italic-VariableFont_wght.ttf::FontFile::6910615928718585649::1779141002::1783251500::1::::<><><>0<>0<>70ed6a5e00947fab8d9a08d281badd48<>res://.godot/imported/Arimo-Italic-VariableFont_wght.ttf-d4ff2f42a5deb0317d0e8d6e4fd78fe9.fontdata::
+Arimo-VariableFont_wght.ttf::FontFile::421154518947867325::1779141002::1783251500::1::::<><><>0<>0<>64c27b90d56e591894c30d820fc3ba58<>res://.godot/imported/Arimo-VariableFont_wght.ttf-5bdae8cb7f8d60520bee84a2f9b45659.fontdata::
+OFL.txt::TextFile::-1::1783251362::0::1::::<><><>0<>0<><>::
+README.txt::TextFile::-1::1783251362::0::1::::<><><>0<>0<><>::
+::res://Font/Rubik/::1783251803
+OFL.txt::TextFile::-1::1783251748::0::1::::<><><>0<>0<><>::
+README.txt::TextFile::-1::1783251748::0::1::::<><><>0<>0<><>::
+Rubik-Italic-VariableFont_wght.ttf::FontFile::6312573625177733981::1757524128::1783251803::1::::<><><>0<>0<>da88780c2c79142b28835c7919a9c01e<>res://.godot/imported/Rubik-Italic-VariableFont_wght.ttf-edd42c588fb1ff7019c10fe709c03360.fontdata::
+Rubik-VariableFont_wght.ttf::FontFile::126044247179314949::1757524128::1783251803::1::::<><><>0<>0<>61c8fd2049f633df658b7bc1457d1bd1<>res://.godot/imported/Rubik-VariableFont_wght.ttf-187a54f1735890ea3859a3279456fd5f.fontdata::
+::res://Font/Rubik/static/::1783251802
+Rubik-Black.ttf::FontFile::1974552108490881091::1757524128::1783251802::1::::<><><>0<>0<>184d800ad3cf15c305a1c684d57e084b<>res://.godot/imported/Rubik-Black.ttf-d224191b8ae1b0e06440a520710e1a8a.fontdata::
+Rubik-BlackItalic.ttf::FontFile::1958789923641736213::1757524128::1783251802::1::::<><><>0<>0<>a30e63066e0cb79eb482d59360e6af71<>res://.godot/imported/Rubik-BlackItalic.ttf-0665bdd61c4dc263221a4b7601077798.fontdata::
+Rubik-Bold.ttf::FontFile::7834616861311246801::1757524128::1783251802::1::::<><><>0<>0<>aeb134d89c290a7315547dd7bc97cd2c<>res://.godot/imported/Rubik-Bold.ttf-61bfe3c4daa2ca6acbf9699a6022cdb5.fontdata::
+Rubik-BoldItalic.ttf::FontFile::5297629424360270490::1757524128::1783251802::1::::<><><>0<>0<>c1c459b81a22a670b7b2008670b95127<>res://.godot/imported/Rubik-BoldItalic.ttf-2b8be76d8ce729b46cc8dfa8df87308a.fontdata::
+Rubik-ExtraBold.ttf::FontFile::4997752635062406815::1757524128::1783251802::1::::<><><>0<>0<>57a00272333da45755414b281a9979df<>res://.godot/imported/Rubik-ExtraBold.ttf-30cb1544d942eb14c2c6a6541b6fedaf.fontdata::
+Rubik-ExtraBoldItalic.ttf::FontFile::815853406604066325::1757524128::1783251802::1::::<><><>0<>0<>b47e6c77af39cdf224c2e8dc81a5021a<>res://.godot/imported/Rubik-ExtraBoldItalic.ttf-f9b4e4ec4db99ae88773d7ca1bd73d76.fontdata::
+Rubik-Italic.ttf::FontFile::4568547497032103509::1757524128::1783251802::1::::<><><>0<>0<>a22627bbf78e1c56c056a2000fd37ebb<>res://.godot/imported/Rubik-Italic.ttf-41e04d94de26ae7bcba4233f35a1bbe7.fontdata::
+Rubik-Light.ttf::FontFile::6162407514747292173::1757524128::1783251802::1::::<><><>0<>0<>7ac1c322460f59a761f0496c3a6f005a<>res://.godot/imported/Rubik-Light.ttf-5700325ab4f174f10f21219ca37c2ccd.fontdata::
+Rubik-LightItalic.ttf::FontFile::6405645362123069257::1757524128::1783251802::1::::<><><>0<>0<>46da52ac5af2aea1f909e7ad7055b78e<>res://.godot/imported/Rubik-LightItalic.ttf-a644c750e47239a2e7dade919526a05a.fontdata::
+Rubik-Medium.ttf::FontFile::5743654155883943039::1757524128::1783251802::1::::<><><>0<>0<>9c5c5a5f3b20a7380f6002ce5cdb8ee9<>res://.godot/imported/Rubik-Medium.ttf-0ecdf7ccc711a06172a6f215d6f85cff.fontdata::
+Rubik-MediumItalic.ttf::FontFile::679858310336374623::1757524128::1783251802::1::::<><><>0<>0<>02658e6f7d34956a741c7856306bcf56<>res://.godot/imported/Rubik-MediumItalic.ttf-f2bb2b4b8d73c971f5b1d4e8a8bca269.fontdata::
+Rubik-Regular.ttf::FontFile::6779922066585241015::1757524128::1783251802::1::::<><><>0<>0<>45be69826b4e992959e2397a1229e23b<>res://.godot/imported/Rubik-Regular.ttf-03415c25d7c4a1c716e76fced67d4928.fontdata::
+Rubik-SemiBold.ttf::FontFile::1006244567808793021::1757524128::1783251802::1::::<><><>0<>0<>fa7c883701e530597c055f9efdca54d5<>res://.godot/imported/Rubik-SemiBold.ttf-eb2266a80842eaf8f7c16da287b4083f.fontdata::
+Rubik-SemiBoldItalic.ttf::FontFile::6723311748916799008::1757524128::1783251802::1::::<><><>0<>0<>4c1f3c43d0c5ba273ec1eefd3ceda487<>res://.godot/imported/Rubik-SemiBoldItalic.ttf-4a6e47a3802601484574342079683e54.fontdata::
+::res://Font/static/::1783251500
+Arimo-Bold.ttf::FontFile::1525463996979973327::1779141002::1783251500::1::::<><><>0<>0<>0350df3913bed1012521d5a331a10c40<>res://.godot/imported/Arimo-Bold.ttf-1af30c43bf786c669bf7da8d9b19dd6e.fontdata::
+Arimo-BoldItalic.ttf::FontFile::4342619267072634637::1779141002::1783251500::1::::<><><>0<>0<>294365aebbf05871e8141a0146f1eab8<>res://.godot/imported/Arimo-BoldItalic.ttf-47c6d1bbae1c0c529aa33eb76b191eaf.fontdata::
+Arimo-Italic.ttf::FontFile::8576987495051955096::1779141002::1783251500::1::::<><><>0<>0<>84698e34c2f40c62d302b1ed06bb9e69<>res://.godot/imported/Arimo-Italic.ttf-0b255411b19d2c4ba6d75cf30e626163.fontdata::
+Arimo-Medium.ttf::FontFile::5560474328661939443::1779141002::1783251500::1::::<><><>0<>0<>4e8c5d5c4cb18b0a7ea18da06437b350<>res://.godot/imported/Arimo-Medium.ttf-871569a6959651cc3b11de92a839a7d7.fontdata::
+Arimo-MediumItalic.ttf::FontFile::916239742950634660::1779141002::1783251500::1::::<><><>0<>0<>e8a52dffcc252d8dda765869921f5d34<>res://.godot/imported/Arimo-MediumItalic.ttf-7105c7cf37b99a67abd6199082922917.fontdata::
+Arimo-Regular.ttf::FontFile::6636288436544954312::1779141002::1783251500::1::::<><><>0<>0<>c7099e3b412e70ab0f05a8d8a8dcf312<>res://.godot/imported/Arimo-Regular.ttf-86dfed76c01ee09e8446eeb662e515e5.fontdata::
+Arimo-SemiBold.ttf::FontFile::7079335965426913936::1779141002::1783251500::1::::<><><>0<>0<>3acaa4278bdc95e4f9faa05a63f33cdd<>res://.godot/imported/Arimo-SemiBold.ttf-fa884d45bb6ddc36e8da6dad817a60f1.fontdata::
+Arimo-SemiBoldItalic.ttf::FontFile::8131579689633513465::1779141002::1783251500::1::::<><><>0<>0<>9aeb3008424dd122a3c567f786e24088<>res://.godot/imported/Arimo-SemiBoldItalic.ttf-2a51eaab64b59fb261a0b13cfadaa7ae.fontdata::
 ::res://GUI/::1783168640
-::res://GUI/Asset/::1783242666
+::res://GUI/Asset/::1783248364
 1Itemslot.png::CompressedTexture2D::8326644106816062185::1783164789::1783168652::1::::<><><>0<>0<>9c80dc14ea549c3bbf302abeafc5c663<>res://.godot/imported/1Itemslot.png-cce643c6df8398f92799988b6e5aebfb.ctex::
+ArrowButton.png::CompressedTexture2D::4847055156560211555::1783248364::1783248364::1::::<><><>0<>0<>2de0ea6ae3f1206c22e12aa3c1df9b0f<>res://.godot/imported/ArrowButton.png-fbd201d7ed74b6d96b7cd385ee7a3566.ctex::
 Health0.png::CompressedTexture2D::2737015573775723601::1783159119::1783168652::1::::<><><>0<>0<>ee5643938252e36aae2e95bc4b448c56<>res://.godot/imported/Health0.png-e69e7992bedf9dd3a045c369ce89e848.ctex::
 Health.png::CompressedTexture2D::326338256835179665::1783159119::1783168652::1::::<><><>0<>0<>ada13fb978a7895bcafb269c13ef79e8<>res://.godot/imported/Health.png-e8ef93c2437ce456d8fbcebfe57b4b4f.ctex::
 Itemslot.png::CompressedTexture2D::2843346352451343401::1783164789::1783168652::1::::<><><>0<>0<>8bbd835b7bf63cf61496f76a8551a753<>res://.godot/imported/Itemslot.png-383265c70ad4f4a608db695ea9c22b7e.ctex::
@@ -142,9 +180,9 @@ floor3.gltf::PackedScene::629863393242056921::1783221997::1783222119::1::::<><><
 floor3_0.png::CompressedTexture2D::6479117896227918529::1783222001::1783222401::1::::<><><>0<>0<>c375cbb75b825ee584f73e625dbf5209<>res://.godot/imported/floor3_0.png-fe2901d4c4f504de0647573cf452dc5c.ctex::
 floor4.gltf::PackedScene::6071090278082548399::1783222431::1783222432::1::::<><><>0<>0<>f8c8faa73fa9918afc768ba4076ebb66<>res://.godot/imported/floor4.gltf-6720d1d8a13df8b4aae7f99ff9123162.scn::uid://c842g1u2yyy32::::res://Map-Asset/NewMapAsset/floor4_0.png
 floor4_0.png::CompressedTexture2D::7150591633640120787::1783222432::1783222437::1::::<><><>0<>0<>46189a4d40a936f453d40aca7eddb2dd<>res://.godot/imported/floor4_0.png-4c0b7c6375db7991331c03dd317849f7.ctex::
-::res://Map-Asset/Scene/::1783243250
+::res://Map-Asset/Scene/::1783254671
 buiding.tscn::PackedScene::7005605233696712384::1783004158::0::1::::<><><>0<>0<><>::uid://bs6di52a3o354::::res://Map-Asset/Asset/Building1_0.png<>uid://pkwniqwi8kgw::::res://Map-Asset/Asset/Building1_1.png<>uid://cqubxaitvxpbo::::res://Map-Asset/Asset/Building1_2.png<>uid://cd0uxb26j0fij::::res://Map-Asset/Asset/Building2_0.png<>uid://b5no3q1gqwmme::::res://Map-Asset/Asset/Building2_1.png<>uid://52d1olgreiyn::::res://Map-Asset/Asset/Building2_2.png<>uid://cio4x4xo710oa::::res://Map-Asset/Asset/Building2_3.png<>uid://bfqqr1vc84vim::::res://Map-Asset/Asset/Building2_4.png
-Char3.tscn::PackedScene::3698379665401621397::1783243250::0::1::::<><><>0<>0<><>::uid://kvtk27say537::::res://Map-Asset/Scene/Player/walk.gd<>uid://bwuv6u440h76m::::res://Character-Asset/Player Vampire/palyer_fron_walk-Sheet.png<>uid://cvru37rfkvj2s::::res://Character-Asset/Player Vampire/player_left.png<>uid://ckx8udipwb2up::::res://Character-Asset/Player Vampire/player_right.png<>uid://d2fnnuxk5wdgm::::res://Character-Asset/Player Vampire/Player_back.png<>uid://c733gulhvmtpw::::res://weapon_manager.gd
+Char3.tscn::PackedScene::3698379665401621397::1783244704::0::1::::<><><>0<>0<><>::uid://kvtk27say537::::res://Map-Asset/Scene/Player/walk.gd<>uid://bwuv6u440h76m::::res://Character-Asset/Player Vampire/palyer_fron_walk-Sheet.png<>uid://cvru37rfkvj2s::::res://Character-Asset/Player Vampire/player_left.png<>uid://ckx8udipwb2up::::res://Character-Asset/Player Vampire/player_right.png<>uid://d2fnnuxk5wdgm::::res://Character-Asset/Player Vampire/Player_back.png<>uid://c733gulhvmtpw::::res://weapon_manager.gd
 main.gd::GDScript::4353930506769096730::1783157703::0::1::::<>Node3D<><>0<>0<><>::
 Main.tscn::PackedScene::5579410116204149488::1783235968::0::1::::<><><>0<>0<><>::uid://bsxr1jkeqrqgb::::res://Map-Asset/Scene/Char3.tscn<>uid://qvnte0g0jk5h::::res://Map-Asset/Scene/Player/darah.gd<>uid://bqk0gkryxb0nm::::res://Map-Asset/Scene/Enemy/enemy1.tscn<>uid://dpaf8r30cyp8s::::res://Map-Asset/Scene/Enemy/enemy.gd<>uid://6cxtuv7cy8bn::::res://WeaponChest.tscn<>uid://bix4huq8vk512::::res://Scene/HealthPoint.tscn<>uid://cbemykgf1go3e::::res://Scene/main_map.tscn<>uid://0jag52u11qae::::res://Scene/item_slot.tscn
 Map1.tscn::PackedScene::6447090678263545248::1783004158::0::1::::<><><>0<>0<><>::uid://cvwk5cqmblsbx::::res://Map-Asset/Asset/NewRoad_0.png<>uid://bvxjs2mjprjaq::::res://Map-Asset/Asset/NewRoad_1.png<>uid://g6in8frbyxjo::::res://Map-Asset/Asset/NewRoad_8.png<>uid://cj4j28s2seuta::::res://Map-Asset/Asset/NewRoad_9.png<>uid://csuvyyvodhpsp::::res://Map-Asset/Asset/NewRoad_10.png<>uid://c1wv76fbs2nu::::res://Map-Asset/Asset/NewRoad_2.png<>uid://bjucpancbqauq::::res://Map-Asset/Asset/NewRoad_3.png<>uid://dufbwhigh7q4f::::res://Map-Asset/Asset/NewRoad_4.png<>uid://cbbj2sgitcaee::::res://Map-Asset/Asset/NewRoad_5.png<>uid://cb620jwjaq05r::::res://Map-Asset/Asset/NewRoad_6.png<>uid://d07c5j6vol5xm::::res://Map-Asset/Asset/NewRoad_7.png<>uid://diis22va2rcsm::::res://Map-Asset/Tres/Building.tres
@@ -153,19 +191,19 @@ road.tscn::PackedScene::5811376712472707256::1783004158::0::1::::<><><>0<>0<><>:
 ::res://Map-Asset/Scene/Enemy/::1783156585
 enemy1.tscn::PackedScene::3531615151641239010::1783156373::0::1::::<><><>0<>0<><>::uid://divy6238su4ah::::res://icon.svg
 enemy.gd::GDScript::8212458159103478960::1783156585::0::1::::<>CharacterBody3D<><>0<>0<><>::
-::res://Map-Asset/Scene/Player/::1783243250
+::res://Map-Asset/Scene/Player/::1783244704
 darah.gd::GDScript::1167196931053828739::1783174362::0::1::::<>Node<><>0<>0<><>::
 level.gd::GDScript::6802428595717434762::1783004158::0::1::::<>Node<><>0<>0<><>::
-walk.gd::GDScript::746413318400202704::1783243250::0::1::::<>CharacterBody3D<><>0<>0<><>::
-::res://Map-Asset/Tres/::1783237874
-Building.tres::MeshLibrary::7738430395129367792::1783222138::0::1::::<><><>0<>0<><>::uid://cd0uxb26j0fij::::res://Map-Asset/Asset/Building2_0.png<>uid://bs6di52a3o354::::res://Map-Asset/Asset/Building1_0.png<>uid://b5no3q1gqwmme::::res://Map-Asset/Asset/Building2_1.png<>uid://pkwniqwi8kgw::::res://Map-Asset/Asset/Building1_1.png<>uid://cqubxaitvxpbo::::res://Map-Asset/Asset/Building1_2.png<>uid://52d1olgreiyn::::res://Map-Asset/Asset/Building2_2.png<>uid://cio4x4xo710oa::::res://Map-Asset/Asset/Building2_3.png<>uid://bfqqr1vc84vim::::res://Map-Asset/Asset/Building2_4.png
+walk.gd::GDScript::746413318400202704::1783244704::0::1::::<>CharacterBody3D<><>0<>0<><>::
+::res://Map-Asset/Tres/::1783251582
+Building.tres::MeshLibrary::7738430395129367792::1783251582::0::1::::<><><>0<>0<><>::uid://cd0uxb26j0fij::::res://Map-Asset/Asset/Building2_0.png<>uid://bs6di52a3o354::::res://Map-Asset/Asset/Building1_0.png<>uid://b5no3q1gqwmme::::res://Map-Asset/Asset/Building2_1.png<>uid://pkwniqwi8kgw::::res://Map-Asset/Asset/Building1_1.png<>uid://cqubxaitvxpbo::::res://Map-Asset/Asset/Building1_2.png<>uid://52d1olgreiyn::::res://Map-Asset/Asset/Building2_2.png<>uid://cio4x4xo710oa::::res://Map-Asset/Asset/Building2_3.png<>uid://bfqqr1vc84vim::::res://Map-Asset/Asset/Building2_4.png
 grass.meshlib::MeshLibrary::2835502854114117261::1783237874::0::1::::<><><>0<>0<><>::uid://c842g1u2yyy32::::res://Map-Asset/NewMapAsset/floor4_0.png<>uid://dcmrsyis72vko::::res://Map-Asset/NewMapAsset/floor1_0.png<>uid://b5haibem6tskm::::res://Map-Asset/NewMapAsset/floor2_0.png<>uid://cykseiwq7r0rt::::res://Map-Asset/NewMapAsset/floor3_0.png
 Road.tres::MeshLibrary::160481149324405993::1783004158::0::1::::<><><>0<>0<><>::uid://cvwk5cqmblsbx::::res://Map-Asset/Asset/NewRoad_0.png<>uid://bvxjs2mjprjaq::::res://Map-Asset/Asset/NewRoad_1.png<>uid://g6in8frbyxjo::::res://Map-Asset/Asset/NewRoad_8.png<>uid://cj4j28s2seuta::::res://Map-Asset/Asset/NewRoad_9.png<>uid://csuvyyvodhpsp::::res://Map-Asset/Asset/NewRoad_10.png<>uid://c1wv76fbs2nu::::res://Map-Asset/Asset/NewRoad_2.png<>uid://bjucpancbqauq::::res://Map-Asset/Asset/NewRoad_3.png<>uid://dufbwhigh7q4f::::res://Map-Asset/Asset/NewRoad_4.png<>uid://cbbj2sgitcaee::::res://Map-Asset/Asset/NewRoad_5.png<>uid://cb620jwjaq05r::::res://Map-Asset/Asset/NewRoad_6.png<>uid://d07c5j6vol5xm::::res://Map-Asset/Asset/NewRoad_7.png
-::res://Scene/::1783243078
+::res://Scene/::1783245609
 HealthPoint.tscn::PackedScene::2997186491200030919::1783174362::0::1::::<><><>0<>0<><>::uid://bnsxj7ntidn4e::::res://GUI/Script/HudHealth.gd
 item_slot.tscn::PackedScene::1773312823855494132::1783174362::0::1::::<><><>0<>0<><>::uid://dqvqu2mf1pfev::::res://GUI/Asset/1Itemslot.png<>uid://dji3mfjjj582o::::res://GUI/Script/item_slot.gd<>uid://bgrlq737yj5dd::::res://GUI/Asset/Itemslot.png
-lobby.gd::GDScript::8664258260544148120::1783241467::0::1::::<>Node3D<><>0<>0<><>::
-lobby.tscn::PackedScene::7181468268698037419::1783243078::0::1::::<><><>0<>0<><>::uid://cbemykgf1go3e::::res://Scene/main_map.tscn<>uid://dvpbckim3c4rs::::res://Scene/lobby.gd<>uid://kvtk27say537::::res://Map-Asset/Scene/Player/walk.gd<>uid://bwuv6u440h76m::::res://Character-Asset/Player Vampire/palyer_fron_walk-Sheet.png<>uid://cvru37rfkvj2s::::res://Character-Asset/Player Vampire/player_left.png<>uid://ckx8udipwb2up::::res://Character-Asset/Player Vampire/player_right.png<>uid://d2fnnuxk5wdgm::::res://Character-Asset/Player Vampire/Player_back.png<>uid://c733gulhvmtpw::::res://weapon_manager.gd<>uid://b3st7dml2383b::::res://GUI/Asset/Point.png
+lobby.gd::GDScript::8664258260544148120::1783245592::0::1::::<>Node3D<><>0<>0<><>::
+lobby.tscn::PackedScene::7181468268698037419::1783245609::0::1::::<><><>0<>0<><>::uid://cbemykgf1go3e::::res://Scene/main_map.tscn<>uid://dvpbckim3c4rs::::res://Scene/lobby.gd<>uid://kvtk27say537::::res://Map-Asset/Scene/Player/walk.gd<>uid://bwuv6u440h76m::::res://Character-Asset/Player Vampire/palyer_fron_walk-Sheet.png<>uid://cvru37rfkvj2s::::res://Character-Asset/Player Vampire/player_left.png<>uid://ckx8udipwb2up::::res://Character-Asset/Player Vampire/player_right.png<>uid://d2fnnuxk5wdgm::::res://Character-Asset/Player Vampire/Player_back.png<>uid://c733gulhvmtpw::::res://weapon_manager.gd<>uid://b3st7dml2383b::::res://GUI/Asset/Point.png
 main_map.tscn::PackedScene::4852059719771891428::1783234362::0::1::::<><><>0<>0<><>::uid://bgnsk2ki4l2wn::::res://Map-Asset/Tres/grass.meshlib
 ::res://SlashVFX-Asset/::1783004158
 ::res://SlashVFX-Asset/Demo/::1783004158
@@ -253,7 +291,19 @@ Voronoi Noise 1_albedo.png::CompressedTexture2D::9223067803087805466::1783004158
 T_Lu_Noise_10.png::CompressedTexture2D::2827883664770058179::1783004158::1783004236::1::::<><><>0<>0<>7a33516523893db35537514f4546ab65<>res://.godot/imported/T_Lu_Noise_10.png-337f2bede31017c243bfeb57de63daee.s3tc.ctex::
 T_Lu_Noise_29.png::CompressedTexture2D::2370814800112752282::1783004158::1783004229::1::::<><><>0<>0<>7b3c2aca750589cd65461718bf94e545<>res://.godot/imported/T_Lu_Noise_29.png-8d451da691ddb8ec66184407eed15432.s3tc.ctex::
 T_Lu_Noise_31.png::CompressedTexture2D::8373290608031698792::1783004158::1783004229::1::::<><><>0<>0<>68982522e9be000409f6a914165ee2c6<>res://.godot/imported/T_Lu_Noise_31.png-8a2e04b9962a532b86f25ff67083af89.s3tc.ctex::
-::res://Weapon-Asset/::1783067944
+::res://Weapon-Asset/::1783254684
+MainMenu.gltf::PackedScene::5552812561284234204::1783254542::1783254546::1::::<><><>0<>0<>a9080053ed90b0a7abf05c890ed79ab2<>res://.godot/imported/MainMenu.gltf-afbd42a4d57a85da4ec78f1e70020ec5.scn::uid://cr3hxymg5jjeg::::res://Weapon-Asset/MainMenu_0.png<>uid://bqvekcc37tooc::::res://Weapon-Asset/MainMenu_1.png<>uid://b8c6nrsost0rg::::res://Weapon-Asset/MainMenu_2.png<>uid://ct2sho1udlgvw::::res://Weapon-Asset/MainMenu_3.png<>uid://jsomggbg40mr::::res://Weapon-Asset/MainMenu_4.png<>uid://ctac0f77dxipd::::res://Weapon-Asset/MainMenu_5.png<>uid://dah6f85owxy03::::res://Weapon-Asset/MainMenu_6.png<>uid://qlbects53826::::res://Weapon-Asset/MainMenu_7.png<>uid://bjwmw8ft0v0jb::::res://Weapon-Asset/MainMenu_8.png<>uid://bv14vgrdfskc5::::res://Weapon-Asset/MainMenu_9.png<>uid://baqio8eqp52at::::res://Weapon-Asset/MainMenu_10.png
+MainMenu_0.png::CompressedTexture2D::6024321657966727578::1783254543::1783254683::1::::<><><>0<>0<>47cb4d321e9b194f14b7e8fdd9166314<>res://.godot/imported/MainMenu_0.png-566f8dab159f519050dbb87cb32114bd.ctex::
+MainMenu_1.png::CompressedTexture2D::3553054950099016494::1783254543::1783254683::1::::<><><>0<>0<>3d41ffd73398c785808d13c5da645246<>res://.godot/imported/MainMenu_1.png-41957ce11672b8b55e9cbc958e053d16.ctex::
+MainMenu_2.png::CompressedTexture2D::4708687642717171492::1783254544::1783254683::1::::<><><>0<>0<>0995a310398760356a0b272974ac0af5<>res://.godot/imported/MainMenu_2.png-48c9749e8eaea3e2b68aa45ed11ca707.ctex::
+MainMenu_3.png::CompressedTexture2D::6163273778700536320::1783254544::1783254684::1::::<><><>0<>0<>202ee317bfc388198b16827f4bb6d980<>res://.godot/imported/MainMenu_3.png-66bcfe84e753b82cbaa4a8b35ef131a2.ctex::
+MainMenu_4.png::CompressedTexture2D::669730184204506613::1783254544::1783254684::1::::<><><>0<>0<>d25f08b571957a9a669a5f1843883871<>res://.godot/imported/MainMenu_4.png-da9409404d0cdba3dc458231b3ccd66e.ctex::
+MainMenu_5.png::CompressedTexture2D::6106595788851321097::1783254544::1783254684::1::::<><><>0<>0<>f74ec8d058aaf838d455315afb036bc9<>res://.godot/imported/MainMenu_5.png-6e0b7dbe0cd7c1a0a682cdbaad0128a3.ctex::
+MainMenu_6.png::CompressedTexture2D::7175605631384121638::1783254544::1783254684::1::::<><><>0<>0<>d4e3fa521f76a64bb5c6beb29822b9e5<>res://.godot/imported/MainMenu_6.png-d4d5f18f36a53d6345efb3429995c4f6.ctex::
+MainMenu_7.png::CompressedTexture2D::1145797648928613241::1783254544::1783254684::1::::<><><>0<>0<>a35d0dd518dfa3c16fd61c8df49d5c41<>res://.godot/imported/MainMenu_7.png-d2851e2338c7ed2224d6376bc7bdb76f.ctex::
+MainMenu_8.png::CompressedTexture2D::3064306220295925743::1783254544::1783254684::1::::<><><>0<>0<>331882eef79f68de009d5d32925f802f<>res://.godot/imported/MainMenu_8.png-0922c6dac6314f9fe700008bd54eb8f5.ctex::
+MainMenu_9.png::CompressedTexture2D::3915858857705048586::1783254544::1783254684::1::::<><><>0<>0<>82afecac4e7ffea675b551d19e34bf69<>res://.godot/imported/MainMenu_9.png-0f6fb99423d053d486626f3ff73bf7a7.ctex::
+MainMenu_10.png::CompressedTexture2D::2419963205012852319::1783254545::1783254684::1::::<><><>0<>0<>ebeb2ceb1ee251de96c2ffd498f71787<>res://.godot/imported/MainMenu_10.png-c196f92fcc9405e831294556642815e1.ctex::
 ::res://Weapon-Asset/Huges/::1783174432
 sword3.gltf::PackedScene::8241141816891069729::1783067931::1783067955::1::::<><><>0<>0<>2849bcd98b1863dd7ba9b4bec11c4669<>res://.godot/imported/sword3.gltf-50fcbf5eb2a474d20a811065560da1d7.scn::uid://cjn3vng6m0y8::::res://Weapon-Asset/Huges/sword3_0.png<>uid://svuu8ncnkqmu::::res://Weapon-Asset/Huges/sword3_1.png<>uid://pbk8smirdhjd::::res://Weapon-Asset/Huges/sword3_2.png<>uid://dpryk32r2x2ak::::res://Weapon-Asset/Huges/sword3_3.png
 sword3_0.png::CompressedTexture2D::159797533585254661::1783067954::1783067955::1::::<><><>0<>0<>1914bfa71bd3a2934b61fbab80f77781<>res://.godot/imported/sword3_0.png-902cb2bf0df21ec2e77b733a6f632a21.s3tc.ctex::
