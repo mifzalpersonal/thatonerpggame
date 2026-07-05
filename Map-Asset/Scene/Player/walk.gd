@@ -4,17 +4,20 @@ extends CharacterBody3D
 @onready var anim = $AnimatedSprite3D
 @onready var node_tangan = $Tangan
 
-@onready var slot_1_ui = get_node_or_null("/root/Main/GUI/ItemContainer/ItemSlot")
-@onready var slot_2_ui = get_node_or_null("/root/Main/GUI/ItemContainer/ItemSlot2")
+# Menggunakan var biasa (bukan @onready langsung kaku) agar bisa dicari ulang nanti jika scene berpindah
+var slot_1_ui = null
+var slot_2_ui = null
 
 func _ready() -> void:
 	await get_tree().process_frame
+	# Coba cari node UI saat awal spawn
+	_update_ui_references()
 	switch_hud_slot(1)
 
 func _physics_process(delta):
 	var input_dir = Vector3.ZERO
 
-	# WASD input (Sudah diperbaiki arah Z nya)
+	# WASD input
 	if Input.is_key_pressed(KEY_W):
 		input_dir.z += 1 # -Z adalah ATAS/DEPAN
 	if Input.is_key_pressed(KEY_S):
@@ -34,57 +37,51 @@ func _physics_process(delta):
 
 	# Logika Animasi 4 Arah
 	if input_dir == Vector3.ZERO:
-		# Jika diam, mainkan animasi Idle (atau bisa pakai anim.stop())
-		# anim.play("Walk_Down") 
 		anim.stop()
 	else:
-		# Utamakan animasi horizontal jika bergerak diagonal, atau sesuaikan seleramu
 		if abs(input_dir.x) > abs(input_dir.z):
 			if input_dir.x > 0:
-				anim.play("Idle_Right") #aslinya mah kiri jir
-				node_tangan.position.x = 3.0
-				node_tangan.position.y = -3.0
-				node_tangan.position.z = 1.5
+				anim.play("Idle_Left")
+				node_tangan.position = Vector3(3.0, -3.0, 1.5)
 				node_tangan.rotation_degrees.y = 0
 			else:
-				anim.play("Idle_Left") #aslinya mah kanan jir
-				node_tangan.position.x = -3.0
-				node_tangan.position.y = -3.0
-				node_tangan.position.z = -1.5
+				anim.play("Idle_Right")
+				node_tangan.position = Vector3(-3.0, -3.0, -1.5)
 				node_tangan.rotation_degrees.y = -180.0
 		else:
 			if input_dir.z > 0:
 				anim.play("Idle_Up")
-				node_tangan.position.x = -1.5
-				node_tangan.position.y = -3.0
-				node_tangan.position.z = 2.5 
+				node_tangan.position = Vector3(-1.5, -3.0, 2.5)
 				node_tangan.rotation_degrees.y = -90.0
 			else:
 				anim.play("Walk_Down")
-				node_tangan.position.x = 1.5
-				node_tangan.position.y = -3.0
-				node_tangan.position.z = -2.5
+				node_tangan.position = Vector3(1.5, -3.0, -2.5)
 				node_tangan.rotation_degrees.y = 90.0
 
-	# Catatan: Baris flip_h di bawah ini dihapus karena kamu sudah punya 
-	# animasi "Walk_Left" dan "Walk_Right" terpisah di AnimatedSprite3D.
-	
 func _process(delta: float) -> void:
-		if Input.is_action_just_pressed("Item1"):
-			switch_hud_slot(1)
-		if Input.is_action_just_pressed("Item2"):
-			switch_hud_slot(2)
-			
-		if Input.is_action_just_pressed("attack"):
-			if has_node("Tangan"):
-				var manager_senjata = get_node("Tangan")
-				if manager_senjata.senjata_sekarang != "":
-					manager_senjata.eksekusi_menyerang()
-					
-					
+	if Input.is_action_just_pressed("Item1"):
+		switch_hud_slot(1)
+	if Input.is_action_just_pressed("Item2"):
+		switch_hud_slot(2)
+		
+	if Input.is_action_just_pressed("attack"):
+		if has_node("Tangan"):
+			var manager_senjata = get_node("Tangan")
+			if manager_senjata.senjata_sekarang != "":
+				manager_senjata.eksekusi_menyerang()
+
+# Fungsi internal untuk mencari ulang UI jika sewaktu-waktu null
+func _update_ui_references():
+	if slot_1_ui == null:
+		slot_1_ui = get_node_or_null("/root/Main/GUI/ItemContainer/ItemSlot")
+	if slot_2_ui == null:
+		slot_2_ui = get_node_or_null("/root/Main/GUI/ItemContainer/ItemSlot2")
+
 func switch_hud_slot(slot_number: int) -> void:
+	_update_ui_references()
+	
+	# JIKA DI LOBBY (UI tidak ada), keluar diam-diam tanpa nge-print error panjang lebar
 	if slot_1_ui == null or slot_2_ui == null:
-		print("Waduh, node Slot UI belum ketemu. Cek lagi susunan namanya di Main scene!")
 		return
 		
 	if slot_number == 1:

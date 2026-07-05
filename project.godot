@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="latest ver"
-run/main_scene="uid://clqycmj0a3b6o"
+run/main_scene="uid://715dbjmtuq7o"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Level="*uid://c36faf6nwwyq1"
+SceneChanger="*uid://ben4pnu5ggbi4"
 
 [display]
 

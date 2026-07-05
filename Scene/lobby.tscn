@@ -1,0 +1,335 @@
+[gd_scene format=3 uid="uid://dak0y6sd35r36"]
+
+[ext_resource type="PackedScene" uid="uid://cbemykgf1go3e" path="res://Scene/main_map.tscn" id="1_d31jc"]
+[ext_resource type="Script" uid="uid://dvpbckim3c4rs" path="res://Scene/lobby.gd" id="1_yy83c"]
+[ext_resource type="Script" uid="uid://kvtk27say537" path="res://Map-Asset/Scene/Player/walk.gd" id="2_keb55"]
+[ext_resource type="Texture2D" uid="uid://bwuv6u440h76m" path="res://Character-Asset/Player Vampire/palyer_fron_walk-Sheet.png" id="3_yy83c"]
+[ext_resource type="Texture2D" uid="uid://cvru37rfkvj2s" path="res://Character-Asset/Player Vampire/player_left.png" id="4_q8xwb"]
+[ext_resource type="Texture2D" uid="uid://ckx8udipwb2up" path="res://Character-Asset/Player Vampire/player_right.png" id="5_sbj8c"]
+[ext_resource type="Texture2D" uid="uid://d2fnnuxk5wdgm" path="res://Character-Asset/Player Vampire/Player_back.png" id="6_v0o1u"]
+[ext_resource type="Script" uid="uid://c733gulhvmtpw" path="res://weapon_manager.gd" id="7_pogwf"]
+[ext_resource type="Texture2D" uid="uid://b3st7dml2383b" path="res://GUI/Asset/Point.png" id="9_q8xwb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rggs0"]
+atlas = ExtResource("3_yy83c")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o0q4r"]
+atlas = ExtResource("4_q8xwb")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nrx0b"]
+atlas = ExtResource("5_sbj8c")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8f8sx"]
+atlas = ExtResource("6_v0o1u")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_57qvm"]
+atlas = ExtResource("3_yy83c")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a0w3r"]
+atlas = ExtResource("3_yy83c")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1sf0f"]
+atlas = ExtResource("3_yy83c")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ol70"]
+atlas = ExtResource("3_yy83c")
+region = Rect2(96, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_13myp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rggs0")
+}],
+"loop": 1,
+"name": &"Idle_Down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o0q4r")
+}],
+"loop": 1,
+"name": &"Idle_Left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nrx0b")
+}],
+"loop": 1,
+"name": &"Idle_Right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8f8sx")
+}],
+"loop": 1,
+"name": &"Idle_Up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_57qvm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a0w3r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1sf0f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ol70")
+}],
+"loop": 1,
+"name": &"Walk_Down",
+"speed": 4.0
+}]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_owrxk"]
+radius = 0.19859257
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_owrxk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sbj8c"]
+atlas = ExtResource("9_q8xwb")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v0o1u"]
+atlas = ExtResource("9_q8xwb")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pogwf"]
+atlas = ExtResource("9_q8xwb")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_owrxk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sbj8c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v0o1u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pogwf")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_atto6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Char3/CameraPivot/Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -13)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ConfigUI:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1000, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_yy83c"]
+resource_name = "close"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Char3/CameraPivot/Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(3, 0, -13), Vector3(0, 0, -13)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ConfigUI:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-1000, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_0d1wl"]
+resource_name = "Vn"
+length = 1.0666667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Char3/CameraPivot/Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -13), Vector3(3, 0, -13)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ConfigUI:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-1000, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8wibw"]
+_data = {
+&"RESET": SubResource("Animation_atto6"),
+&"close_ui": SubResource("Animation_yy83c"),
+&"open_ui": SubResource("Animation_0d1wl")
+}
+
+[node name="Lobby" type="Node3D" unique_id=1238528179]
+script = ExtResource("1_yy83c")
+
+[node name="MainMap" parent="." unique_id=1602624028 instance=ExtResource("1_d31jc")]
+
+[node name="Char3" type="CharacterBody3D" parent="." unique_id=2050083730]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3849945, 0)
+script = ExtResource("2_keb55")
+
+[node name="CameraPivot" type="Node3D" parent="Char3" unique_id=59797104]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, -0.70710677, 0, 0.70710677, 0.70710677, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Char3/CameraPivot" unique_id=1662372830]
+transform = Transform3D(-1, 0, 8.7422784e-08, 0, 1.0000001, 0, -8.7422784e-08, 0, -1.0000001, 0, 0, -13)
+current = true
+fov = 80.0
+near = 0.001
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Char3" unique_id=1933847049]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+billboard = 1
+texture_filter = 2
+sprite_frames = SubResource("SpriteFrames_13myp")
+animation = &"Walk_Down"
+frame_progress = 0.05493644
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Char3" unique_id=292171999]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+shape = SubResource("SphereShape3D_owrxk")
+
+[node name="Tangan" type="Marker3D" parent="Char3" unique_id=1091863885]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -2.5, 1.5)
+script = ExtResource("7_pogwf")
+
+[node name="InteractionArea" type="Area3D" parent="." unique_id=1919792627]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3991723, -7.1722054)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea" unique_id=1204814040]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+shape = SubResource("BoxShape3D_owrxk")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="InteractionArea" unique_id=1225405835]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 3.911933, 0)
+billboard = 1
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_owrxk")
+autoplay = "default"
+frame_progress = 0.39860615
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=880947653]
+layer = 100
+
+[node name="ConfigUI" type="Control" parent="CanvasLayer" unique_id=515551905]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1000.0
+offset_right = -734.0
+offset_bottom = 642.0
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/ConfigUI" unique_id=1784710366]
+layout_mode = 0
+offset_right = 272.0
+offset_bottom = 643.0
+color = Color(0.09411765, 0.09411765, 0.09411765, 0.49019608)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ConfigUI" unique_id=1936672171]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 343.0
+offset_right = 204.0
+offset_bottom = 411.0
+
+[node name="PlayButton" type="Button" parent="CanvasLayer/ConfigUI/VBoxContainer" unique_id=1769461126]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
+text = "Lets GO"
+
+[node name="VSplitContainer" type="VSplitContainer" parent="CanvasLayer/ConfigUI/VBoxContainer" unique_id=1880774992]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+
+[node name="CloseButton" type="Button" parent="CanvasLayer/ConfigUI/VBoxContainer" unique_id=1972481104]
+custom_minimum_size = Vector2(128, 32)
+layout_mode = 2
+text = "Meh.."
+
+[node name="Label" type="Label" parent="CanvasLayer/ConfigUI" unique_id=1135183478]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 108.0
+offset_right = 265.0
+offset_bottom = 196.0
+theme_override_font_sizes/font_size = 32
+text = "La Tittle"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="CanvasLayer/ConfigUI" unique_id=1307004866]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 184.0
+offset_right = 265.0
+offset_bottom = 272.0
+theme_override_font_sizes/font_size = 16
+text = "Auuuu"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UIAnimation" type="AnimationPlayer" parent="CanvasLayer" unique_id=1330137219]
+libraries/ = SubResource("AnimationLibrary_8wibw")
+
+[connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]
+[connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_body_exited"]
+[connection signal="pressed" from="CanvasLayer/ConfigUI/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/ConfigUI/VBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
