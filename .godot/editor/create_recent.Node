@@ -1,0 +1,15 @@
+MeshInstance3D
+GPUParticles3D
+DirectionalLight3D
+WorldEnvironment
+CanvasLayer
+Camera3D
+Control
+AnimatedSprite2D
+AnimatedSprite3D
+CollisionShape3D
+Label
+VSplitContainer
+VBoxContainer
+Button
+ColorRect

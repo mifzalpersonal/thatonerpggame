@@ -1,0 +1,16 @@
+<<<<<<< HEAD
+res://Scene/lobby.tscn
+res://Map-Asset/Tres/grass.meshlib
+res://Map-Asset/Tres/Building.tres
+res://main_menu_model.gdshader
+=======
+res://weapon_drop.gd
+res://Scene/lobby.tscn
+res://Map-Asset/Tres/Building.tres
+res://Map-Asset/Scene/Enemy/enemy.gd
+res://scene_changer.tscn
+res://Map-Asset/Tres/grass.meshlib
+res://scene_changer.gd
+res://weapon_manager.gd
+res://Map-Asset/Scene/Player/walk.gd
+>>>>>>> fdaf554501504169ee375e64ecf2b0153581d420
