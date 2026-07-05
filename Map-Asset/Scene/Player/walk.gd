@@ -61,14 +61,20 @@ func _physics_process(delta):
 				node_tangan.rotation_degrees.y = 90.0
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("Item1"):
-		switch_hud_slot(1)
-	if Input.is_action_just_pressed("Item2"):
-		switch_hud_slot(2)
+	if has_node("Tangan"):
+		var manager_senjata = get_node("Tangan")
 		
-	if Input.is_action_just_pressed("attack"):
-		if has_node("Tangan"):
-			var manager_senjata = get_node("Tangan")
+		if Input.is_action_just_pressed("Item1"):
+			switch_hud_slot(1)
+			if manager_senjata.has_method("ganti_slot"):
+				manager_senjata.ganti_slot(1)
+				
+		if Input.is_action_just_pressed("Item2"):
+			switch_hud_slot(2)
+			if manager_senjata.has_method("ganti_slot"):
+				manager_senjata.ganti_slot(2)
+		
+		if Input.is_action_just_pressed("attack"):
 			if manager_senjata.senjata_sekarang != "":
 				manager_senjata.eksekusi_menyerang()
 

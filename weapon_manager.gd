@@ -1,15 +1,35 @@
 extends Marker3D
 
-var senjata_sekarang = ""
+var slot_senjata = ["", ""]
+var slot_aktif = 0
 var node_senjata_di_tangan : Node = null
 
+var senjata_sekarang : String:
+	get:
+		return slot_senjata[slot_aktif]
+
 func ambil_senjata(nama_barang: String) -> void:
+	slot_senjata[slot_aktif] = nama_barang
+	print("Slot ", slot_aktif + 1, " diisi: ", nama_barang)
+	pasang_visual_senjata(nama_barang)
+
+func ganti_slot(nomor_slot: int) -> void:
+	var indeks_baru = nomor_slot - 1
+	if indeks_baru == slot_aktif:
+		return
+		
+	slot_aktif = indeks_baru
+	print("Swapped ke Slot: ", nomor_slot)
+	pasang_visual_senjata(slot_senjata[slot_aktif])
+
+func pasang_visual_senjata(nama_barang: String) -> void:
 	if node_senjata_di_tangan != null:
 		node_senjata_di_tangan.queue_free()
-	
-	senjata_sekarang = nama_barang
-	print("Player berhasil ngambil ", nama_barang )
-	
+		node_senjata_di_tangan = null
+		
+	if nama_barang == "":
+		return
+		
 	var path_senjata = "res://" + nama_barang + ".tscn"
 	
 	if ResourceLoader.exists(path_senjata):
@@ -21,4 +41,5 @@ func ambil_senjata(nama_barang: String) -> void:
 		print("Eror: File senjata ", path_senjata, " gak ketemu!")
 
 func eksekusi_menyerang() -> void:
-	print("Menyerang pake: ", senjata_sekarang)
+	if slot_senjata[slot_aktif] != "":
+		print("Menyerang pake: ", slot_senjata[slot_aktif])

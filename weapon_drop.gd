@@ -1,6 +1,7 @@
 extends RigidBody3D
 
 @export var nama_senjata : String = "Sabit Biru"
+# jujur gua yang ngoding aja bingung kenapa ini dinamain sabit biru tapi karna work yaudahlah yah biarin aja
 
 func _ready() -> void:
 	$AmbilArea.body_entered.connect(_on_body_entered)
