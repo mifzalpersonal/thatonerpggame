@@ -32,7 +32,6 @@ func change_scene_to(target_scene_path: String):
 		await get_tree().process_frame # Tunggu frame berikutnya
 	
 	# 3. Logika Penahan Waktu (Agar tidak kecepatan)
-	# Menggunakan milidetik (2000 msec = 2 detik). Ganti angka 2000 kalau mau lebih cepat/lama.
 	var minimum_loading_time = 10000 
 	var time_passed = Time.get_ticks_msec() - start_time
 	
@@ -50,8 +49,34 @@ func change_scene_to(target_scene_path: String):
 	# Matikan animasi spritesheet
 	loading_sprite.stop()
 	
-	# 5. Jalankan animasi Fade From Black (Layar kembali terang)
+	# TUNGGU 1 FRAME setelah scene ganti agar node-node di scene baru selesai dirakit oleh Godot
+	await get_tree().process_frame
+	
+# 5. Jalankan animasi Fade From Black (Layar kembali terang)
 	animation_player.play("fade_from_black")
 	await animation_player.animation_finished
 	
+	# 6. CARA PINTAR: Cari karakter dengan memeriksa script-nya, bukan cuma namanya
+	var player = _cari_karakter_player(get_tree().current_scene)
+	
+	if player:
+		player.set_physics_process(true)
+		print("SceneChanger: Berhasil mencairkan kebekuan karakter: ", player.name)
+	else:
+		# Jika tetap tidak ketemu, kita cetak daftar node yang ada di scene baru buat debug
+		print("SceneChanger: Waduh, karakter gak ketemu di scene ini! Periksa nama nodemu.")
+	
 	control_ui.visible = false
+
+# Fungsi pembantu untuk mencari node yang punya fungsi gerakan, apa pun namanya
+func _cari_karakter_player(node: Node) -> Node:
+	# Cek apakah node ini punya fungsi khas milik karaktermu
+	if node.has_method("switch_hud_slot") or node.name == "Char3":
+		return node
+	
+	# Jika bukan, cek anak-anak nodenya secara mendalam (rekursif)
+	for child in node.get_children():
+		var hasil = _cari_karakter_player(child)
+		if hasil:
+			return hasil
+	return null

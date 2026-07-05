@@ -1,14 +1,7 @@
+res://Map-Asset/Scene/Char3.tscn
 res://Map-Asset/Tres/Building.tres
-res://new_map.tscn
-res://Map-Asset/Tres/grass.meshlib
-res://main_map.tscn
-res://Map-Asset/Scene/Main.tscn
-res://main_menu.tscn
-res://main_menu.gd
-res://scene_changer.gd
-res://Scene/main_map.tscn
+res://Map-Asset/Scene/Player/walk.gd
 res://scene_changer.tscn
+res://scene_changer.gd
 res://Scene/lobby.tscn
 res://Scene/lobby.gd
-res://Map-Asset/Scene/Player/walk.gd
-res://Map-Asset/Scene/Char3.tscn

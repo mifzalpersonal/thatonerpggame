@@ -267,7 +267,7 @@ autoplay = "default"
 frame_progress = 0.39860615
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=880947653]
-layer = 100
+layer = 90
 
 [node name="ConfigUI" type="Control" parent="CanvasLayer" unique_id=515551905]
 layout_mode = 3

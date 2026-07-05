@@ -13,6 +13,8 @@ func _ready() -> void:
 	# Coba cari node UI saat awal spawn
 	_update_ui_references()
 	switch_hud_slot(1)
+	
+	set_physics_process(false)
 
 func _physics_process(delta):
 	var input_dir = Vector3.ZERO
