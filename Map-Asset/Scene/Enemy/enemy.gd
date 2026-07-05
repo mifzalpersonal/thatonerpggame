@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var speed = 3.0
+@export var speed = 0.0
 @export var attack_cooldown = 1.0 # Musuh cuma bisa nyerang tiap 1 detik
 @onready var musuh = $AnimatedSprite3D
 

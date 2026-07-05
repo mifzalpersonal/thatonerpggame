@@ -1,7 +1,9 @@
-res://Map-Asset/Scene/Char3.tscn
-res://Map-Asset/Tres/Building.tres
-res://Map-Asset/Scene/Player/walk.gd
-res://scene_changer.tscn
-res://scene_changer.gd
+res://weapon_drop.gd
 res://Scene/lobby.tscn
-res://Scene/lobby.gd
+res://Map-Asset/Tres/Building.tres
+res://Map-Asset/Scene/Enemy/enemy.gd
+res://scene_changer.tscn
+res://Map-Asset/Tres/grass.meshlib
+res://scene_changer.gd
+res://weapon_manager.gd
+res://Map-Asset/Scene/Player/walk.gd
