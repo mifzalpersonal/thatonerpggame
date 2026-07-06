@@ -18,7 +18,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5839884, 2.9700055, -3.0101
 script = ExtResource("2_d6kqq")
 
 [node name="musuhbody" parent="." unique_id=404111702 instance=ExtResource("3_75v3i")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.908783, 1.2013508, -2.7459278)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.34446, 3.1385846, -2.7459278)
 script = ExtResource("4_sbhub")
 
 [node name="WeaponChest" parent="." unique_id=1020326057 instance=ExtResource("6_bn8b8")]

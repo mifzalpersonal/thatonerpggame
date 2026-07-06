@@ -9,9 +9,18 @@ var senjata_sekarang : String:
 		return slot_senjata[slot_aktif]
 
 func ambil_senjata(nama_barang: String) -> void:
-	slot_senjata[slot_aktif] = nama_barang
-	print("Slot ", slot_aktif + 1, " diisi: ", nama_barang)
-	pasang_visual_senjata(nama_barang)
+	if slot_senjata[slot_aktif] == "":
+		slot_senjata[slot_aktif] = nama_barang
+		print("Slot ", slot_aktif + 1, " diisi: ", nama_barang)
+		pasang_visual_senjata(nama_barang)
+		return
+		
+	var slot_cadangan = 1 if slot_aktif == 0 else 0
+	
+	if slot_senjata[slot_cadangan] == "":
+		slot_senjata[slot_cadangan] = nama_barang
+		print("Slot aktif penuh, dimasukkan ke Slot ", slot_cadangan + 1, ": ", nama_barang)
+		return
 
 func ganti_slot(nomor_slot: int) -> void:
 	var indeks_baru = nomor_slot - 1

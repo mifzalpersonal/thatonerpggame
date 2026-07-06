@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var speed := 50.0
+@export var speed := 10.0
 @onready var anim = $AnimatedSprite3D
 @onready var node_tangan = $Tangan
 
