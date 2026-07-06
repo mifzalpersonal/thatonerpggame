@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bqk0gkryxb0nm"]
 
-[ext_resource type="Script" uid="uid://dpaf8r30cyp8s" path="res://Map-Asset/Scene/Enemy/enemy.gd" id="1_h3uvd"]
+[ext_resource type="Script" uid="uid://dlugomsiag3ge" path="res://zombie.gd" id="1_h3uvd"]
 [ext_resource type="Texture2D" uid="uid://ch1n6isgcdat4" path="res://Map-Asset/Scene/Enemy/Enemy_type_flying.png" id="1_l5u6o"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4kxuq"]

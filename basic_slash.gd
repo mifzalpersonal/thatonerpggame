@@ -16,6 +16,7 @@ var scale_tengah: Vector3 = Vector3(20, 20, 20) # Gede pas di tengah perjalanan
 var scale_akhir: Vector3 = Vector3(15, 15, 15)  # Medium sebelum menghilang
 
 func _ready() -> void:
+	body_entered.connect(_on_body_entered)
 	# Set skala awal pas pertama kali spawn
 	scale = scale_awal
 	
@@ -47,6 +48,9 @@ func _physics_process(delta: float) -> void:
 		scale = scale_tengah.lerp(scale_akhir, t)
 
 func _on_body_entered(body: Node) -> void:
+	if body is CharacterBody3D and body.name == "Char3": # Sesuaikan sama nama node player lu
+		return
+	
 	if body.has_method("take_damage"):
 		body.take_damage(damage)
-	queue_free()
+		queue_free()

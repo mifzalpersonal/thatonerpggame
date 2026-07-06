@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://bsxr1jkeqrqgb" path="res://Map-Asset/Scene/Char3.tscn" id="2_75v3i"]
 [ext_resource type="Script" uid="uid://qvnte0g0jk5h" path="res://Map-Asset/Scene/Player/darah.gd" id="2_d6kqq"]
 [ext_resource type="PackedScene" uid="uid://bqk0gkryxb0nm" path="res://Map-Asset/Scene/Enemy/enemy1.tscn" id="3_75v3i"]
-[ext_resource type="Script" uid="uid://dpaf8r30cyp8s" path="res://Map-Asset/Scene/Enemy/enemy.gd" id="4_sbhub"]
 [ext_resource type="PackedScene" uid="uid://6cxtuv7cy8bn" path="res://WeaponChest.tscn" id="6_bn8b8"]
 [ext_resource type="PackedScene" uid="uid://bix4huq8vk512" path="res://Scene/HealthPoint.tscn" id="7_xhust"]
 [ext_resource type="PackedScene" uid="uid://cbemykgf1go3e" path="res://Scene/main_map.tscn" id="8_f7oih"]
@@ -19,7 +18,6 @@ script = ExtResource("2_d6kqq")
 
 [node name="musuhbody" parent="." unique_id=404111702 instance=ExtResource("3_75v3i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.34446, 3.1385846, -2.7459278)
-script = ExtResource("4_sbhub")
 
 [node name="WeaponChest" parent="." unique_id=1020326057 instance=ExtResource("6_bn8b8")]
 transform = Transform3D(-0.99999994, 0, 8.742277e-08, 0, 1, 0, -8.742277e-08, 0, -0.99999994, -12.53976, 0.9479082, -17.611584)
