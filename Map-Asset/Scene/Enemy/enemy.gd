@@ -10,6 +10,12 @@ var can_attack: bool = true
 var posisi_patroli: Vector3 = Vector3.ZERO
 var waktu_ganti_arah: float = 0.0
 
+# --- TAMBAHAN VARIABEL UNTUK EFEK SLOW ---
+var is_slowed: bool = false
+var slow_timer: float = 0.0
+var slow_multiplier: float = 1.0 # 1.0 berarti kecepatan normal (100%)
+# ----------------------------------------
+
 # --- FUNGSI DINAMIS UTK DI-OVERRIDE ANAK ---
 func ambil_radius() -> float:
 	return 12.0
@@ -22,20 +28,30 @@ func ambil_speed() -> float:
 # -------------------------------------------
 
 func _ready() -> void:
-	# HP sekarang otomatis ngikutin aturan max_hp dari script anak
 	current_hp = ambil_max_hp()
 	posisi_patroli = global_position
 	player_node = get_node_or_null("/root/Main/CharacterBody3D")
 
 func _physics_process(delta: float) -> void:
+	# --- UPDATE TIMER SLOW (Paling Atas agar Aman dari Interupsi) ---
+	if is_slowed:
+		slow_timer -= delta
+		if slow_timer <= 0:
+			is_slowed = false
+			slow_multiplier = 1.0
+			reset_enemy_color() # Kembalikan warna musuh ke normal
+			print(name, " sudah normal kembali!") # Cek ini di Output
+	# -----------------------------------------------------------------
+
+	# Pengecekan player ditaruh di bawah timer slow
 	if player_node == null:
 		return
 		
 	var jarak_ke_player = global_position.distance_to(player_node.global_position)
-	
-	# Ambil data real-time dari script anak
 	var batas_radius = ambil_radius()
-	var kecepatan_musuh = ambil_speed()
+	
+	# MODIFIKASI: Kecepatan asli dikalikan dengan multiplier slow
+	var kecepatan_musuh = ambil_speed() * slow_multiplier
 	
 	# 1. LOGIKA PERGERAKAN (CHASE VS PATROL)
 	if jarak_ke_player <= batas_radius:
@@ -87,3 +103,22 @@ func take_damage(amount: int) -> void:
 func mati() -> void:
 	print(name, " mati!")
 	queue_free()
+
+# --- FUNGSI BARU UNTUK MENERIMA EFEK FREEZE/SLOW ---
+func apply_freeze_slow(percentage: float, duration: float) -> void:
+	is_slowed = true
+	slow_timer = duration
+	slow_multiplier = 1.0 - percentage
+	
+	# Panggil fungsi ubah warna ke es (Cyan/Biru Muda cerah)
+	change_enemy_color(Color(0.0, 0.75, 1.0))
+
+func change_enemy_color(new_color: Color) -> void:
+	var sprite = get_node_or_null("AnimatedSprite3D")
+	if sprite and sprite is AnimatedSprite3D:
+		sprite.modulate = new_color
+
+func reset_enemy_color() -> void:
+	var sprite = get_node_or_null("AnimatedSprite3D")
+	if sprite and sprite is AnimatedSprite3D:
+		sprite.modulate = Color(1, 1, 1) # Kembalikan ke warna asli (putih normal)

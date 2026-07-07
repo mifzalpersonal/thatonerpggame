@@ -32,7 +32,7 @@ func change_scene_to(target_scene_path: String):
 		await get_tree().process_frame # Tunggu frame berikutnya
 	
 	# 3. Logika Penahan Waktu (Agar tidak kecepatan)
-	var minimum_loading_time = 1000 
+	var minimum_loading_time = 5000 
 	# awalnya 10.000
 	var time_passed = Time.get_ticks_msec() - start_time
 	
