@@ -1,11 +1,3 @@
-res://arrow.gd
-res://explosion.gd
-res://Scene/arrow.tscn
-res://bow.gd
-res://Scene/bow.tscn
-res://hugs.tscn
-res://hugs.gd
-res://Scene/explosion.tscn
 res://Map-Asset/Scene/Enemy/enemy1.tscn
 res://Map-Asset/Scene/Enemy/enemy.gd
-res://Scene/Test.tscn
+res://zombie.gd

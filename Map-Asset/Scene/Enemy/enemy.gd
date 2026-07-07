@@ -10,11 +10,15 @@ var can_attack: bool = true
 var posisi_patroli: Vector3 = Vector3.ZERO
 var waktu_ganti_arah: float = 0.0
 
-# --- TAMBAHAN VARIABEL UNTUK EFEK SLOW ---
+# --- AMBIL REFERENSI NODE UI ---
+@onready var hp_bar: ProgressBar = $EnemyUI/HPBar
+# -------------------------------
+
+# --- VARIABEL UNTUK STATUS SLOW ---
 var is_slowed: bool = false
 var slow_timer: float = 0.0
-var slow_multiplier: float = 1.0 # 1.0 berarti kecepatan normal (100%)
-# ----------------------------------------
+var slow_multiplier: float = 1.0 
+# ----------------------------------
 
 # --- FUNGSI DINAMIS UTK DI-OVERRIDE ANAK ---
 func ambil_radius() -> float:
@@ -31,26 +35,27 @@ func _ready() -> void:
 	current_hp = ambil_max_hp()
 	posisi_patroli = global_position
 	player_node = get_node_or_null("/root/Main/CharacterBody3D")
+	
+	# --- INISIALISASI TAMPILAN HP BAR ---
+	if hp_bar:
+		hp_bar.max_value = ambil_max_hp()
+		hp_bar.value = current_hp
+	# ------------------------------------
 
 func _physics_process(delta: float) -> void:
-	# --- UPDATE TIMER SLOW (Paling Atas agar Aman dari Interupsi) ---
 	if is_slowed:
 		slow_timer -= delta
 		if slow_timer <= 0:
 			is_slowed = false
 			slow_multiplier = 1.0
-			reset_enemy_color() # Kembalikan warna musuh ke normal
-			print(name, " sudah normal kembali!") # Cek ini di Output
-	# -----------------------------------------------------------------
+			reset_enemy_color()
+			print(name, " sudah normal kembali!")
 
-	# Pengecekan player ditaruh di bawah timer slow
 	if player_node == null:
 		return
 		
 	var jarak_ke_player = global_position.distance_to(player_node.global_position)
 	var batas_radius = ambil_radius()
-	
-	# MODIFIKASI: Kecepatan asli dikalikan dengan multiplier slow
 	var kecepatan_musuh = ambil_speed() * slow_multiplier
 	
 	# 1. LOGIKA PERGERAKAN (CHASE VS PATROL)
@@ -97,6 +102,12 @@ func start_attack_cooldown() -> void:
 func take_damage(amount: int) -> void:
 	current_hp -= amount
 	print(name, " kena hit! Sisa HP: ", current_hp)
+	
+	# --- UPDATE VALUE BAR HP SAAT KENA HIT ---
+	if hp_bar:
+		hp_bar.value = current_hp
+	# ----------------------------------------
+		
 	if current_hp <= 0:
 		mati()
 
@@ -104,13 +115,11 @@ func mati() -> void:
 	print(name, " mati!")
 	queue_free()
 
-# --- FUNGSI BARU UNTUK MENERIMA EFEK FREEZE/SLOW ---
+# --- FUNGSI EFEK FREEZE/SLOW & WARNA ---
 func apply_freeze_slow(percentage: float, duration: float) -> void:
 	is_slowed = true
 	slow_timer = duration
 	slow_multiplier = 1.0 - percentage
-	
-	# Panggil fungsi ubah warna ke es (Cyan/Biru Muda cerah)
 	change_enemy_color(Color(0.0, 0.75, 1.0))
 
 func change_enemy_color(new_color: Color) -> void:
@@ -121,4 +130,4 @@ func change_enemy_color(new_color: Color) -> void:
 func reset_enemy_color() -> void:
 	var sprite = get_node_or_null("AnimatedSprite3D")
 	if sprite and sprite is AnimatedSprite3D:
-		sprite.modulate = Color(1, 1, 1) # Kembalikan ke warna asli (putih normal)
+		sprite.modulate = Color(1, 1, 1)
