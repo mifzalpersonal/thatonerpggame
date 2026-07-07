@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bl6y1lxq8wkei"]
+
+[ext_resource type="Script" uid="uid://earhn0psw1tm" path="res://wave_manager.gd" id="1_5nqn4"]
+
+[node name="WaveManager" type="Node3D" unique_id=1565121233]
+script = ExtResource("1_5nqn4")
+
+[node name="SpawnPoint" type="Node3D" parent="." unique_id=1696325500]
+
+[node name="SpawnPoint2" type="Node3D" parent="." unique_id=1661605634]

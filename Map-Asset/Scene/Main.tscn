@@ -1,23 +1,47 @@
 [gd_scene format=3 uid="uid://clqycmj0a3b6o"]
 
+[ext_resource type="Script" uid="uid://b3bcum3bj52eg" path="res://Map-Asset/Scene/main.gd" id="1_qi4r4"]
 [ext_resource type="PackedScene" uid="uid://bsxr1jkeqrqgb" path="res://Map-Asset/Scene/Char3.tscn" id="2_75v3i"]
 [ext_resource type="Script" uid="uid://qvnte0g0jk5h" path="res://Map-Asset/Scene/Player/darah.gd" id="2_d6kqq"]
 [ext_resource type="PackedScene" uid="uid://bqk0gkryxb0nm" path="res://Map-Asset/Scene/Enemy/enemy1.tscn" id="3_75v3i"]
+[ext_resource type="PackedScene" uid="uid://f6wccaab1adv" path="res://deadscene.tscn" id="3_qi4r4"]
 [ext_resource type="PackedScene" uid="uid://6cxtuv7cy8bn" path="res://WeaponChest.tscn" id="6_bn8b8"]
 [ext_resource type="PackedScene" uid="uid://bix4huq8vk512" path="res://Scene/HealthPoint.tscn" id="7_xhust"]
-[ext_resource type="PackedScene" uid="uid://cbemykgf1go3e" path="res://Scene/main_map.tscn" id="8_f7oih"]
 [ext_resource type="PackedScene" uid="uid://0jag52u11qae" path="res://Scene/item_slot.tscn" id="8_qi4r4"]
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_f7oih"]
+viewport_path = NodePath("EnemyUI")
+
+[sub_resource type="Environment" id="Environment_qi4r4"]
+background_mode = 1
+background_color = Color(0.8117647, 0.41568628, 0.3019608, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.16470589, 0.16862746, 0.27058825, 1)
+ambient_light_energy = 0.4
+tonemap_mode = 2
+glow_enabled = true
+glow_intensity = 1.0
+glow_bloom = 0.6
+glow_hdr_luminance_cap = 20.0
+fog_enabled = true
+fog_light_color = Color(0.9098039, 0.5921569, 0.3647059, 1)
+fog_density = 0.015
+
 [node name="Main" type="Node3D" unique_id=1815589481]
+script = ExtResource("1_qi4r4")
 
 [node name="CharacterBody3D" parent="." unique_id=2050083730 instance=ExtResource("2_75v3i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5839884, 2.9700055, -3.0101395)
 
 [node name="darahEntity" type="Node" parent="CharacterBody3D" unique_id=1241688466]
 script = ExtResource("2_d6kqq")
+dead_scene = ExtResource("3_qi4r4")
 
 [node name="musuhbody" parent="." unique_id=404111702 instance=ExtResource("3_75v3i")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.34446, 3.1385846, -2.7459278)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.34446, 42.819855, -2.7459278)
+
+[node name="UIVisual" parent="musuhbody" index="3" unique_id=1327681699]
+texture = SubResource("ViewportTexture_f7oih")
 
 [node name="WeaponChest" parent="." unique_id=1020326057 instance=ExtResource("6_bn8b8")]
 transform = Transform3D(-0.99999994, 0, 8.742277e-08, 0, 1, 0, -8.742277e-08, 0, -0.99999994, -12.53976, 0.9479082, -17.611584)
@@ -34,6 +58,7 @@ transform = Transform3D(0.9999999, 0, -1.7484552e-07, 0, 1, 0, 1.7484552e-07, 0,
 [node name="GUI" type="CanvasLayer" parent="." unique_id=2122856101]
 
 [node name="GameUI" parent="GUI" unique_id=651630163 instance=ExtResource("7_xhust")]
+mouse_filter = 2
 
 [node name="ItemContainer" type="HBoxContainer" parent="GUI" unique_id=1146870071]
 anchors_preset = 2
@@ -44,13 +69,25 @@ offset_top = -92.0
 offset_right = 168.0
 offset_bottom = -28.0
 grow_vertical = 0
+mouse_filter = 2
 
 [node name="ItemSlot" parent="GUI/ItemContainer" unique_id=10156569 instance=ExtResource("8_qi4r4")]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="ItemSlot2" parent="GUI/ItemContainer" unique_id=210039798 instance=ExtResource("8_qi4r4")]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="MainMap" parent="." unique_id=1602624028 instance=ExtResource("8_f7oih")]
+[node name="LevelContainer" type="Node3D" parent="." unique_id=715125515]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=324360085]
+environment = SubResource("Environment_qi4r4")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=447737387]
+transform = Transform3D(1, 0, 0, 0, 0.0441581, 0.99902457, 0, -0.99902457, 0.0441581, 0, 0, 0)
+light_color = Color(1, 0.6666667, 0.26666668, 1)
+light_energy = 3.0
+shadow_enabled = true
 
 [editable path="musuhbody"]

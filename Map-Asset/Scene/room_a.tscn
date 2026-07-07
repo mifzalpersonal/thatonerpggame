@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://37j1jwrq2ndx"]
+
+[ext_resource type="MeshLibrary" uid="uid://bgnsk2ki4l2wn" path="res://Map-Asset/Tres/grass.meshlib" id="1_t4bwh"]
+
+[node name="RoomA" type="Node3D" unique_id=1901342513]
+
+[node name="EnemySpawnNatural" type="Marker3D" parent="." unique_id=1007758133]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3719165, 0)
+
+[node name="EnemySpawnNatural2" type="Marker3D" parent="." unique_id=537256641]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3719165, 6.817744)
+
+[node name="GridMap" type="GridMap" parent="." unique_id=1528503406]
+mesh_library = ExtResource("1_t4bwh")
+data = {
+"cells": PackedInt32Array(65534, 0, 1, 65535, 0, 1, 0, 0, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 3, 65535, 1, 65534, 1, 1, 65534, 2, 1, 65534, 3, 1, 65535, 1, 1, 65535, 2, 1, 65535, 3, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 3, 1, 1, 3, 2, 1, 2, 2, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 2, 3, 1, 3, 3, 1, 1, 3, 1, 2, 65535, 1, 1, 65535, 1, 0, 65535, 1, 65534, 65535, 1, 65535, 65535, 1, 4, 2, 1, 5, 1, 1, 5, 2, 1, 6, 2, 1, 4, 1, 1, 6, 1, 1, 7, 2, 1, 8, 2, 1, 9, 2, 1, 7, 1, 1, 8, 1, 1, 9, 1, 1)
+}
+metadata/_editor_floor_ = Vector3(0, 1, 0)

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cvht6bxa5jo4m"]
+
+[ext_resource type="MeshLibrary" uid="uid://bgnsk2ki4l2wn" path="res://Map-Asset/Tres/grass.meshlib" id="1_l2rim"]
+
+[node name="StartRoom" type="Node3D" unique_id=1873758610]
+
+[node name="GridMap" type="GridMap" parent="." unique_id=1467804437]
+mesh_library = ExtResource("1_l2rim")
+data = {
+"cells": PackedInt32Array(65535, 0, 1, 0, 0, 1, 65535, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 65535, 2, 1, 0, 2, 1, 1, 2, 1)
+}
+
+[node name="SpawnPoint" type="Marker3D" parent="." unique_id=1269814950]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8348522, 2.2358234, 3.2145452)

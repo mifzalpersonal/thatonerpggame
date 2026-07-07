@@ -219,6 +219,7 @@ _data = {
 }
 
 [node name="Lobby" type="Node3D" unique_id=1238528179]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.3364506, 0)
 script = ExtResource("1_yy83c")
 
 [node name="MainMap" parent="." unique_id=1602624028 instance=ExtResource("1_d31jc")]
@@ -282,14 +283,15 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 0
 offset_right = 272.0
 offset_bottom = 643.0
+scale = Vector2(1.7599976, 1)
 color = Color(0.09411765, 0.09411765, 0.09411765, 0.49019608)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ConfigUI" unique_id=1936672171]
 layout_mode = 0
-offset_left = 76.0
+offset_left = 166.0
 offset_top = 343.0
-offset_right = 204.0
-offset_bottom = 411.0
+offset_right = 294.0
+offset_bottom = 447.0
 
 [node name="PlayButton" type="Button" parent="CanvasLayer/ConfigUI/VBoxContainer" unique_id=1769461126]
 custom_minimum_size = Vector2(128, 32)
@@ -307,9 +309,9 @@ text = "Meh.."
 
 [node name="Label" type="Label" parent="CanvasLayer/ConfigUI" unique_id=1135183478]
 layout_mode = 0
-offset_left = 17.0
+offset_left = 107.0
 offset_top = 108.0
-offset_right = 265.0
+offset_right = 355.0
 offset_bottom = 196.0
 theme_override_font_sizes/font_size = 32
 text = "BrinForest"
@@ -318,9 +320,9 @@ vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="CanvasLayer/ConfigUI" unique_id=1307004866]
 layout_mode = 0
-offset_left = 17.0
+offset_left = 107.0
 offset_top = 184.0
-offset_right = 265.0
+offset_right = 355.0
 offset_bottom = 272.0
 theme_override_fonts/font = ExtResource("10_sbj8c")
 theme_override_font_sizes/font_size = 16

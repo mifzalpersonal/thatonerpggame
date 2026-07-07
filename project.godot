@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Level="*uid://c36faf6nwwyq1"
 SceneChanger="*uid://ben4pnu5ggbi4"
+GameManager="*uid://ctp7jv1htq3d8"
 
 [display]
 
@@ -28,6 +29,10 @@ window/stretch/aspect="expand"
 [filesystem]
 
 import/blender/enabled=false
+
+[global_group]
+
+Player=""
 
 [gui]
 

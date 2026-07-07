@@ -1,58 +1,47 @@
 extends Node3D
 
-var base_max_hp: int = 3    # HP awal tanpa gear (misal 3 nyawa)
-var bonus_max_hp: int = 0     # Tambahan kapasitas dari gear
-var current_hp: int = 3
+@onready var level_container = $LevelContainer
+@onready var player = $Char3
 
-@onready var game_ui = $GUI/GameUI
-
-# Helper untuk menghitung total kapasitas HP saat ini
-func get_total_max_hp() -> int:
-	return base_max_hp + bonus_max_hp
-
-func _ready() -> void:
-	# Awal game, setup UI dengan total HP awal
-	game_ui.setup_hearts(get_total_max_hp(), current_hp)
-
-# Fungsi terkena damage
-func take_damage(amount: int) -> void:
-	current_hp -= amount
-	current_hp = clamp(current_hp, 0, get_total_max_hp())
+func _ready():
+	# Serah terima jabatan: Daftarkan scene Main ini ke GameManager
+	GameManager.main_scene = self
 	
-	game_ui.update_hearts(current_hp)
+	# Dengarkan sinyal jika generator selesai menyusun ruangan
+	GameManager.map_generation_complete.connect(_on_map_ready)
+	
+	# Mulai load level pertama
+	GameManager.load_initial_level()
 
-# ==========================================
-# REKAYASA FITUR GEAR UP (TAMBAH KAPASITAS)
-# ==========================================
-func equip_gear() -> void:
-	print("Gear dipakai! Kapasitas HP bertambah.")
-	bonus_max_hp = 2 # Misal dapat tambahan 2 slot nyawa dari armor/gear
+# Fungsi pembongkar-pasang map di dalam wadah
+func change_map(new_map_scene: PackedScene):
+	# 1. Bersihkan map lama agar memori RAM bersih dan tidak tumpuk
+	for child in level_container.get_children():
+		child.queue_free()
 	
-	# Karena kapasitas bertambah, kita isi juga nyawa tambahannya (opsional)
-	current_hp += 2 
+	# 2. Wujudkan blueprint map menjadi objek nyata di memori
+	var map_instance = new_map_scene.instantiate()
 	
-	# Panggil SETUP lagi karena struktur jumlah TextureRect di HBox-nya berubah
-	game_ui.setup_hearts(get_total_max_hp(), current_hp)
+	# 3. Masukkan objek map nyata tersebut ke dalam wadah (LevelContainer)
+	level_container.add_child(map_instance)
 
-func unequip_gear() -> void:
-	print("Gear dilepas! Kapasitas HP berkurang.")
-	bonus_max_hp = 0
-	
-	# Jika setelah dilepas HP sekarang melebihi batas maksimal yang baru
-	if current_hp > get_total_max_hp():
-		current_hp = get_total_max_hp()
+# Berjalan otomatis setelah map selesai di-generate dan posisi fisik siap
+func _on_map_ready():
+	if player:
+		# 1. Matikan proses physics player sementara (Biar dia gak ngelawan pas dipindah)
+		player.set_physics_process(false)
 		
-	game_ui.setup_hearts(get_total_max_hp(), current_hp)
-
-# ==========================================
-# TOMBOL TESTING (Gunakan Keyboard)
-# ==========================================
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept"): # Tombol SPASI
-		take_damage(1) # Kurang 1 nyawa
+		# 2. Reset total kecepatannya
+		if "velocity" in player:
+			player.velocity = Vector3.ZERO
 		
-	if event.is_action_pressed("ui_right"): # Tombol Panah Kanan
-		equip_gear() # Simulasi pakai gear
+		# 3. Pindahkan secara paksa ke koordinat SpawnPoint baru
+		player.global_position = GameManager.player_spawn_position
 		
-	if event.is_action_pressed("ui_left"): # Tombol Panah Kiri
-		unequip_gear() # Simulasi lepas gear
+		# 4. Paksa transformasi fisiknya diperbarui detik ini juga
+		player.global_transform.origin = GameManager.player_spawn_position
+		
+		# 5. Hidupkan kembali physics player setelah posisinya aman
+		player.set_physics_process(true)
+		
+	print("SISTEM: Player sukses dikunci di posisi Spawn baru: ", player.global_position)
