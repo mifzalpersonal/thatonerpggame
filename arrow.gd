@@ -1,34 +1,55 @@
 extends Area3D
 
 @export var speed: float = 30.0
+@export var lifetime: float = 2.5 
+var dmg : float = 15.0
 var direction: Vector3 = Vector3.RIGHT 
 
-# Drag & drop scene Explosion3D.tscn kamu ke variabel ini di Inspector
 @export var explosion_scene: PackedScene
+var time_elapsed: float = 0.0
+
+func _ready() -> void:
+	body_entered.connect(_on_body_entered)
 
 func _physics_process(delta: float) -> void:
-	# Terbang lurus ke depan sesuai arah bow
-	global_position += direction * speed * delta
+	global_translate(direction * speed * delta)
+	
+	time_elapsed += delta
+	if time_elapsed >= lifetime:
+		queue_free()
 
 func _on_body_entered(body: Node) -> void:
-	# Debug print untuk ngecek di Output apakah panah menyentuh collider musuh
-	print("Panah menabrak: ", body.name)
+	if body is CharacterBody3D and (body.name == "Char3" or body.name == "CharacterBody3D" or body.is_in_group("Player")):
+		return
+		
+	print("Panah MENABRAK AKURAT: ", body.name)
 	
-	# Cek jika menabrak musuh (baik lewat class BaseEnemy atau Group) atau tembok
-	if body is BaseEnemy or body.is_in_group("enemy") or body.is_in_group("walls"):
-		explode()
+	# Kasih damage & slow ke badan yang ditabrak[cite: 1, 5]
+	if body.has_method("take_damage"):
+		body.take_damage(dmg) #[cite: 1, 5]
+	if body.has_method("apply_freeze_slow"):
+		body.apply_freeze_slow(0.6, 4.0) #[cite: 1, 5]
+		
+	# FIX OPERAN: Oper si 'body' (si zombie) ke fungsi bawah, bukan Vector3!
+	explode_di_target(body)
 
-func explode():
+func explode_di_target(target_body: Node):
 	if not explosion_scene:
-		print("ERROR: Ambil file Explosion3D.tscn lalu drag ke Inspector Arrow!")
+		queue_free()
 		return
 		
 	var explosion = explosion_scene.instantiate()
-	explosion.global_position = self.global_position
-	# Paksa sumbu Z ledakan di posisi yang sama agar pas kena musuh
-	explosion.global_position.z = self.global_position.z
 	
-	get_tree().root.add_child(explosion)
+	# Masukin langsung jadi anak dari si zombie (target_body) biar koordinatnya otomatis lokal!
+	target_body.add_child(explosion)
 	
-	# Hapus panah setelah meledak
+	# Karena udah jadi anak zombie, set posisinya ke ZERO biar pas di tengah badan si zombie
+	explosion.position = Vector3.ZERO
+	
+	# Dorong sumbu Z dikit ke depan (menghadap kamera) biar gak tenggelam di dalam sprite zombienya
+	explosion.position.z = 0.5 
+	
+	# Paksa skala visualnya tetep normal 1,1,1
+	explosion.scale = Vector3(1.0, 1.0, 1.0)
+	
 	queue_free()

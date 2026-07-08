@@ -37,12 +37,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5839884, 2.9700055, -3.0101
 script = ExtResource("2_d6kqq")
 dead_scene = ExtResource("3_qi4r4")
 
-[node name="musuhbody" parent="." unique_id=404111702 instance=ExtResource("3_75v3i")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.34446, 42.819855, -2.7459278)
-
-[node name="UIVisual" parent="musuhbody" index="3" unique_id=1327681699]
-texture = SubResource("ViewportTexture_f7oih")
-
 [node name="WeaponChest" parent="." unique_id=1020326057 instance=ExtResource("6_bn8b8")]
 transform = Transform3D(-0.99999994, 0, 8.742277e-08, 0, 1, 0, -8.742277e-08, 0, -0.99999994, -12.53976, 0.9479082, -17.611584)
 
@@ -90,4 +84,8 @@ light_color = Color(1, 0.6666667, 0.26666668, 1)
 light_energy = 3.0
 shadow_enabled = true
 
-[editable path="musuhbody"]
+[node name="musuhbody" parent="." unique_id=404111702 instance=ExtResource("3_75v3i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 54.819267, 1.6493692, 11.868729)
+
+[node name="musuhbody2" parent="." unique_id=443768762 instance=ExtResource("3_75v3i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.88998, 1.6493711, 16.447632)
