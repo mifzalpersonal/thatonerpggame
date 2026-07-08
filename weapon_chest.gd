@@ -8,6 +8,7 @@ const daftar_senjata = [
 	"katana",
 	"sword_slim",
 	"sword_slim_nature",
+	"bow"
 ]
 
 var udah_kebuka : bool = false

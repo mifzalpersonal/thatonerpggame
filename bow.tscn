@@ -1,10 +1,10 @@
-[gd_scene format=3 uid="uid://bkkdn40kllntx"]
+[gd_scene format=3 uid="uid://b258g64yprqc3"]
 
-[ext_resource type="Script" uid="uid://bwjvwopxoqjc2" path="res://bow.gd" id="1_cxkwo"]
+[ext_resource type="Script" uid="uid://dxs53nu6rmc0f" path="res://bow.gd" id="1_cxkwo"]
 [ext_resource type="PackedScene" uid="uid://byobis7ahd7cf" path="res://Weapon-Asset/Bow/bowace.gltf" id="2_lyyur"]
 
 [node name="Bow" type="Node3D" unique_id=102631818]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.124786, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1, 0)
 script = ExtResource("1_cxkwo")
 
 [node name="blockbench_export" parent="." unique_id=22915033 instance=ExtResource("2_lyyur")]

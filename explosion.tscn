@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://buv4e5jw6lc14"]
+[gd_scene format=3 uid="uid://coloix2rj5oym"]
 
-[ext_resource type="Script" uid="uid://duebnowffcneq" path="res://explosion.gd" id="1_w8ob6"]
+[ext_resource type="Script" uid="uid://3v5ag2yod0h3" path="res://explosion.gd" id="1_w8ob6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_13myp"]
 
@@ -13,6 +13,7 @@ gravity = Vector3(0, -2, 0)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x7rc5"]
 albedo_color = Color(0.64705884, 0.9529412, 0.9882353, 1)
+billboard_mode = 2
 
 [sub_resource type="QuadMesh" id="QuadMesh_lyyur"]
 material = SubResource("StandardMaterial3D_x7rc5")

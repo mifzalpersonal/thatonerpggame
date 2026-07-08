@@ -26,10 +26,10 @@ shape = SubResource("BoxShape3D_4kxuq")
 [node name="Old Chest" parent="WeaponChest" unique_id=793999235 instance=ExtResource("1_dq3hi")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.01120688, 0.068238735, -0.01855728)
 
-[node name="chest " parent="WeaponChest/Old Chest" index="0" unique_id=780167821]
+[node name="chest " parent="WeaponChest/Old Chest" index="0" unique_id=1342369771]
 material_override = SubResource("StandardMaterial3D_1i828")
 
-[node name="chest cover" parent="WeaponChest/Old Chest" index="1" unique_id=1820551095]
+[node name="chest cover" parent="WeaponChest/Old Chest" index="1" unique_id=1695202860]
 material_override = SubResource("StandardMaterial3D_7bm33")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="WeaponChest" unique_id=210052126]

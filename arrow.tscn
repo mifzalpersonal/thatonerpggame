@@ -1,7 +1,7 @@
-[gd_scene format=3 uid="uid://c4wripfvm3cc6"]
+[gd_scene format=3 uid="uid://4tljcd7c6g3f"]
 
 [ext_resource type="Script" uid="uid://bjy80bgn7c0q3" path="res://arrow.gd" id="1_xjl78"]
-[ext_resource type="PackedScene" uid="uid://buv4e5jw6lc14" path="res://Scene/explosion.tscn" id="2_t7vqp"]
+[ext_resource type="PackedScene" uid="uid://coloix2rj5oym" path="res://explosion.tscn" id="2_acd0x"]
 [ext_resource type="Texture2D" uid="uid://crqa2o2jbg760" path="res://Weapon-Asset/Arrow1.png" id="2_x000j"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_owrxk"]
@@ -9,7 +9,7 @@
 [node name="Arrow" type="Area3D" unique_id=1264773735]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 script = ExtResource("1_xjl78")
-explosion_scene = ExtResource("2_t7vqp")
+explosion_scene = ExtResource("2_acd0x")
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1039508282]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
@@ -19,5 +19,3 @@ texture = ExtResource("2_x000j")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=371455535]
 transform = Transform3D(-1.3113417e-08, 0.3, 0, -0.3, -1.3113417e-08, 0, 0, 0, 0.3, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_owrxk")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]

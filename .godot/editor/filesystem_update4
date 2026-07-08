@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 res://main_menu_model.gdshader
 res://Breakable.gd
 res://Breakable.tscn
@@ -11,3 +12,13 @@ res://Map-Asset/Scene/Player/walk.gd
 res://Map-Asset/Scene/Player/darah.gd
 res://Scene/HealthPoint.tscn
 res://GUI/Script/HudHealth.gd
+=======
+res://arrow.gd
+res://bow.tscn
+res://Map-Asset/Scene/Main.tscn
+res://nature_slash.gd
+res://katana_slash.gd
+res://WeaponChest.tscn
+res://weapon_chest.gd
+res://explosion.tscn
+>>>>>>> c0aca97e5083326bd762bab25dbda77d52de7ea4
