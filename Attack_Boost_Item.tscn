@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://ecg3845qrgwx"]
+
+[ext_resource type="Script" uid="uid://bcba6ydig5gel" path="res://Damage_Boost_Item.gd" id="1_gb6sr"]
+[ext_resource type="PackedScene" uid="uid://n0bw5wcnr864" path="res://BreakableEnviroment/Attack+.gltf" id="2_wdbkw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_13myp"]
+size = Vector3(1, 1.2559204, 1)
+
+[node name="Area3D" type="Area3D" unique_id=1108352616]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("1_gb6sr")
+
+[node name="blockbench_export" parent="." unique_id=2113485643 instance=ExtResource("2_wdbkw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0023553371)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1668309624]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.530365, 0)
+shape = SubResource("BoxShape3D_13myp")

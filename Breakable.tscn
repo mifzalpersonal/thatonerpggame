@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://srjeo4rmrn0x" path="res://SpeedBoost.tscn" id="2_cf6pg"]
 [ext_resource type="PackedScene" uid="uid://b0nwbfvfgbbx6" path="res://BreakableEnviroment/Dus.gltf" id="2_kmg2m"]
 [ext_resource type="PackedScene" uid="uid://dbwjucbf4rwmn" path="res://Heal_item.tscn" id="3_cf6pg"]
+[ext_resource type="PackedScene" uid="uid://ecg3845qrgwx" path="res://Attack_Boost_Item.tscn" id="3_h1qb3"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_13myp"]
 size = Vector3(1, 0.9782715, 1)
@@ -25,10 +26,11 @@ size = Vector3(0.2, 0.2, 0.2)
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("1_t4wd4")
 chance_empty = 0
-chance_temporary = 25
-chance_permanent = 75
-item_temporary_prefab = ExtResource("2_cf6pg")
-item_permanent_prefab = ExtResource("3_cf6pg")
+chance_temporary = 100
+chance_permanent = 0
+item_speed_boost = ExtResource("2_cf6pg")
+item_damage_boost = ExtResource("3_h1qb3")
+item_heal = ExtResource("3_cf6pg")
 
 [node name="blockbench_export" parent="." unique_id=1948035253 instance=ExtResource("2_kmg2m")]
 

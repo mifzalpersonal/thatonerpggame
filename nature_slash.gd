@@ -48,9 +48,26 @@ func _physics_process(delta: float) -> void:
 		scale = scale_tengah.lerp(scale_akhir, t)
 
 func _on_body_entered(body: Node) -> void:
-	if body is CharacterBody3D and body.name == "Char3": # Sesuaikan sama nama node player lu
+	# Ganti "Char3" sesuai nama node Player utama kamu jika berbeda
+	if body is CharacterBody3D and body.name == "Char3": 
 		return
 		
 	if body.has_method("take_damage"):
-		body.take_damage(damage)
+		var damage_akhir = float(damage)
+		
+		# --- CARI PLAYER LEWAT GROUP (ANTI GAGAL) ---
+		# Mencari node pertama yang terdaftar di grup "Player"
+		var nodes_player = get_tree().get_nodes_in_group("Player")
+		
+		if nodes_player.size() > 0:
+			var node_player = nodes_player[0] # Ambil Player-nya
+			
+			if "damage_multiplier_active" in node_player:
+				damage_akhir = float(damage) * node_player.damage_multiplier_active
+				print("🔥 Peluru ", name, " berhasil dapet multiplier Player lewat Group: ", damage_akhir)
+		else:
+			print("🚨 ERROR: Player belum didaftarkan ke Group 'Player' di Editor Godot!")
+		
+		# Kirim damage ke musuh/kardus
+		body.take_damage(damage_akhir)
 		queue_free()

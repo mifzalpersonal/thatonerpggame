@@ -58,13 +58,16 @@ weapon_chest.gd::GDScript::4403933715141434023::1783502335::0::1::::<>Area3D<><>
 weapon_drop.gd::GDScript::1702650363812289230::1783338229::0::1::::<>RigidBody3D<><>0<>0<><>::
 weapon_manager.gd::GDScript::7078398799284259120::1783338229::0::1::::<>Marker3D<><>0<>0<><>::
 zombie.gd::GDScript::7973016847700555248::1783430432::0::1::::<>BaseEnemy<><>0<>0<><>::
-::res://BreakableEnviroment/::1783497613
+::res://BreakableEnviroment/::1783505907
+Attack+.gltf::PackedScene::964166025399741655::1783505896::1783505898::1::::<><><>0<>0<>9c4aaa0cc97375d28fef06954fd5a158<>res://.godot/imported/Attack+.gltf-b3bf309a32e663bca888dfe7e198e81f.scn::uid://ck0hbgjqoewn2::::res://BreakableEnviroment/Attack+_0.png<>uid://cedar8yucgcgo::::res://BreakableEnviroment/Attack+_1.png
 Dus.gltf::PackedScene::4169316540374334713::1783496738::1783496739::1::::<><><>0<>0<>553e773e1d4af56278718046e8f9c0e5<>res://.godot/imported/Dus.gltf-f6bc94a3e58324b4acf842ab37429836.scn::uid://whwknrwf3x5y::::res://BreakableEnviroment/Dus_0.png
 Dus_0.png::CompressedTexture2D::1559959546167658144::1783496738::1783496740::1::::<><><>0<>0<>4c7269041e101291befd11b8e7214463<>res://.godot/imported/Dus_0.png-ac744a8cec2de1a303034af64316a9db.s3tc.ctex::
 p1.gltf::PackedScene::8977267801730584255::1783496738::1783496739::1::::<><><>0<>0<>64ae87388917ec2f6b5d902d1a0bfd99<>res://.godot/imported/p1.gltf-662304af1fc6d892bf51ba325719a2a7.scn::uid://x4n7v223e1h8::::res://BreakableEnviroment/p1_0.png
 p1_0.png::CompressedTexture2D::1675057970817832695::1783496739::1783497613::1::::<><><>0<>0<>eb1a0a0e27c6cf1bd0fbba9e0b7a455d<>res://.godot/imported/p1_0.png-6588b19b9f0aec58606a660e05dfb824.ctex::
 p2.gltf::PackedScene::3917470493136827594::1783496738::1783496740::1::::<><><>0<>0<>17e252572794cb6d1292e65b678236a0<>res://.godot/imported/p2.gltf-91b1d4f0d5b92b1c0ab8abdc053a9d5b.scn::uid://dprdggqa6iye::::res://BreakableEnviroment/p2_0.png
 p2_0.png::CompressedTexture2D::242570068620861004::1783496739::1783496747::1::::<><><>0<>0<>f74d2568a8c40ceccdab3f6570e51212<>res://.godot/imported/p2_0.png-f92160d23541b3372c3335f8ecc86629.ctex::
+Attack+_0.png::CompressedTexture2D::5526766382150489709::1783505896::1783505907::1::::<><><>0<>0<>978fb179d379b65c5acdee174a77181f<>res://.godot/imported/Attack+_0.png-6eb4be26fc2b9b7b442ced273e7ce221.ctex::
+Attack+_1.png::CompressedTexture2D::5059822004954374450::1783505897::1783506000::1::::<><><>0<>0<>45425233821555136def885b5f94f54f<>res://.godot/imported/Attack+_1.png-f17c8665c6fb3c28abbcde23e490fca6.ctex::
 ::res://Character-Asset/::1783004157
 ::res://Character-Asset/Player Vampire/::1783004250
 palyer_fron_walk-Sheet.png::CompressedTexture2D::3973194311887836370::1783004157::1783004249::1::::<><><>0<>0<>b6b0bbfe9f5fdff85c95940955cfc9dd<>res://.godot/imported/palyer_fron_walk-Sheet.png-7e971cef5b15e3b846ee62ee65f595fd.ctex::
@@ -168,7 +171,7 @@ progres_bar.png::CompressedTexture2D::1767892378855906147::1783236921::178323698
 HudHealth.gd::GDScript::3337448715243130442::1783501029::0::1::::<>Control<><>0<>0<><>::
 item_slot.gd::GDScript::7809198448120547080::1783168411::0::1::::<>PanelContainer<><>0<>0<><>::
 ::res://Map-Asset/::1783222089
-::res://Map-Asset/Asset/::1783502533
+::res://Map-Asset/Asset/::1783505041
 Building1.1.gltf::PackedScene::1468482389355669397::1783004158::1783004265::1::::<><><>0<>0<>a42a1f7f9585073fb5fd07060697472f<>res://.godot/imported/Building1.1.gltf-03c93246171d207be2a06355c493ab5e.scn::uid://bs6di52a3o354::::res://Map-Asset/Asset/Building1_0.png<>uid://pkwniqwi8kgw::::res://Map-Asset/Asset/Building1_1.png<>uid://cqubxaitvxpbo::::res://Map-Asset/Asset/Building1_2.png
 Building1_0.png::CompressedTexture2D::3714013634331300217::1783004158::1783004248::1::::<><><>0<>0<>8a8f57f6dbf823dffc9a20464a5013a0<>res://.godot/imported/Building1_0.png-bb498d8fbdf56fd7f2455391783f5f0e.ctex::
 Building1_1.png::CompressedTexture2D::1074835867187960018::1783004158::1783505041::1::::<><><>0<>0<>2db446cf8cc58374f9dd3cd7b6e9ed14<>res://.godot/imported/Building1_1.png-61b6e539a5452fb219bfd71cc71ac24a.ctex::
@@ -213,7 +216,7 @@ NewRoad_7.png::CompressedTexture2D::8980218759535114026::1783004158::1783004252:
 NewRoad_8.png::CompressedTexture2D::485639465236228300::1783004158::1783004235::1::::<><><>0<>0<>9a570ef7b5195dbf2305ea4acfc4e2d1<>res://.godot/imported/NewRoad_8.png-4baaf3b8c954b5193c2e92a28de28826.ctex::
 NewRoad_9.png::CompressedTexture2D::5465004346694583158::1783004158::1783004235::1::::<><><>0<>0<>9e4be99aaad8fa3df51dd30ddabbcdbd<>res://.godot/imported/NewRoad_9.png-d7e28a13abec88ba2b6e1f91f4e0cf01.ctex::
 NewRoad_10.png::CompressedTexture2D::6078847317495488023::1783004158::1783004235::1::::<><><>0<>0<>fac93f58a1e7709089b1dfa50e77e1a0<>res://.godot/imported/NewRoad_10.png-17141b9d9fa0b9f77bb099e4a7294c0a.ctex::
-::res://Map-Asset/NewMapAsset/::1783502533
+::res://Map-Asset/NewMapAsset/::1783505041
 floor1.gltf::PackedScene::5269653776570804409::1783221997::1783222118::1::::<><><>0<>0<>9d6e96265b227c690ab67e53ef270e0e<>res://.godot/imported/floor1.gltf-0081eaf7aa087b3a1ac97ceea8204bca.scn::uid://dcmrsyis72vko::::res://Map-Asset/NewMapAsset/floor1_0.png
 floor1_0.png::CompressedTexture2D::7325477878351928270::1783221998::1783222401::1::::<><><>0<>0<>680a628796afe219cc0f06ddd1041817<>res://.godot/imported/floor1_0.png-628884f418c5c1af8f06086e969e54c5.ctex::
 floor2.gltf::PackedScene::5196582717070249563::1783221997::1783222118::1::::<><><>0<>0<>615265bb04d9ade3e58924fc18797d2f<>res://.godot/imported/floor2.gltf-1c815193feae0b98af6a00f33727ffd0.scn::uid://b5haibem6tskm::::res://Map-Asset/NewMapAsset/floor2_0.png

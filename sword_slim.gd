@@ -28,6 +28,14 @@ func shoot_slash() -> void:
 	var slash_instance = SLASH_PROJECTILE_SCENE.instantiate()
 	get_tree().root.add_child(slash_instance)
 	slash_instance.global_transform = muzzle.global_transform
+	
+	# Ambil data titipan player yang sudah kita set di _process milik Char3 sebelumnya
+	if has_meta("pencipta"):
+		var node_player = get_meta("pencipta")
+		
+		# Oper data player tersebut ke dalam peluru slash yang baru lahir
+		if slash_instance.has_method("set_pencipta"):
+			slash_instance.set_pencipta(node_player)
 
 # --- FUNGSI UNTUK MENGATUR JEDA ---
 func mulai_cooldown() -> void:

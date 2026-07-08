@@ -9,6 +9,11 @@ var current_speed: float = 10.0
 var speed_boost_timer: Timer
 # -----------------------------
 
+# --- TAMBAHAN DAMAGE BOOST ---
+var damage_multiplier_active: float = 1.0
+var damage_boost_timer: Timer
+# ------------------------------
+
 # Menggunakan var biasa (bukan @onready langsung kaku) agar bisa dicari ulang nanti jika scene berpindah
 var slot_1_ui = null
 var slot_2_ui = null
@@ -19,14 +24,19 @@ func _ready() -> void:
 	_update_ui_references()
 	switch_hud_slot(1)
 	
-	# --- TAMBAHAN SPEED BOOST ---
-	current_speed = speed # Set kecepatan awal agar sama dengan eksport var speed
-	
+	# --- INITIALIZATION SPEED BOOST ---
+	current_speed = speed 
 	speed_boost_timer = Timer.new()
 	speed_boost_timer.one_shot = true
 	speed_boost_timer.timeout.connect(_on_speed_boost_timeout)
 	add_child(speed_boost_timer)
-	# -----------------------------
+	
+	# --- INITIALIZATION DAMAGE BOOST ---
+	damage_boost_timer = Timer.new()
+	damage_boost_timer.one_shot = true
+	damage_boost_timer.timeout.connect(_on_damage_boost_timeout)
+	add_child(damage_boost_timer)
+	# -----------------------------------
 	
 	set_physics_process(false)
 
@@ -47,7 +57,7 @@ func _physics_process(delta):
 	if input_dir != Vector3.ZERO:
 		input_dir = input_dir.normalized()
 
-	# Gerakan (SEKARANG MENGGUNAKAN current_speed)
+	# Gerakan
 	velocity = input_dir * current_speed
 	move_and_slide()
 
@@ -92,20 +102,25 @@ func _process(delta: float) -> void:
 			if manager_senjata.senjata_sekarang != "":
 				manager_senjata.eksekusi_menyerang()
 
-# --- FUNGSI TAMBAHAN SPEED BOOST (Dipanggil oleh Item Speed Boost) ---
+# --- FUNGSI SPEED BOOST ---
 func apply_speed_boost(multiplier: float, duration: float) -> void:
-	# Kalikan base speed dengan pengali dari item (misal 10 * 1.5 = 15)
 	current_speed = speed * multiplier
 	print("Speed Boost Aktif! Kecepatan sekarang: ", current_speed)
-	
-	# Mulai timer hitung mundur
 	speed_boost_timer.start(duration)
 
 func _on_speed_boost_timeout() -> void:
-	# Kembalikan kecepatan ke base speed awal saat timer habis
 	current_speed = speed
 	print("Speed Boost Habis! Kecepatan kembali normal: ", current_speed)
-# ---------------------------------------------------------------------
+
+# --- FUNGSI DAMAGE BOOST (Dipanggil oleh Item Damage Boost) ---
+func apply_damage_boost(multiplier: float, duration: float) -> void:
+	damage_multiplier_active = multiplier
+	print("Damage Boost Aktif! Pengali damage saat ini: x", damage_multiplier_active)
+	damage_boost_timer.start(duration)
+
+func _on_damage_boost_timeout() -> void:
+	damage_multiplier_active = 1.0 # Kembali ke normal (tidak dikali apa-apa)
+	print("Damage Boost Habis! Damage kembali normal.")
 
 # Fungsi internal untuk mencari ulang UI jika sewaktu-waktu null
 func _update_ui_references():
@@ -117,7 +132,6 @@ func _update_ui_references():
 func switch_hud_slot(slot_number: int) -> void:
 	_update_ui_references()
 	
-	# JIKA DI LOBBY (UI tidak ada), keluar diam-diam tanpa nge-print error panjang lebar
 	if slot_1_ui == null or slot_2_ui == null:
 		return
 		
