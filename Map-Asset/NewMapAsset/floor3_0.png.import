@@ -2,21 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://4yc3xurqt6ml"
-path.s3tc="res://.godot/imported/floor3_0.png-fe2901d4c4f504de0647573cf452dc5c.s3tc.ctex"
+uid="uid://cykseiwq7r0rt"
+path="res://.godot/imported/floor3_0.png-fe2901d4c4f504de0647573cf452dc5c.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Map-Asset/NewMapAsset/floor3_0.png"
-dest_files=["res://.godot/imported/floor3_0.png-fe2901d4c4f504de0647573cf452dc5c.s3tc.ctex"]
+dest_files=["res://.godot/imported/floor3_0.png-fe2901d4c4f504de0647573cf452dc5c.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

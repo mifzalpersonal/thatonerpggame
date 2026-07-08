@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bfnyj5k1ma8ol"
-path.s3tc="res://.godot/imported/PP_Color_Palette.png-a03d39d4f47fc1791bdc9943457d581e.s3tc.ctex"
+path.s3tc="res://.godot/imported/PP_Color_Palette.png-34189d5fbe589f2cf1a6a358dbac0847.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Weapon-Asset/textures/PP_Color_Palette.png"
-dest_files=["res://.godot/imported/PP_Color_Palette.png-a03d39d4f47fc1791bdc9943457d581e.s3tc.ctex"]
+source_file="res://Weapon-Asset/Textures/PP_Color_Palette.png"
+dest_files=["res://.godot/imported/PP_Color_Palette.png-34189d5fbe589f2cf1a6a358dbac0847.s3tc.ctex"]
 
 [params]
 

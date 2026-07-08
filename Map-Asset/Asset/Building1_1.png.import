@@ -2,21 +2,23 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6v4hsdpa8t8q"
-path.s3tc="res://.godot/imported/Building1_1.png-61b6e539a5452fb219bfd71cc71ac24a.s3tc.ctex"
+uid="uid://pkwniqwi8kgw"
+path="res://.godot/imported/Building1_1.png-61b6e539a5452fb219bfd71cc71ac24a.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
+}
+generator_parameters={
+"md5": "0f16328af50d40294b76c7b64a93f539"
 }
 
 [deps]
 
 source_file="res://Map-Asset/Asset/Building1_1.png"
-dest_files=["res://.godot/imported/Building1_1.png-61b6e539a5452fb219bfd71cc71ac24a.s3tc.ctex"]
+dest_files=["res://.godot/imported/Building1_1.png-61b6e539a5452fb219bfd71cc71ac24a.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
