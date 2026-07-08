@@ -11,8 +11,9 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_o0e71")
 
-[node name="HeartContainer" type="HBoxContainer" parent="." unique_id=1674056869]
+[node name="HeartContainer" type="GridContainer" parent="." unique_id=552322973]
 custom_minimum_size = Vector2(1.64, 0)
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
+columns = 10

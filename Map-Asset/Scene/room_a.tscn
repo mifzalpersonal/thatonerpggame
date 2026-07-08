@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://37j1jwrq2ndx"]
 
 [ext_resource type="MeshLibrary" uid="uid://bgnsk2ki4l2wn" path="res://Map-Asset/Tres/grass.meshlib" id="1_t4bwh"]
+[ext_resource type="PackedScene" uid="uid://dvmn4kdfb6avi" path="res://Breakable.tscn" id="2_wr8xb"]
+[ext_resource type="PackedScene" uid="uid://srjeo4rmrn0x" path="res://SpeedBoost.tscn" id="3_6fnpw"]
 
 [node name="RoomA" type="Node3D" unique_id=1901342513]
 
@@ -16,3 +18,7 @@ data = {
 "cells": PackedInt32Array(65534, 0, 1, 65535, 0, 1, 0, 0, 1, 1, 0, 1, 2, 0, 1, 3, 0, 1, 3, 65535, 1, 65534, 1, 1, 65534, 2, 1, 65534, 3, 1, 65535, 1, 1, 65535, 2, 1, 65535, 3, 1, 0, 1, 1, 0, 2, 1, 0, 3, 1, 3, 1, 1, 3, 2, 1, 2, 2, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 2, 3, 1, 3, 3, 1, 1, 3, 1, 2, 65535, 1, 1, 65535, 1, 0, 65535, 1, 65534, 65535, 1, 65535, 65535, 1, 4, 2, 1, 5, 1, 1, 5, 2, 1, 6, 2, 1, 4, 1, 1, 6, 1, 1, 7, 2, 1, 8, 2, 1, 9, 2, 1, 7, 1, 1, 8, 1, 1, 9, 1, 1)
 }
 metadata/_editor_floor_ = Vector3(0, 1, 0)
+
+[node name="Breakable" parent="." unique_id=1190910255 instance=ExtResource("2_wr8xb")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1.4814026, 0)
+item_temporary_prefab = ExtResource("3_6fnpw")

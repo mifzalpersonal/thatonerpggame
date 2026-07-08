@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://bix4huq8vk512" path="res://Scene/HealthPoint.tscn" id="7_xhust"]
 [ext_resource type="PackedScene" uid="uid://0jag52u11qae" path="res://Scene/item_slot.tscn" id="8_qi4r4"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_f7oih"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_qi4r4"]
 viewport_path = NodePath("EnemyUI")
 
 [sub_resource type="Environment" id="Environment_qi4r4"]
@@ -41,7 +41,7 @@ dead_scene = ExtResource("3_qi4r4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.34446, 42.819855, -2.7459278)
 
 [node name="UIVisual" parent="musuhbody" index="3" unique_id=1327681699]
-texture = SubResource("ViewportTexture_f7oih")
+texture = SubResource("ViewportTexture_qi4r4")
 
 [node name="WeaponChest" parent="." unique_id=1020326057 instance=ExtResource("6_bn8b8")]
 transform = Transform3D(-0.99999994, 0, 8.742277e-08, 0, 1, 0, -8.742277e-08, 0, -0.99999994, -12.53976, 0.9479082, -17.611584)

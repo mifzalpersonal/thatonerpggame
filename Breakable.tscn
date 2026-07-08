@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://dvmn4kdfb6avi"]
+
+[ext_resource type="Script" uid="uid://bdtjb7frdbhgx" path="res://Breakable.gd" id="1_t4wd4"]
+[ext_resource type="PackedScene" uid="uid://srjeo4rmrn0x" path="res://SpeedBoost.tscn" id="2_cf6pg"]
+[ext_resource type="PackedScene" uid="uid://b0nwbfvfgbbx6" path="res://BreakableEnviroment/Dus.gltf" id="2_kmg2m"]
+[ext_resource type="PackedScene" uid="uid://dbwjucbf4rwmn" path="res://Heal_item.tscn" id="3_cf6pg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_13myp"]
+size = Vector3(1, 0.9782715, 1)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b6ubh"]
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 3.0
+initial_velocity_max = 5.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oaqmh"]
+albedo_color = Color(0.94509804, 0.7490196, 0.30980393, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_1nw3g"]
+material = SubResource("StandardMaterial3D_oaqmh")
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="Breakable" type="StaticBody3D" unique_id=1190910255]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("1_t4wd4")
+chance_empty = 0
+chance_temporary = 25
+chance_permanent = 75
+item_temporary_prefab = ExtResource("2_cf6pg")
+item_permanent_prefab = ExtResource("3_cf6pg")
+
+[node name="blockbench_export" parent="." unique_id=1948035253 instance=ExtResource("2_kmg2m")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2016844866]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.6604161, 0, 0.3812256, 0)
+shape = SubResource("BoxShape3D_13myp")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=434822419]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6592144, 0)
+emitting = false
+amount = 10
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_b6ubh")
+draw_pass_1 = SubResource("BoxMesh_1nw3g")

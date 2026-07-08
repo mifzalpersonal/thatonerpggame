@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://srjeo4rmrn0x"]
+
+[ext_resource type="Script" uid="uid://dsufdgv03cp5d" path="res://Speed_boost_item.gd" id="1_0qisa"]
+[ext_resource type="PackedScene" uid="uid://d05wj3g00tast" path="res://BreakableEnviroment/p1.gltf" id="2_nid8v"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_13myp"]
+size = Vector3(1, 1.2559204, 1)
+
+[node name="Area3D" type="Area3D" unique_id=1108352616]
+script = ExtResource("1_0qisa")
+
+[node name="blockbench_export" parent="." unique_id=1173410532 instance=ExtResource("2_nid8v")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1668309624]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.530365, 0)
+shape = SubResource("BoxShape3D_13myp")

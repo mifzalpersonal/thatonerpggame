@@ -1,3 +1,9 @@
+GridContainer
+CollisionShape3D
+Area3D
+GPUParticles3D
+MeshInstance3D
+StaticBody3D
 Node3D
 GridMap
 Marker3D
@@ -5,10 +11,5 @@ Button
 Label
 Panel
 CanvasLayer
-CollisionShape3D
-Area3D
 VSplitContainer
 Container
-VBoxContainer
-ColorRect
-Sprite3D
