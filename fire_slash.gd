@@ -51,6 +51,15 @@ func _on_body_entered(body: Node) -> void:
 		
 	if body.has_method("take_damage"):
 		var damage_akhir = float(damage)
+	
+		# ========================================================
+		# --- TWEAK BARU SENJATA API ---
+		# ========================================================
+		# Panggil fungsi penambah stack burn di enemy.gd
+		if body.has_method("apply_burn_stack"):
+			body.apply_burn_stack()
+		# ========================================================
+
 		
 		# --- CARI PLAYER LEWAT GROUP (ANTI GAGAL) ---
 		# Mencari node pertama yang terdaftar di grup "Player"

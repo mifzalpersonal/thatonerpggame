@@ -52,9 +52,26 @@ func _on_body_entered(body: Node) -> void:
 	if body.has_method("take_damage"):
 		var damage_akhir = float(damage)
 		
+		# ========================================================
+		# --- TWEAK BARU KATANA ---
+		# ========================================================
+		# 1. Pemicu DoT Bloody di otak musuh
+		if body.has_method("apply_bloody_effect"):
+			body.apply_bloody_effect()
+			
+		# 2. Peluang 50% Heal Player
+		var nodes_player = get_tree().get_nodes_in_group("Player")
+		if nodes_player.size() > 0:
+			var player = nodes_player[0]
+			if randf() <= 0.5: # Lolos peluang 50%
+				var health_component = player.get_node_or_null("darahEntity")
+				if health_component and "hp" in health_component:
+					health_component.hp += 1.0
+					print("🩸 KATANA LIFESTEAL AKTIF! HP lu bertambah jadi: ", health_component.hp)
+		# ========================================================
+		
 		# --- CARI PLAYER LEWAT GROUP (ANTI GAGAL) ---
 		# Mencari node pertama yang terdaftar di grup "Player"
-		var nodes_player = get_tree().get_nodes_in_group("Player")
 		
 		if nodes_player.size() > 0:
 			var node_player = nodes_player[0] # Ambil Player-nya

@@ -55,9 +55,26 @@ func _on_body_entered(body: Node) -> void:
 	if body.has_method("take_damage"):
 		var damage_akhir = float(damage)
 		
+		# ========================================================
+		# --- TWEAK BARU SENJATA NATURE ---
+		# ========================================================
+		# 1. Kasih efek slow bawaan (misal 40% selama 3 detik)
+		if body.has_method("apply_freeze_slow"):
+			body.apply_freeze_slow(0.4, 3.0)
+			
+		# 2. Peluang 20% Heal Player
+		var nodes_player = get_tree().get_nodes_in_group("Player")
+		if nodes_player.size() > 0:
+			var player = nodes_player[0]
+			if randf() <= 0.2: # Lolos peluang 20%
+				var health_component = player.get_node_or_null("darahEntity")
+				if health_component and "hp" in health_component:
+					health_component.hp += 1.0
+					print("🌿 NATURE HEAL AKTIF! HP lu bertambah jadi: ", health_component.hp)
+		# ========================================================
+		
 		# --- CARI PLAYER LEWAT GROUP (ANTI GAGAL) ---
 		# Mencari node pertama yang terdaftar di grup "Player"
-		var nodes_player = get_tree().get_nodes_in_group("Player")
 		
 		if nodes_player.size() > 0:
 			var node_player = nodes_player[0] # Ambil Player-nya

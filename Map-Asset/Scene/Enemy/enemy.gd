@@ -10,6 +10,23 @@ var can_attack: bool = true
 var posisi_patroli: Vector3 = Vector3.ZERO
 var waktu_ganti_arah: float = 0.0
 
+# ==========================================================
+# --- ditambahin ijal 	
+# --- SISP STATUS RPG BARU (TWEAK) --- 
+# ==========================================================
+# Status Bloody (Blood Katana)
+var is_bloody: bool = false
+var bloody_timer: float = 0.0
+var bloody_tick_timer: float = 0.0
+
+# Status Burn (Senjata Api)
+var burn_stack: int = 0
+var is_burning: bool = false
+var burn_timer: float = 0.0
+var burn_tick_timer: float = 0.0
+# ==========================================================
+
+
 # --- AMBIL REFERENSI NODE UI ---
 @onready var hp_bar: ProgressBar = $EnemyUI/HPBar
 # -------------------------------
@@ -43,6 +60,44 @@ func _ready() -> void:
 	# ------------------------------------
 
 func _physics_process(delta: float) -> void:
+	# ========================================================
+	# --- TWEAK LOGIKA MANAGEMENT STATUS (BLOODY & BURN) ---
+	# ========================================================
+	# 1. Siklus Hitung Mundur Efek Bloody (15 damage tiap 1 detik selama 3 detik)
+	if is_bloody:
+		bloody_timer -= delta
+		bloody_tick_timer += delta
+		
+		if bloody_tick_timer >= 1.0:
+			take_damage(15)
+			print(name, " terkena TICK BLEED BLOODY! Sisa HP: ", current_hp)
+			bloody_tick_timer = 0.0 
+			
+		if bloody_timer <= 0:
+			is_bloody = false
+			print(name, " efek Bloody selesai.")
+
+	# 2. Siklus Hitung Mundur Efek Burn (Total 70 damage dalam 5 detik = 14 damage/detik)
+	if is_burning:
+		burn_timer -= delta
+		burn_tick_timer += delta
+		
+		if burn_tick_timer >= 1.0:
+			take_damage(14)
+			print(name, " terkena TICK BURN! Sisa HP: ", current_hp)
+			burn_tick_timer = 0.0
+			
+		if burn_timer <= 0:
+			is_burning = false
+			burn_stack = 0 # Reset stack setelah efek gosongnya selesai
+			if "slow_multiplier" in self:
+				slow_multiplier = 1.0 # Kembalikan speed bawaan lu jika pakai multiplier
+			reset_enemy_color()
+			print(name, " efek Burn selesai.")
+	# ========================================================
+
+	# ... SISA KODE BAWAAN LU (NGEJAR PLAYER/PATROLI) BIARKAN UTUH DI BAWAH SINI ...
+	
 	if is_slowed:
 		slow_timer -= delta
 		if slow_timer <= 0:
@@ -121,6 +176,39 @@ func apply_freeze_slow(percentage: float, duration: float) -> void:
 	slow_timer = duration
 	slow_multiplier = 1.0 - percentage
 	change_enemy_color(Color(0.0, 0.75, 1.0))
+	
+# --- ditambahin ijal 	
+func apply_bloody_effect() -> void:
+	is_bloody = true
+	bloody_timer = 3.0 # Durasi 3 detik sesuai konsep lu
+	bloody_tick_timer = 0.0
+	change_enemy_color(Color(0.8, 0.1, 0.1)) # Ubah warna agak merah gelap
+
+# Pemicu Burn Berbasis Stack (Dipanggil oleh Senjata Api)
+func apply_burn_stack() -> void:
+	if is_burning:
+		return # Kalau lagi kebakar, gak bisa numpuk stack baru
+		
+	burn_stack += 1
+	print(name, " terkena peluru api! Stack saat ini: ", burn_stack, "/3")
+	
+	# Begitu genap 3 kali hit... BOOM! Efek Burn DoT Pecah!
+	if burn_stack >= 3:
+		is_burning = true
+		burn_timer = 5.0 # Durasi terbakar DoT 5 detik
+		burn_tick_timer = 0.0
+		
+		# Set efek slow 50% saat terbakar
+		if "slow_multiplier" in self:
+			slow_multiplier = 0.5 
+		elif "is_slowed" in self:
+			is_slowed = true
+			
+		change_enemy_color(Color(1.0, 0.4, 0.0)) # Berubah warna Oranye Gosong
+		print("BOOM! ", name, " GOSONG TERBAKAR & MELAMBAT 50%!")
+
+# --- ditambahin ijal 	
+
 
 func change_enemy_color(new_color: Color) -> void:
 	var sprite = get_node_or_null("AnimatedSprite3D")
@@ -131,3 +219,4 @@ func reset_enemy_color() -> void:
 	var sprite = get_node_or_null("AnimatedSprite3D")
 	if sprite and sprite is AnimatedSprite3D:
 		sprite.modulate = Color(1, 1, 1)
+		

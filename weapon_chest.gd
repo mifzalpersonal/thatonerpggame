@@ -3,12 +3,12 @@ extends Area3D
 const weapon_drop = preload("res://WeaponDrop.tscn")
 
 const daftar_senjata = [
-	"hugs",
-	"hugs_fire",
+	#"hugs",
+	#"hugs_fire",
 	"katana",
-	"sword_slim",
+	#"sword_slim",
 	"sword_slim_nature",
-	"bow"
+	#"bow"
 ]
 
 var udah_kebuka : bool = false
