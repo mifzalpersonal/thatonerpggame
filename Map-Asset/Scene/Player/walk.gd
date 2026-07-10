@@ -3,6 +3,7 @@ extends CharacterBody3D
 @export var speed := 10.0
 @onready var anim = $AnimatedSprite3D
 @onready var node_tangan = $Tangan
+@onready var radar_aim = $RadarAim # <--- SISIPAN BARU: Referensi Radar Area3D
 
 # --- TAMBAHAN SPEED BOOST ---
 var current_speed: float = 10.0
@@ -61,28 +62,56 @@ func _physics_process(delta):
 	velocity = input_dir * current_speed
 	move_and_slide()
 
-	# Logika Animasi 4 Arah
-	if input_dir == Vector3.ZERO:
-		anim.stop()
-	else:
-		if abs(input_dir.x) > abs(input_dir.z):
-			if input_dir.x > 0:
-				anim.play("Idle_Left")
-				node_tangan.position = Vector3(3.0, -3.0, 1.5)
-				node_tangan.rotation_degrees.y = 0
-			else:
-				anim.play("Idle_Right")
-				node_tangan.position = Vector3(-3.0, -3.0, -1.5)
-				node_tangan.rotation_degrees.y = -180.0
+	# ========================================================
+	# --- TWEAK LOGIKA AIM ASSIST LOCK ROTATION 360° ---
+	# ========================================================
+	var target_musuh = ambil_musuh_terdekat()
+	
+	if target_musuh != null:
+		# 1. Pindahkan posisi node_tangan ke poros tengah (Y tetap 0.0 sesuai script lu)
+		node_tangan.position = Vector3(0.0, 0.0, 0.0)
+		
+		# 2. Ambil posisi musuh tapi ratakan sumbu Y-nya biar sejajar sama tangan player (anti miring ke bawah)
+		var posisi_target = target_musuh.global_position
+		posisi_target.y = global_position.y 
+		
+		# 3. KUNCI SUCI: Paksa tangan menengok ke target secara instan!
+		node_tangan.look_at(posisi_target, Vector3.UP)
+		
+		# 4. TWEAK FIX: Karena arah 'depan' standar look_at di Godot 3D itu sumbu -Z, 
+		# sedangkan tangan lu nembaknya ke sumbu X, kita tambahkan rotasi koreksi 90 derajat!
+		node_tangan.rotate_y(deg_to_rad(90.0)) # <--- Kalau arahnya serong, ganti jadi 90.0 atau 180.0 sesuai arah moncong pedang lu!
+		
+		# 5. Mainkan animasi tubuh player seperti biasa
+		if target_musuh.global_position.x > global_position.x:
+			anim.play("Idle_Left")
 		else:
-			if input_dir.z > 0:
-				anim.play("Idle_Up")
-				node_tangan.position = Vector3(-1.5, -3.0, 2.5)
-				node_tangan.rotation_degrees.y = -90.0
+			anim.play("Idle_Right")
+			
+	else:
+		# --- LOGIKA ANIMASI 4 ARAH ASLI BAWAAN LU (JALAN JIKA RADAR KOSONG) ---
+		if input_dir == Vector3.ZERO:
+			anim.stop()
+		else:
+			if abs(input_dir.x) > abs(input_dir.z):
+				if input_dir.x > 0:
+					anim.play("Idle_Left")
+					node_tangan.position = Vector3(0.0, 0.0, 1.5)
+					node_tangan.rotation_degrees.y = 0
+				else:
+					anim.play("Idle_Right")
+					node_tangan.position = Vector3(0.0, 0.0, -1.5)
+					node_tangan.rotation_degrees.y = -180.0
 			else:
-				anim.play("Walk_Down")
-				node_tangan.position = Vector3(1.5, -3.0, -2.5)
-				node_tangan.rotation_degrees.y = 90.0
+				if input_dir.z > 0:
+					anim.play("Idle_Up")
+					node_tangan.position = Vector3(-1.5, 0.0, 0.0)
+					node_tangan.rotation_degrees.y = -90.0
+				else:
+					anim.play("Walk_Down")
+					node_tangan.position = Vector3(1.5, 0.0, 0.0)
+					node_tangan.rotation_degrees.y = 90.0
+	# ========================================================
 
 func _process(delta: float) -> void:
 	if has_node("Tangan"):
@@ -119,7 +148,7 @@ func apply_damage_boost(multiplier: float, duration: float) -> void:
 	damage_boost_timer.start(duration)
 
 func _on_damage_boost_timeout() -> void:
-	damage_multiplier_active = 1.0 # Kembali ke normal (tidak dikali apa-apa)
+	damage_multiplier_active = 1.0 
 	print("Damage Boost Habis! Damage kembali normal.")
 
 # Fungsi internal untuk mencari ulang UI jika sewaktu-waktu null
@@ -143,3 +172,23 @@ func switch_hud_slot(slot_number: int) -> void:
 		slot_1_ui.is_active = false  
 		slot_2_ui.is_active = true   
 		print("HUD: Slot 2 Aktif")
+
+# ========================================================
+# --- SISIPAN BARU: FUNGSI DETEKSI TARGET ZOMBIE ---
+# ========================================================
+func ambil_musuh_terdekat() -> Node3D:
+	if radar_aim == null:
+		return null
+		
+	var daftar_body = radar_aim.get_overlapping_bodies()
+	var musuh_terdekat: Node3D = null
+	var jarak_terdekat: float = 99999.0
+	
+	for body in daftar_body:
+		if body is CharacterBody3D and body != self and (body.is_in_group("Enemy") or "current_hp" in body):
+			var jarak = global_position.distance_to(body.global_position)
+			if jarak < jarak_terdekat:
+				jarak_terdekat = jarak
+				musuh_terdekat = body
+				
+	return musuh_terdekat
