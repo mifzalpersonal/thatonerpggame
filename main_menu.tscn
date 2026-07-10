@@ -3,8 +3,13 @@
 [ext_resource type="Script" uid="uid://b03vrckhk0flk" path="res://main_menu.gd" id="1_06t4h"]
 [ext_resource type="Texture2D" uid="uid://cbb7j4stp7652" path="res://GUI/Asset/ArrowButton.png" id="2_7vrkn"]
 [ext_resource type="FontFile" uid="uid://c3uilcykbd6n0" path="res://Font/Rubik/static/Rubik-Regular.ttf" id="2_fu7sn"]
+[ext_resource type="Texture2D" uid="uid://cjc08jisw32bj" path="res://Tittle.png" id="4_jix8l"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q8xwb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bj20j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bluwy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fu7sn"]
 atlas = ExtResource("2_7vrkn")
@@ -56,6 +61,10 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xv8wr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lxma4"]
+
 [node name="Main Menu" type="Control" unique_id=1969033308]
 layout_mode = 3
 anchors_preset = 15
@@ -64,6 +73,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_06t4h")
+
+[node name="Panel" type="Panel" parent="." unique_id=2084590846]
+layout_mode = 0
+offset_right = 470.0
+offset_bottom = 647.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1037111905]
 layout_mode = 1
@@ -79,9 +93,14 @@ grow_vertical = 2
 [node name="Start" type="Button" parent="VBoxContainer" unique_id=1378150265]
 custom_minimum_size = Vector2(256, 64)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.63784295, 0.6378433, 0.6378428, 1)
+theme_override_colors/font_pressed_color = Color(0.9411765, 0, 0.27450982, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_fu7sn")
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxEmpty_q8xwb")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_bj20j")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_bluwy")
 text = "Start"
 alignment = 0
 
@@ -109,9 +128,14 @@ speed_scale = 2.0
 [node name="Credits" type="Button" parent="VBoxContainer" unique_id=939969932]
 custom_minimum_size = Vector2(256, 64)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.63784295, 0.6378433, 0.6378428, 1)
+theme_override_colors/font_pressed_color = Color(0.9411765, 0, 0.27450982, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_fu7sn")
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxEmpty_q8xwb")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_xv8wr")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_lxma4")
 text = "Creadits"
 alignment = 0
 
@@ -143,9 +167,14 @@ layout_mode = 2
 [node name="Quit" type="Button" parent="VBoxContainer" unique_id=1535321502]
 custom_minimum_size = Vector2(256, 64)
 layout_mode = 2
+theme_override_colors/font_color = Color(0.63784295, 0.6378433, 0.6378428, 1)
+theme_override_colors/font_pressed_color = Color(0.9411765, 0, 0.27450982, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("2_fu7sn")
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxEmpty_q8xwb")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_xv8wr")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_lxma4")
 text = "Quit Game"
 alignment = 0
 
@@ -170,22 +199,6 @@ autoplay = "default"
 frame_progress = 0.17455687
 speed_scale = 2.0
 
-[node name="Label" type="Label" parent="." unique_id=1899515277]
-custom_minimum_size = Vector2(256, 128)
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_left = 86.0
-offset_top = -209.0
-offset_right = 342.0
-offset_bottom = -81.0
-grow_vertical = 2
-theme_override_font_sizes/font_size = 64
-text = "La Title"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Button" type="Button" parent="." unique_id=862204609]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 1
@@ -200,6 +213,19 @@ offset_right = -41.0
 offset_bottom = -35.0
 grow_horizontal = 0
 grow_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1231468375]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 54.0
+offset_top = -196.0
+offset_right = 418.8
+offset_bottom = -82.0
+grow_vertical = 2
+texture = ExtResource("4_jix8l")
 
 [connection signal="mouse_entered" from="VBoxContainer/Start" to="." method="_on_start_mouse_entered"]
 [connection signal="mouse_exited" from="VBoxContainer/Start" to="." method="_on_start_mouse_exited"]

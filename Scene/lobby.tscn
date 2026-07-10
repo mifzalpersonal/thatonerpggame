@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://c733gulhvmtpw" path="res://weapon_manager.gd" id="7_pogwf"]
 [ext_resource type="Texture2D" uid="uid://b3st7dml2383b" path="res://GUI/Asset/Point.png" id="9_q8xwb"]
 [ext_resource type="FontFile" uid="uid://c3uilcykbd6n0" path="res://Font/Rubik/static/Rubik-Regular.ttf" id="10_sbj8c"]
+[ext_resource type="Texture2D" uid="uid://f7he6kh18lhu" path="res://Ifile.png" id="11_v0o1u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rggs0"]
 atlas = ExtResource("3_yy83c")
@@ -223,6 +224,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.3364506, 0)
 script = ExtResource("1_yy83c")
 
 [node name="MainMap" parent="." unique_id=1602624028 instance=ExtResource("1_d31jc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.1922202, 0)
 
 [node name="Char3" type="CharacterBody3D" parent="." unique_id=2050083730]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3849945, 0)
@@ -254,7 +256,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -2.5, 1.5)
 script = ExtResource("7_pogwf")
 
 [node name="InteractionArea" type="Area3D" parent="." unique_id=1919792627]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3991723, -7.1722054)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.292969, 3.3991723, 26.950586)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionArea" unique_id=1204814040]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
@@ -288,47 +290,38 @@ color = Color(0.09411765, 0.09411765, 0.09411765, 0.49019608)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ConfigUI" unique_id=1936672171]
 layout_mode = 0
-offset_left = 166.0
-offset_top = 343.0
-offset_right = 294.0
-offset_bottom = 447.0
+offset_left = 110.0
+offset_top = 362.0
+offset_right = 366.0
+offset_bottom = 426.0
 
 [node name="PlayButton" type="Button" parent="CanvasLayer/ConfigUI/VBoxContainer" unique_id=1769461126]
-custom_minimum_size = Vector2(128, 32)
+custom_minimum_size = Vector2(256, 64)
 layout_mode = 2
-text = "Lets GO"
-
-[node name="VSplitContainer" type="VSplitContainer" parent="CanvasLayer/ConfigUI/VBoxContainer" unique_id=1880774992]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-
-[node name="CloseButton" type="Button" parent="CanvasLayer/ConfigUI/VBoxContainer" unique_id=1972481104]
-custom_minimum_size = Vector2(128, 32)
-layout_mode = 2
-text = "Meh.."
-
-[node name="Label" type="Label" parent="CanvasLayer/ConfigUI" unique_id=1135183478]
-layout_mode = 0
-offset_left = 107.0
-offset_top = 108.0
-offset_right = 355.0
-offset_bottom = 196.0
 theme_override_font_sizes/font_size = 32
-text = "BrinForest"
-horizontal_alignment = 1
-vertical_alignment = 1
+text = "Selidiki"
 
 [node name="Label2" type="Label" parent="CanvasLayer/ConfigUI" unique_id=1307004866]
 layout_mode = 0
-offset_left = 107.0
-offset_top = 184.0
-offset_right = 355.0
-offset_bottom = 272.0
+offset_left = 55.0
+offset_top = 200.0
+offset_right = 428.0
+offset_bottom = 288.0
 theme_override_fonts/font = ExtResource("10_sbj8c")
 theme_override_font_sizes/font_size = 16
-text = "Kopi kapal api"
-horizontal_alignment = 1
+text = "Sebuah Altar Misterius Muncul Di Sekitar Hutan Jal Di Utara, Telah Di Utus Seorang Tein Untuk Menyelidiki Nya Namun Ia Tidak Kunjung Kembali ..."
 vertical_alignment = 1
+autowrap_mode = 2
+justification_flags = 171
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/ConfigUI" unique_id=1844230510]
+texture_filter = 1
+layout_mode = 0
+offset_left = 50.0
+offset_top = 61.0
+offset_right = 462.8
+offset_bottom = 190.0
+texture = ExtResource("11_v0o1u")
 
 [node name="UIAnimation" type="AnimationPlayer" parent="CanvasLayer" unique_id=1330137219]
 libraries/ = SubResource("AnimationLibrary_8wibw")
@@ -336,4 +329,3 @@ libraries/ = SubResource("AnimationLibrary_8wibw")
 [connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]
 [connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_body_exited"]
 [connection signal="pressed" from="CanvasLayer/ConfigUI/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/ConfigUI/VBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
