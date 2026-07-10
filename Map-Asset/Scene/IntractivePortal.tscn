@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c4pi7qpyxm5ra"]
 
 [ext_resource type="Script" uid="uid://cqw8ik0pw77i5" path="res://next_level_portal.gd" id="1_c4cql"]
+[ext_resource type="PackedScene" uid="uid://bbw3cp5koluxm" path="res://Summoner.gltf" id="2_33xar"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_13myp"]
 
@@ -8,7 +9,7 @@
 script = ExtResource("1_c4cql")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1641022235]
-transform = Transform3D(8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 1.2087476, 0)
+transform = Transform3D(25.768347, 0, 0, 0, 16.953812, 0, 0, 0, 24.096003, 0, 7.774851, 0)
 shape = SubResource("BoxShape3D_13myp")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=253756208]
@@ -68,6 +69,9 @@ offset_bottom = 13.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Tidak"
+
+[node name="blockbench_export" parent="." unique_id=706773163 instance=ExtResource("2_33xar")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0)
 
 [connection signal="pressed" from="CanvasLayer/Panel/IysButton" to="." method="_on_iys_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Panel/TdkButton" to="." method="_on_tdk_button_pressed"]

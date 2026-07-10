@@ -1,13 +1,3 @@
-res://Map-Asset/Scene/Main.tscn
-res://main_menu_model.gdshader
-res://Map-Asset/Scene/Player/darah.gd
-res://Map-Asset/Scene/Char3.tscn
-res://main_menu.tscn
-res://deadscene.tscn
-res://Map-Asset/Scene/Enemy/enemy1.tscn
-res://zombie.gd
-res://Scene/lobby.tscn
-res://Scene/main_map.tscn
-res://Map-Asset/Tres/grass.meshlib
+res://Map-Asset/Scene/end_room.tscn
 res://Map-Asset/Tres/High.tres
-res://map_tile.tscn
+res://main_menu_model.gdshader
