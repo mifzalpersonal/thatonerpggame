@@ -89,15 +89,22 @@ func pemicu_kematian() -> void:
 	
 	var player = get_parent()
 	
+	# === TAMBAHKAN DUA BARIS INI ===
+	player.set_physics_process(false) # Menghentikan gerakan dan update animasi player
+	player.set_process(false)         # Menghentikan input serang/ganti item saat mati
+	# ===============================
+	
 	var collision = player.get_node_or_null("CollisionShape3D")
 	if collision:
 		collision.set_deferred("disabled", true)
 		
 	var sprite = player.get_node_or_null("AnimatedSprite3D") 
-	if sprite and sprite.sprite_frames.has_animation("Die"):
-		sprite.play("Die")
+	if sprite and sprite.sprite_frames.has_animation("Death"):
+		sprite.play("Death")
 	elif sprite and sprite.sprite_frames.has_animation("Death"):
 		sprite.play("Death")
+
+	# ... (sisa kode efek kamera dan screen mati tetap sama)
 
 	# --- EFEK KAMERA DRAMATIS ---
 	var camera = get_tree().get_root().get_camera_3d() 

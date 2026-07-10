@@ -188,15 +188,6 @@ radius = 0.19859257
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7437539, 0)
 script = ExtResource("1_he2yi")
 
-[node name="CameraPivot" type="Node3D" parent="." unique_id=59797104]
-transform = Transform3D(1, 0, 0, 0, 0.70710677, -0.70710677, 0, 0.70710677, 0.70710677, 0, 0, 0)
-
-[node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=1662372830]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, -13)
-current = true
-fov = 80.0
-near = 0.001
-
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=1933847049]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
 billboard = 1
@@ -205,6 +196,15 @@ sprite_frames = SubResource("SpriteFrames_13myp")
 animation = &"Death"
 frame = 11
 frame_progress = 1.0
+
+[node name="CameraPivot" type="Node3D" parent="." unique_id=59797104]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, -0.70710677, 0, 0.70710677, 0.70710677, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=1662372830]
+transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, -13)
+current = true
+fov = 80.0
+near = 0.001
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=292171999]
 transform = Transform3D(6, 0, 0, 0, 6, 0, 0, 0, 6, 0, 0, 0)
