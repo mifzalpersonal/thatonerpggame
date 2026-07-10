@@ -1,6 +1,11 @@
-res://
-res://Map-Asset/Scene/
 res://Scene/
+res://Character-Asset/Enemy/Boss/
+res://
+res://Character-Asset/Enemy/Slime/
+res://Character-Asset/Enemy/Plant/
+res://Character-Asset/Enemy/Wisp/
+res://Character-Asset/Player Vampire/
+res://Map-Asset/Scene/
 res://Map-Asset/Scene/Enemy/
 res://Font/Rubik/static/
 res://GUI/Asset/
@@ -9,5 +14,4 @@ res://Weapon-Asset/Huges/Huges_fire/
 res://Weapon-Asset/sword_slim/
 res://Map-Asset/Scene/Player/
 res://Map-Asset/Scene/
-res://Character-Asset/Player Vampire/
 res://Character-Asset/Sprites/IDLE/

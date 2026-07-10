@@ -1,5 +1,8 @@
-GridContainer
+Sprite3D
+Node
 CollisionShape3D
+CharacterBody3D
+GridContainer
 Area3D
 GPUParticles3D
 MeshInstance3D
@@ -10,6 +13,3 @@ Marker3D
 Button
 Label
 Panel
-CanvasLayer
-VSplitContainer
-Container

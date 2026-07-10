@@ -1,17 +1,98 @@
 [gd_scene format=3 uid="uid://bqk0gkryxb0nm"]
 
 [ext_resource type="Script" uid="uid://dlugomsiag3ge" path="res://zombie.gd" id="1_h3uvd"]
-[ext_resource type="Texture2D" uid="uid://ch1n6isgcdat4" path="res://Map-Asset/Scene/Enemy/Enemy_type_flying.png" id="1_l5u6o"]
+[ext_resource type="Texture2D" uid="uid://3fbdhijhrhry" path="res://Character-Asset/Enemy/Wisp/Enemy_type_flying_idle_animated-Sheet.png" id="2_h3uvd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6art"]
+atlas = ExtResource("2_h3uvd")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tssx0"]
+atlas = ExtResource("2_h3uvd")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iksk0"]
+atlas = ExtResource("2_h3uvd")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kmytd"]
+atlas = ExtResource("2_h3uvd")
+region = Rect2(96, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y8bpv"]
+atlas = ExtResource("2_h3uvd")
+region = Rect2(128, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bbcg7"]
+atlas = ExtResource("2_h3uvd")
+region = Rect2(160, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yepmc"]
+atlas = ExtResource("2_h3uvd")
+region = Rect2(192, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j604b"]
+atlas = ExtResource("2_h3uvd")
+region = Rect2(224, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mbbn"]
+atlas = ExtResource("2_h3uvd")
+region = Rect2(256, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0l2i0"]
+atlas = ExtResource("2_h3uvd")
+region = Rect2(288, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kbian"]
+atlas = ExtResource("2_h3uvd")
+region = Rect2(320, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jwitu"]
+atlas = ExtResource("2_h3uvd")
+region = Rect2(352, 0, 32, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_4kxuq"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_l5u6o")
+"texture": SubResource("AtlasTexture_t6art")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tssx0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iksk0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kmytd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y8bpv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bbcg7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yepmc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j604b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mbbn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0l2i0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kbian")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jwitu")
 }],
 "loop": 1,
 "name": &"default",
-"speed": 5.0
+"speed": 12.0
 }]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_fspii"]
@@ -33,7 +114,7 @@ transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 2.5506306, 0)
 billboard = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_4kxuq")
-frame_progress = 0.9884623
+frame_progress = 0.041526392
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1994943877]
 transform = Transform3D(2.3443997, 0, 0, 0, 3.5608358, 0, 0, 0, 1.9698501, 0, 1.536356, 0)
