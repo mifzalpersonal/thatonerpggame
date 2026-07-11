@@ -4,11 +4,12 @@
 [ext_resource type="PackedScene" uid="uid://cvht6bxa5jo4m" path="res://Map-Asset/Scene/start_room.tscn" id="2_evryy"]
 [ext_resource type="PackedScene" uid="uid://37j1jwrq2ndx" path="res://Map-Asset/Scene/room_a.tscn" id="3_7mcfi"]
 [ext_resource type="PackedScene" uid="uid://ck10xvifbujct" path="res://Map-Asset/Scene/room_b.tscn" id="4_msp8f"]
-[ext_resource type="PackedScene" uid="uid://q2d6dtyc1qb3" path="res://Map-Asset/Scene/end_room.tscn" id="5_r74e5"]
+[ext_resource type="PackedScene" uid="uid://q2d6dtyc1qb3" path="res://Map-Asset/Scene/end_room.tscn" id="5_evryy"]
+[ext_resource type="PackedScene" uid="uid://bqk0gkryxb0nm" path="res://Map-Asset/Scene/Enemy/enemy1.tscn" id="7_18wyr"]
 
 [node name="ProceduralMap" type="Node3D" unique_id=392431847]
 script = ExtResource("1_u5rmv")
 start_room_scene = ExtResource("2_evryy")
 room_scenes = Array[PackedScene]([ExtResource("3_7mcfi"), ExtResource("4_msp8f")])
-end_room_scene = ExtResource("5_r74e5")
-natural_enemy_scene = ExtResource("3_7mcfi")
+end_room_scene = ExtResource("5_evryy")
+natural_enemy_scene = ExtResource("7_18wyr")

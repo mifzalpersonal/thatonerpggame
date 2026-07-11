@@ -1,7 +1,7 @@
 extends Node3D
 
 @onready var level_container = $LevelContainer
-@onready var player = $Char3
+@onready var player = $CharacterBody3D
 
 func _ready():
 	# Serah terima jabatan: Daftarkan scene Main ini ke GameManager
@@ -13,19 +13,26 @@ func _ready():
 	# Mulai load level pertama
 	GameManager.load_initial_level()
 
-# Fungsi pembongkar-pasang map di dalam wadah
 func change_map(new_map_scene: PackedScene):
-	# 1. Bersihkan map lama agar memori RAM bersih dan tidak tumpuk
+	# 1. Sebelum menghapus, putus hubungan sinyal agar tidak ada sinyal nyasar ke node lama
+	if GameManager.map_generation_complete.is_connected(_on_map_ready):
+		GameManager.map_generation_complete.disconnect(_on_map_ready)
+
+	# 2. Bersihkan map lama dari wadah LevelContainer
 	for child in level_container.get_children():
 		child.queue_free()
 	
-	# 2. Wujudkan blueprint map menjadi objek nyata di memori
-	var map_instance = new_map_scene.instantiate()
+	# 3. Tunggu 1 frame penuh agar objek lama BENAR-BENAR musnah dari memori dunia
+	await get_tree().process_frame
 	
-	# 3. Masukkan objek map nyata tersebut ke dalam wadah (LevelContainer)
+	# 4. Hubungkan kembali sinyalnya khusus untuk map yang baru nanti
+	GameManager.map_generation_complete.connect(_on_map_ready)
+	
+	# 5. Setelah dunia bersih total, barulah lahirkan map baru
+	var map_instance = new_map_scene.instantiate()
 	level_container.add_child(map_instance)
-
-# Berjalan otomatis setelah map selesai di-generate dan posisi fisik siap
+	print("MAIN_SCENE: Map lama musnah total, map baru dilahirkan dengan aman!")
+	
 func _on_map_ready():
 	if player:
 		# 1. Matikan proses physics player sementara (Biar dia gak ngelawan pas dipindah)

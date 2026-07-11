@@ -1,7 +1,7 @@
 extends Area3D
 
 @export var enemy_scene: PackedScene
-@export var spawn_points: Array # DIUBAH JADI GENERIK AGAR TIDAK ERROR NATIVE TYPE 'Node3D'
+@export var spawn_points: Array = [] # Dibuat generik dan kosong agar diisi otomatis oleh Generator
 
 @onready var ui_layer = $CanvasLayer
 @onready var ui_label = $CanvasLayer/Panel/ConfirmLabel
@@ -73,34 +73,42 @@ func start_wave():
 		spawn_enemy()
 
 func spawn_enemy():
+	# Pengaman jika portal ini adalah sisa level lalu yang sedang mengantre queue_free
+	if not is_inside_tree():
+		return
+		
 	if spawn_points.is_empty(): 
 		print("Peringatan: Belum ada Spawn Points untuk Wave!")
 		return
 		
-	# 1. Saring ulang kandidat spawner yang murni masuk ke dalam group WaveSpawner
+	# Menyaring instansi node EnemySpawnWav yang benar-benar aktif di Tree level baru
 	var valid_wave_points: Array = []
 	for point in spawn_points:
-		if is_instance_valid(point) and point.is_in_group("WaveSpawner"):
+		if is_instance_valid(point):
 			valid_wave_points.append(point)
 			
-	# 2. Pengaman darurat jika data kosong
+	# Pengaman jika seluruh spawner terdeteksi mati/kosong
 	if valid_wave_points.is_empty():
-		print("Peringatan Fatal: Tidak ada node dengan group 'WaveSpawner' yang diterima portal!")
+		print("Peringatan Fatal: Spawner yang diterima portal kondisinya tidak valid di memori!")
 		return
 		
-	# 3. Ambil acak murni dari daftar wave yang bersih dari intervensi spawner natural
+	# Ambil acak salah satu node EnemySpawnWav
 	var random_point = valid_wave_points.pick_random()
 	
+	# Lahirkan monster wave baru
 	var wave_enemy = enemy_scene.instantiate()
-	
-	# Masukkan ke Main Scene dunia luar, baru setel global_position-nya
 	get_tree().current_scene.add_child(wave_enemy)
-	wave_enemy.global_position = random_point.global_position
 	
-	# Sambungkan sinyal kematian monster wave untuk menghitung sisa musuh
+	# Proteksi posisi fisik: Ambil global_position langsung dari node spawner yang valid
+	if "global_position" in random_point:
+		wave_enemy.global_position = random_point.global_position
+	else:
+		wave_enemy.global_position = Vector3.ZERO
+	
+	# Sambungkan sinyal kematian musuh
 	wave_enemy.tree_exited.connect(_on_enemy_defeated)
 	enemies_alive += 1
-	print("WAVE SPAWN: Monster tantangan murni lahir di spawner wave: ", wave_enemy.global_position)
+	print("WAVE SPAWN: Monster lahir di posisi spawner: ", wave_enemy.global_position)
 
 func _on_enemy_defeated():
 	enemies_alive -= 1
