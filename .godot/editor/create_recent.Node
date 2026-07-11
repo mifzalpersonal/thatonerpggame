@@ -1,3 +1,4 @@
+AudioStreamPlayer3D
 Marker3D
 AnimatedSprite3D
 CollisionShape3D
@@ -11,4 +12,3 @@ CharacterBody3D
 GridContainer
 Area3D
 GPUParticles3D
-StaticBody3D

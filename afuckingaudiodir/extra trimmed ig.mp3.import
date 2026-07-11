@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cod86hds2aud"
+path="res://.godot/imported/extra trimmed ig.mp3-bdccdc6e1b65f7b31496e3331abcd923.mp3str"
+
+[deps]
+
+source_file="res://afuckingaudiodir/extra trimmed ig.mp3"
+dest_files=["res://.godot/imported/extra trimmed ig.mp3-bdccdc6e1b65f7b31496e3331abcd923.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

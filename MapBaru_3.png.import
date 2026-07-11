@@ -2,23 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brrjom0wvvfn4"
-path="res://.godot/imported/MapBaru_3.png-5177154c9d4a6170f9c85a21371a1928.ctex"
+uid="uid://ca7eygbcgsyxw"
+path.s3tc="res://.godot/imported/MapBaru_3.png-5177154c9d4a6170f9c85a21371a1928.s3tc.ctex"
 metadata={
-"vram_texture": false
-}
-generator_parameters={
-"md5": "59e370b0e7fb039d19c20134fe2e6dd8"
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://MapBaru_3.png"
-dest_files=["res://.godot/imported/MapBaru_3.png-5177154c9d4a6170f9c85a21371a1928.ctex"]
+dest_files=["res://.godot/imported/MapBaru_3.png-5177154c9d4a6170f9c85a21371a1928.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

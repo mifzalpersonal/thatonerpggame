@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://kwjfn63ax2ll" path="res://NatureWeapon.gd" id="1_3o0rl"]
 [ext_resource type="PackedScene" uid="uid://ufejau7o76ww" path="res://Weapon-Asset/sword_slim/nature_ver/Sword2.gltf" id="1_33k4j"]
+[ext_resource type="AudioStream" uid="uid://bhn15qvhalh33" path="res://afuckingaudiodir/513739__daleonfire__sword-schwing.wav" id="3_2my27"]
+[ext_resource type="AudioStream" uid="uid://ujqh5utjuqtb" path="res://afuckingaudiodir/swooshtrim.mp3" id="4_w13hh"]
 
 [sub_resource type="Animation" id="Animation_8ih5n"]
 resource_name = "Attack"
@@ -59,3 +61,9 @@ fov = 101.38106
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1967260926]
 light_energy = 0.549
+
+[node name="SfxSlash" type="AudioStreamPlayer3D" parent="." unique_id=1855015657]
+stream = ExtResource("3_2my27")
+
+[node name="SfxSlash2" type="AudioStreamPlayer3D" parent="." unique_id=62961117]
+stream = ExtResource("4_w13hh")

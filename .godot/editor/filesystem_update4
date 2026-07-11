@@ -1,13 +1,7 @@
-res://Map-Asset/Scene/end_room.tscn
+res://sword_slim_nature.tscn
 res://Map-Asset/Tres/High.tres
 res://Map-Asset/Tres/Enviroment.tres
 res://main_menu_model.gdshader
-res://Map-Asset/Scene/procedural_map.tscn
-res://MapGenerator.gd
-res://GameManager.gd
-res://Map-Asset/Scene/main.gd
-res://Map-Asset/Scene/Main.tscn
-res://Map-Asset/Scene/Enemy/enemy1.tscn
-res://Map-Asset/Scene/IntractivePortal.tscn
-res://next_level_portal.gd
-res://Map-Asset/Scene/Char3.tscn
+res://NatureWeapon.gd
+res://bow.tscn
+res://bow.gd

@@ -2,23 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjq4dtmlvxahj"
-path="res://.godot/imported/Enviroment_0.png-384f057a2de6fa78e1c18c1f55c6c814.ctex"
+uid="uid://b1lxxnghx848u"
+path.s3tc="res://.godot/imported/Enviroment_0.png-384f057a2de6fa78e1c18c1f55c6c814.s3tc.ctex"
 metadata={
-"vram_texture": false
-}
-generator_parameters={
-"md5": "bd7aeaeb90dd872eef7d9af3ba9b10f6"
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://Map-Asset/Scene/Enviroment_0.png"
-dest_files=["res://.godot/imported/Enviroment_0.png-384f057a2de6fa78e1c18c1f55c6c814.ctex"]
+dest_files=["res://.godot/imported/Enviroment_0.png-384f057a2de6fa78e1c18c1f55c6c814.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

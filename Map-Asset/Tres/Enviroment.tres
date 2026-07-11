@@ -1,6 +1,6 @@
 [gd_resource type="MeshLibrary" format=4 uid="uid://d4lcgjxj2m1nl"]
 
-[ext_resource type="Texture2D" uid="uid://bjq4dtmlvxahj" path="res://Map-Asset/Scene/Enviroment_0.png" id="1_wdrv7"]
+[ext_resource type="Texture2D" uid="uid://b1lxxnghx848u" path="res://Map-Asset/Scene/Enviroment_0.png" id="1_wdrv7"]
 [ext_resource type="Texture2D" uid="uid://bj0pwx1v8ejj3" path="res://Map-Asset/Scene/Enviroment_1.png" id="2_si4yw"]
 [ext_resource type="Texture2D" uid="uid://c22wltujn0yw0" path="res://Map-Asset/Scene/Enviroment_2.png" id="3_q1rqt"]
 [ext_resource type="Texture2D" uid="uid://dvpsxgu3vf3h8" path="res://Map-Asset/Scene/Enviroment_3.png" id="4_si4yw"]
