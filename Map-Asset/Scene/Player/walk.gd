@@ -5,6 +5,10 @@ extends CharacterBody3D
 @onready var node_tangan = $Tangan
 @onready var radar_aim = $RadarAim # <--- SISIPAN BARU: Referensi Radar Area3D
 
+# --- TAMBAHAN GRAVITASI 3D ---
+var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+# -----------------------------
+
 # --- TAMBAHAN SPEED BOOST ---
 var current_speed: float = 10.0
 var speed_boost_timer: Timer
@@ -39,9 +43,18 @@ func _ready() -> void:
 	add_child(damage_boost_timer)
 	# -----------------------------------
 	
-	set_physics_process(false)
+	# FIX: Jangan di-false, biarkan true agar physics dan gravitasi bisa berjalan!
+	set_physics_process(true)
 
 func _physics_process(delta):
+	# 1. LOGIKA GRAVITASI DASAR
+	# Jika karakter sedang melayang/tidak menyentuh lantai, tarik ke bawah
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+	else:
+		# Reset kecepatan Y saat menyentuh tanah agar tidak menumpuk energi jatuh
+		velocity.y = 0.0
+
 	var input_dir = Vector3.ZERO
 
 	# WASD input
@@ -58,8 +71,13 @@ func _physics_process(delta):
 	if input_dir != Vector3.ZERO:
 		input_dir = input_dir.normalized()
 
-	# Gerakan
-	velocity = input_dir * current_speed
+	# 2. SIMPAN GERAKAN HORIZONTAL (X & Z)
+	# Menggunakan variabel bantuan agar sumbu Y (gravitasi) tidak tertimpa/terhapus input jalan
+	var target_velocity = input_dir * current_speed
+	velocity.x = target_velocity.x
+	velocity.z = target_velocity.z
+	
+	# 3. APLIKASIKAN FISIKA DAN GRAVITASI
 	move_and_slide()
 
 	# ========================================================
@@ -68,21 +86,20 @@ func _physics_process(delta):
 	var target_musuh = ambil_musuh_terdekat()
 	
 	if target_musuh != null:
-		# 1. Pindahkan posisi node_tangan ke poros tengah (Y tetap 0.0 sesuai script lu)
+		# Pindahkan posisi node_tangan ke poros tengah
 		node_tangan.position = Vector3(0.0, 0.0, 0.0)
 		
-		# 2. Ambil posisi musuh tapi ratakan sumbu Y-nya biar sejajar sama tangan player (anti miring ke bawah)
+		# Ambil posisi musuh tapi ratakan sumbu Y-nya biar sejajar sama tangan player (anti miring ke bawah)
 		var posisi_target = target_musuh.global_position
 		posisi_target.y = global_position.y 
 		
-		# 3. KUNCI SUCI: Paksa tangan menengok ke target secara instan!
+		# KUNCI SUCI: Paksa tangan menengok ke target secara instan!
 		node_tangan.look_at(posisi_target, Vector3.UP)
 		
-		# 4. TWEAK FIX: Karena arah 'depan' standar look_at di Godot 3D itu sumbu -Z, 
-		# sedangkan tangan lu nembaknya ke sumbu X, kita tambahkan rotasi koreksi 90 derajat!
-		node_tangan.rotate_y(deg_to_rad(90.0)) # <--- Kalau arahnya serong, ganti jadi 90.0 atau 180.0 sesuai arah moncong pedang lu!
+		# TWEAK FIX: Koreksi rotasi moncong senjata ke arah target (90.0 derajat)
+		node_tangan.rotate_y(deg_to_rad(90.0)) 
 		
-		# 5. Mainkan animasi tubuh player seperti biasa
+		# Mainkan animasi tubuh player seperti biasa
 		if target_musuh.global_position.x > global_position.x:
 			anim.play("Idle_Left")
 		else:

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://cq86oq5nqd13g"]
+
+[ext_resource type="PackedScene" uid="uid://dvmn4kdfb6avi" path="res://Breakable.tscn" id="1_tin2o"]
+
+[node name="ItemIn" type="Node3D" unique_id=2089360623]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+
+[node name="Breakable" parent="." unique_id=1190910255 instance=ExtResource("1_tin2o")]

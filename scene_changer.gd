@@ -22,7 +22,6 @@ func change_scene_to(target_scene_path: String):
 	var start_time = Time.get_ticks_msec()
 	
 	# 2. LOGIKA PERCEPATAN UNTUK REGENERASI MAP
-	# Jika kita mendeteksi perintah "REGENERATE_MAP", kita bypass ResourceLoader karena scene-nya sudah ada
 	if target_scene_path == "REGENERATE_MAP" or target_scene_path == GameManager.generator_scene_path:
 		if GameManager.main_scene != null:
 			# Muat ulang blueprint generator secara langsung tanpa loading asinkronus background yang bikin bug
@@ -51,7 +50,7 @@ func change_scene_to(target_scene_path: String):
 			print("Gagal meload scene, cek kembali path-nya!")
 	
 	# 3. Logika Penahan Waktu (Agar tidak kecepatan)
-	var minimum_loading_time = 3000 # Saya turunkan ke 3 detik agar player tidak bosan menunggu
+	var minimum_loading_time = 3000 # Turunkan ke 3 detik agar player tidak bosan menunggu
 	var time_passed = Time.get_ticks_msec() - start_time
 	
 	if time_passed < minimum_loading_time:
@@ -64,12 +63,18 @@ func change_scene_to(target_scene_path: String):
 	# TUNGGU 1 FRAME setelah scene ganti agar node-node di scene baru selesai dirakit oleh Godot
 	await get_tree().process_frame
 	
+	# ====================================================================
+	# PANDUAN PERBAIKAN DI SINI:
+	# Mematikan visibility pembungkus UI utama agar jalanan bersih 
+	# sehingga LevelUI bisa merdeka beranimasi tepat saat transisi membuka
+	# ====================================================================
+	control_ui.visible = false
+	
 	# 5. Jalankan animasi Fade From Black (Layar kembali terang)
 	animation_player.play("fade_from_black")
 	await animation_player.animation_finished
 	
 	# 6. CARA PINTAR: Cari karakter dengan memeriksa script-nya, bukan cuma namanya
-	# Kita cari di Main Scene dulu karena Char3 sekarang menetap di sana secara permanen
 	var player = null
 	if GameManager.main_scene != null:
 		player = _cari_karakter_player(GameManager.main_scene)
@@ -88,8 +93,6 @@ func change_scene_to(target_scene_path: String):
 		print("SceneChanger: Berhasil mencairkan kebekuan karakter dan mengunci posisi di: ", player.global_position)
 	else:
 		print("SceneChanger: Waduh, karakter gak ketemu di scene ini! Periksa nama nodemu.")
-	
-	control_ui.visible = false
 
 # Fungsi pembantu untuk mencari node yang punya fungsi gerakan, apa pun namanya
 func _cari_karakter_player(node: Node) -> Node:

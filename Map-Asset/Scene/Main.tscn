@@ -5,10 +5,13 @@
 [ext_resource type="Script" uid="uid://qvnte0g0jk5h" path="res://Map-Asset/Scene/Player/darah.gd" id="2_d6kqq"]
 [ext_resource type="PackedScene" uid="uid://bqk0gkryxb0nm" path="res://Map-Asset/Scene/Enemy/enemy1.tscn" id="3_75v3i"]
 [ext_resource type="PackedScene" uid="uid://f6wccaab1adv" path="res://deadscene.tscn" id="3_qi4r4"]
+[ext_resource type="PackedScene" uid="uid://c4bhokn2ce1fh" path="res://coin_hud.tscn" id="6_o1ivj"]
 [ext_resource type="PackedScene" uid="uid://bix4huq8vk512" path="res://Scene/HealthPoint.tscn" id="7_xhust"]
+[ext_resource type="PackedScene" uid="uid://y4km705r36h1" path="res://pause_menu.tscn" id="8_f7oih"]
 [ext_resource type="PackedScene" uid="uid://0jag52u11qae" path="res://Scene/item_slot.tscn" id="8_qi4r4"]
+[ext_resource type="PackedScene" uid="uid://yumr8c4f0j58" path="res://LevelGUI.tscn" id="9_f7oih"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_xhust"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_antmc"]
 viewport_path = NodePath("EnemyUI")
 
 [sub_resource type="Environment" id="Environment_qi4r4"]
@@ -41,9 +44,11 @@ dead_scene = ExtResource("3_qi4r4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.34446, 42.819855, -2.7459278)
 
 [node name="UIVisual" parent="musuhbody" index="3" unique_id=1327681699]
-texture = SubResource("ViewportTexture_xhust")
+texture = SubResource("ViewportTexture_antmc")
 
 [node name="GUI" type="CanvasLayer" parent="." unique_id=2122856101]
+
+[node name="CoinHUD" parent="GUI" unique_id=1413814855 instance=ExtResource("6_o1ivj")]
 
 [node name="GameUI" parent="GUI" unique_id=651630163 instance=ExtResource("7_xhust")]
 mouse_filter = 2
@@ -66,6 +71,10 @@ mouse_filter = 2
 [node name="ItemSlot2" parent="GUI/ItemContainer" unique_id=210039798 instance=ExtResource("8_qi4r4")]
 layout_mode = 2
 mouse_filter = 2
+
+[node name="PauseMenu" parent="GUI" unique_id=2044131015 instance=ExtResource("8_f7oih")]
+
+[node name="Control" parent="GUI" unique_id=898299092 instance=ExtResource("9_f7oih")]
 
 [node name="LevelContainer" type="Node3D" parent="." unique_id=715125515]
 

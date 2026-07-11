@@ -11,7 +11,6 @@ var posisi_patroli: Vector3 = Vector3.ZERO
 var waktu_ganti_arah: float = 0.0
 
 # ==========================================================
-# --- ditambahin ijal 	
 # --- SISP STATUS RPG BARU (TWEAK) --- 
 # ==========================================================
 # Status Bloody (Blood Katana)
@@ -96,8 +95,6 @@ func _physics_process(delta: float) -> void:
 			print(name, " efek Burn selesai.")
 	# ========================================================
 
-	# ... SISA KODE BAWAAN LU (NGEJAR PLAYER/PATROLI) BIARKAN UTUH DI BAWAH SINI ...
-	
 	if is_slowed:
 		slow_timer -= delta
 		if slow_timer <= 0:
@@ -168,6 +165,13 @@ func take_damage(amount: int) -> void:
 
 func mati() -> void:
 	print(name, " mati!")
+	
+	# --- INTEGRASI SISTEM CURRENCY ---
+	# Memanggil GameManager untuk memproses peluang 45% mendapatkan koin/poin
+	if GameManager.has_method("register_enemy_death"):
+		GameManager.register_enemy_death()
+	# ---------------------------------
+	
 	queue_free()
 
 # --- FUNGSI EFEK FREEZE/SLOW & WARNA ---
@@ -177,38 +181,32 @@ func apply_freeze_slow(percentage: float, duration: float) -> void:
 	slow_multiplier = 1.0 - percentage
 	change_enemy_color(Color(0.0, 0.75, 1.0))
 	
-# --- ditambahin ijal 	
 func apply_bloody_effect() -> void:
 	is_bloody = true
-	bloody_timer = 3.0 # Durasi 3 detik sesuai konsep lu
+	bloody_timer = 3.0 
 	bloody_tick_timer = 0.0
-	change_enemy_color(Color(0.8, 0.1, 0.1)) # Ubah warna agak merah gelap
+	change_enemy_color(Color(0.8, 0.1, 0.1)) 
 
 # Pemicu Burn Berbasis Stack (Dipanggil oleh Senjata Api)
 func apply_burn_stack() -> void:
 	if is_burning:
-		return # Kalau lagi kebakar, gak bisa numpuk stack baru
+		return 
 		
 	burn_stack += 1
 	print(name, " terkena peluru api! Stack saat ini: ", burn_stack, "/3")
 	
-	# Begitu genap 3 kali hit... BOOM! Efek Burn DoT Pecah!
 	if burn_stack >= 3:
 		is_burning = true
-		burn_timer = 5.0 # Durasi terbakar DoT 5 detik
+		burn_timer = 5.0 
 		burn_tick_timer = 0.0
 		
-		# Set efek slow 50% saat terbakar
 		if "slow_multiplier" in self:
 			slow_multiplier = 0.5 
 		elif "is_slowed" in self:
 			is_slowed = true
 			
-		change_enemy_color(Color(1.0, 0.4, 0.0)) # Berubah warna Oranye Gosong
+		change_enemy_color(Color(1.0, 0.4, 0.0)) 
 		print("BOOM! ", name, " GOSONG TERBAKAR & MELAMBAT 50%!")
-
-# --- ditambahin ijal 	
-
 
 func change_enemy_color(new_color: Color) -> void:
 	var sprite = get_node_or_null("AnimatedSprite3D")
@@ -219,4 +217,3 @@ func reset_enemy_color() -> void:
 	var sprite = get_node_or_null("AnimatedSprite3D")
 	if sprite and sprite is AnimatedSprite3D:
 		sprite.modulate = Color(1, 1, 1)
-		

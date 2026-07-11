@@ -11,7 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://b3st7dml2383b" path="res://GUI/Asset/Point.png" id="9_q8xwb"]
 [ext_resource type="Texture2D" uid="uid://bu87kpgpl7r2w" path="res://Cicle.png" id="10_pogwf"]
 [ext_resource type="FontFile" uid="uid://c3uilcykbd6n0" path="res://Font/Rubik/static/Rubik-Regular.ttf" id="10_sbj8c"]
+[ext_resource type="Script" uid="uid://dhcmq8m1a6d3y" path="res://pause_menu.gd" id="11_0d1wl"]
 [ext_resource type="Texture2D" uid="uid://f7he6kh18lhu" path="res://Ifile.png" id="11_v0o1u"]
+[ext_resource type="Texture2D" uid="uid://jpu1lbuc0n4n" path="res://afuckingaudiodir/Pause.png" id="12_8wibw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rggs0"]
 atlas = ExtResource("3_yy83c")
@@ -257,7 +259,7 @@ script = ExtResource("1_yy83c")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.1922202, 0)
 
 [node name="Char3" type="CharacterBody3D" parent="." unique_id=2050083730]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3849945, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.7317095, 3.3849945, 0)
 script = ExtResource("2_keb55")
 
 [node name="CameraPivot" type="Node3D" parent="Char3" unique_id=59797104]
@@ -322,7 +324,7 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 0
 offset_right = 272.0
 offset_bottom = 643.0
-scale = Vector2(1.7599976, 1)
+scale = Vector2(1.7599976, 1.0799998)
 color = Color(0.09411765, 0.09411765, 0.09411765, 0.49019608)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ConfigUI" unique_id=1936672171]
@@ -360,9 +362,71 @@ offset_right = 462.8
 offset_bottom = 190.0
 texture = ExtResource("11_v0o1u")
 
+[node name="PauseMenu" type="Control" parent="CanvasLayer" unique_id=2044131015]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("11_0d1wl")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/PauseMenu" unique_id=1576989775]
+custom_minimum_size = Vector2(1000, 0)
+layout_mode = 0
+offset_right = 1149.0
+offset_bottom = 655.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.27058825)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PauseMenu" unique_id=416325277]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -40.0
+offset_right = 128.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ResumeButton" type="Button" parent="CanvasLayer/PauseMenu/VBoxContainer" unique_id=374129277]
+custom_minimum_size = Vector2(256, 64)
+layout_mode = 2
+text = "Balik Ke Game"
+
+[node name="MainMenuButton" type="Button" parent="CanvasLayer/PauseMenu/VBoxContainer" unique_id=678041640]
+custom_minimum_size = Vector2(256, 64)
+layout_mode = 2
+text = "Main Menu"
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/PauseMenu" unique_id=1201655673]
+texture_filter = 1
+custom_minimum_size = Vector2(128, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -210.0
+offset_top = -202.00002
+offset_right = -82.0
+offset_bottom = -162.00002
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3.24, 3.24)
+texture = ExtResource("12_8wibw")
+
 [node name="UIAnimation" type="AnimationPlayer" parent="CanvasLayer" unique_id=1330137219]
 libraries/ = SubResource("AnimationLibrary_8wibw")
 
 [connection signal="body_entered" from="InteractionArea" to="." method="_on_interaction_area_body_entered"]
 [connection signal="body_exited" from="InteractionArea" to="." method="_on_interaction_area_body_exited"]
 [connection signal="pressed" from="CanvasLayer/ConfigUI/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/VBoxContainer/ResumeButton" to="CanvasLayer/PauseMenu" method="_on_resume_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/PauseMenu/VBoxContainer/MainMenuButton" to="CanvasLayer/PauseMenu" method="_on_main_menu_button_pressed"]

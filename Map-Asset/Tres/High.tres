@@ -934,3 +934,4 @@ item/11/shapes = [SubResource("ConcavePolygonShape3D_f33fe"), Transform3D(1, 0, 
 item/11/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 item/11/navigation_layers = 1
 item/11/preview = SubResource("ImageTexture_yuy1p")
+metadata/_editor_source_scene = "res://Breakable.tscn"

@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://cvht6bxa5jo4m"]
 
 [ext_resource type="MeshLibrary" uid="uid://c51rudjw8drhk" path="res://Map-Asset/Tres/High.tres" id="1_l2rim"]
+[ext_resource type="MeshLibrary" uid="uid://bdl2vb3ifo701" path="res://Map-Asset/Tres/Item.tres" id="2_0i8tq"]
+[ext_resource type="PackedScene" uid="uid://6cxtuv7cy8bn" path="res://WeaponChest.tscn" id="3_m5qaj"]
 
 [node name="StartRoom" type="Node3D" unique_id=1873758610]
 
-[node name="GridMap" type="GridMap" parent="." unique_id=1467804437]
+[node name="Tiles" type="GridMap" parent="." unique_id=1467804437]
 mesh_library = ExtResource("1_l2rim")
 cell_size = Vector3(4, 2, 4)
 cell_scale = 4.0
@@ -13,7 +15,24 @@ data = {
 }
 
 [node name="SpawnPoint" type="Marker3D" parent="." unique_id=1269814950]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8348522, 10.160315, 3.2145452)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8348522, 10.160315, -119.351524)
 
 [node name="ExitMarker" type="Marker3D" parent="." unique_id=1073505478]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4265175, 0, -131.36798)
+
+[node name="Chest" type="GridMap" parent="." unique_id=2051066458]
+mesh_library = ExtResource("2_0i8tq")
+cell_scale = 3.0
+data = {
+"cells": PackedInt32Array(65552, 65483, 1441792, 65566, 65483, 1441792, 131062, 65510, 1441792, 131038, 65509, 1441792)
+}
+metadata/_editor_floor_ = Vector3(0, 1, 0)
+
+[node name="ChestIn" type="Node3D" parent="." unique_id=2104334829]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 6)
+
+[node name="WeaponChest" parent="ChestIn" unique_id=1020326057 instance=ExtResource("3_m5qaj")]
+transform = Transform3D(-2, 0, -1.7484555e-07, 0, 2, 0, 1.7484555e-07, 0, -2, 0, 3.554749, -101.77913)
+
+[node name="WeaponChest2" parent="ChestIn" unique_id=1127741160 instance=ExtResource("3_m5qaj")]
+transform = Transform3D(-2, 0, -1.7484555e-07, 0, 2, 0, 1.7484555e-07, 0, -2, -6, 3.554749, -101.77913)

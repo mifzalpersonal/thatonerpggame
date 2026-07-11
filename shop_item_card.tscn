@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://b5ldtm0abkgtu"]
+
+[ext_resource type="Script" uid="uid://c4en0wmo10xki" path="res://shop_item_card.gd" id="1_widgl"]
+
+[node name="ShopItemCard" type="PanelContainer" unique_id=1904072370]
+custom_minimum_size = Vector2(200, 320)
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_widgl")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=502715228]
+layout_mode = 2
+
+[node name="ItemIcon" type="TextureRect" parent="VBoxContainer" unique_id=1993730287]
+custom_minimum_size = Vector2(120, 240)
+layout_mode = 2
+expand_mode = 1
+
+[node name="ItemName" type="Label" parent="VBoxContainer" unique_id=1119140536]
+layout_mode = 2
+
+[node name="ItemDesc" type="Label" parent="VBoxContainer" unique_id=1647587243]
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="BuyButton" type="Button" parent="VBoxContainer" unique_id=40175025]
+layout_mode = 2
+text = "Beli (0)"

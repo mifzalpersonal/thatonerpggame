@@ -2,6 +2,7 @@ extends Node3D
 
 @export var start_room_scene: PackedScene
 @export var room_scenes: Array[PackedScene]
+@export var shop_room_scene: PackedScene # BARU: Slot untuk memasukkan shop_room.tscn di Inspector
 @export var end_room_scene: PackedScene
 @export var natural_enemy_scene: PackedScene 
 
@@ -38,8 +39,21 @@ func generate_level():
 	next_spawn_z = start_room.global_position.z + start_bounds["max_meter"]
 
 	# ==================== 2. SPAWN RUANGAN TENGAH ====================
-	for i in range(total_rooms - 2):
-		var room_instance = room_scenes.pick_random().instantiate()
+	var total_middle_rooms = total_rooms - 2
+	# Tentukan indeks ruangan mana yang mau dijadikan toko (misal tepat di tengah-tengah barisan ruangan)
+	var shop_room_index = int(total_middle_rooms / 2)
+
+	for i in range(total_middle_rooms):
+		var room_instance: Node3D
+		
+		# CEK KONDISI: Jika ini level kelipatan 3 DAN perulangan menyentuh indeks tengah, lahirkan TOKO
+		if GameManager.is_shop_level() and i == shop_room_index and shop_room_scene != null:
+			room_instance = shop_room_scene.instantiate()
+			print("GENERATOR: Menyisipkan RUANG TOKO pada ruangan tengah indeks ke-", i, " di Level ", GameManager.current_level)
+		else:
+			# Jika bukan level kelipatan 3 atau bukan urutan tengah, lahirkan ruangan acak biasa
+			room_instance = room_scenes.pick_random().instantiate()
+			
 		add_child(room_instance)
 		
 		var current_gridmap = _ambil_gridmap(room_instance)
@@ -88,7 +102,6 @@ func generate_level():
 	print("GENERATOR: Berhasil mengumpulkan total spawner wave = ", wave_spawn_points.size())
 	
 	# CARI PORTAL: Cari node portal baru di dalam End Room
-	# (Disesuaikan dengan nama 'IntractivePortal' tanpa huruf 'e' sesuai screenshot)
 	var active_portal = end_room.find_child("IntractivePortal", true, false)
 	if not active_portal:
 		active_portal = end_room.find_child("*IntractivePortal*", true, false)
@@ -134,8 +147,6 @@ func _dapatkan_batas_z_gridmap(gridmap: GridMap) -> Dictionary:
 	var cell_size_z = gridmap.cell_size.z
 	
 	# Konversi koordinat indeks sel ke meteran dunia fisik Godot.
-	# Z negatif di Godot artinya MAJU/DEPAN, Z positif artinya MUNDUR/BELAKANG.
-	# Kita hitung batas dalam meter berdasarkan orientasi selnya.
 	if min_cell_z <= max_cell_z:
 		batas["min_meter"] = min_cell_z * cell_size_z
 		batas["max_meter"] = (max_cell_z + 1) * cell_size_z # +1 agar menghitung ketebalan ubin terakhir
@@ -144,7 +155,6 @@ func _dapatkan_batas_z_gridmap(gridmap: GridMap) -> Dictionary:
 
 # Fungsi sortir spawner tetap sama
 func _sortir_spawner_pakai_group(node: Node):
-	# 1. Pastikan node INI VALID dan murni objek 3D (punya posisi fisik)
 	if node and node is Node3D:
 		if node.is_in_group("WaveSpawner"):
 			wave_spawn_points.append(node)
@@ -153,7 +163,6 @@ func _sortir_spawner_pakai_group(node: Node):
 		elif node.is_in_group("NaturalSpawner"):
 			spawn_natural_monster(node.global_position, node)
 
-	# 2. Tetap telusuri anak-anaknya secara mendalam (termasuk menembus WaveManager)
 	if node:
 		for child in node.get_children():
 			_sortir_spawner_pakai_group(child)
