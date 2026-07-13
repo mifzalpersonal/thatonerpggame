@@ -2,6 +2,110 @@
 
 [ext_resource type="Script" uid="uid://dlugomsiag3ge" path="res://zombie.gd" id="1_h3uvd"]
 [ext_resource type="Texture2D" uid="uid://3fbdhijhrhry" path="res://Character-Asset/Enemy/Wisp/Enemy_type_flying_idle_animated-Sheet.png" id="2_h3uvd"]
+[ext_resource type="Texture2D" uid="uid://vc86re2bf3vr" path="res://VFX/Fire/FireDamageIndikator-sheet.png" id="2_kmytd"]
+[ext_resource type="Texture2D" uid="uid://36vgbh18ffvh" path="res://VFX/Fire/FireDamageIndikator2-sheet.png" id="3_y8bpv"]
+[ext_resource type="Texture2D" uid="uid://el5fbpyvxr7s" path="res://VFX/Fire/FireDamageIndikator3-sheet.png" id="4_bbcg7"]
+[ext_resource type="Texture2D" uid="uid://d3mqfecw1vll8" path="res://VFX/Fire/FireDamageIndikator.png" id="5_yepmc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d0n0i"]
+atlas = ExtResource("2_kmytd")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gvlrg"]
+atlas = ExtResource("2_kmytd")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ah000"]
+atlas = ExtResource("2_kmytd")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r7m1q"]
+atlas = ExtResource("2_kmytd")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w6uo6"]
+atlas = ExtResource("3_y8bpv")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kscjc"]
+atlas = ExtResource("3_y8bpv")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ora1a"]
+atlas = ExtResource("3_y8bpv")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_it54b"]
+atlas = ExtResource("3_y8bpv")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c5hff"]
+atlas = ExtResource("4_bbcg7")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0xgyk"]
+atlas = ExtResource("4_bbcg7")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6usj"]
+atlas = ExtResource("5_yepmc")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_13myp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d0n0i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gvlrg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ah000")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7m1q")
+}],
+"loop": 1,
+"name": &"Burn1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w6uo6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kscjc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ora1a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_it54b")
+}],
+"loop": 1,
+"name": &"Burn2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c5hff")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0xgyk")
+}],
+"loop": 1,
+"name": &"Burn3",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6usj")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t6art"]
 atlas = ExtResource("2_h3uvd")
@@ -109,6 +213,17 @@ viewport_path = NodePath("EnemyUI")
 
 [node name="musuhbody" type="CharacterBody3D" unique_id=404111702]
 script = ExtResource("1_h3uvd")
+
+[node name="StatusVFX" type="AnimatedSprite3D" parent="." unique_id=620874747]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1973662, 0)
+pixel_size = 0.05
+billboard = 1
+texture_filter = 0
+render_priority = 100
+sprite_frames = SubResource("SpriteFrames_13myp")
+animation = &"Burn1"
+frame_progress = 0.56873363
+speed_scale = 2.0
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=1135376981]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 2.5506306, 0)

@@ -10,6 +10,15 @@ const SLASH_PROJECTILE_SCENE = preload("res://fire_slash.tscn")
 var bisa_serang: bool = true
 # ----------------------------------
 
+# --- VARIABEL BARU: BONUS SUNTIKAN EFEK TOKO ---
+var bonus_damage: int = 0
+# -----------------------------------------------
+
+func _ready() -> void:
+	# Hubungkan senjata ke GameManager agar merespon saat item toko dibeli
+	if GameManager.has_signal("item_purchased"):
+		GameManager.item_purchased.connect(_on_item_purchased)
+
 func play_attack_animation() -> void:
 	if anim_player.has_animation("Attack"):
 		anim_player.stop() 
@@ -30,6 +39,11 @@ func shoot_slash() -> void:
 	var slash_instance = SLASH_PROJECTILE_SCENE.instantiate()
 	get_tree().root.add_child(slash_instance)
 	slash_instance.global_transform = muzzle.global_transform
+	
+	# SUNTIKKAN BONUS DAMAGE: Jika senjata punya bonus damage dari toko, tambahkan ke base damagenya peluru
+	if bonus_damage > 0 and "damage" in slash_instance:
+		slash_instance.damage += bonus_damage
+		print("⚔️ WEAPON: Peluru di-spawn dengan tambahan +", bonus_damage, " ATK! Total base damage peluru: ", slash_instance.damage)
 
 # --- FUNGSI UNTUK MENGATUR JEDA ---
 func mulai_cooldown() -> void:
@@ -40,6 +54,21 @@ func mulai_cooldown() -> void:
 	
 	# Pas timernya habis (timeout), panggil fungsi untuk buka kunci serang
 	timer.timeout.connect(func(): bisa_serang = true)
+
+# --- FUNGSI MERESPON EFEK ITEM TOKO ---
+func _on_item_purchased(item_id: String) -> void:
+	match item_id:
+		"atk_buff":
+			# Tambah base damage senjata secara permanen
+			bonus_damage += 5
+			print("⚔️ WEAPON: Antidote ATK dibeli! Bonus damage senjata saat ini: +", bonus_damage)
+			
+		"atk_speed_buff":
+			# Potong waktu cooldown sebesar 15% (artinya menyerang 15% lebih cepat)
+			attack_cooldown *= 0.85
+			# Batasi agar cooldown tidak menyentuh angka 0 atau terlalu minus (gameplay guard)
+			attack_cooldown = max(0.1, attack_cooldown)
+			print("⚔️ WEAPON: Cincin Waktu dibeli! Cooldown tebasan dipercepat menjadi: ", attack_cooldown, " detik")
 
 func mainkan_sfx_tebasan() -> void:
 	# 1. Ambil acuan ke node template audio bawaan di scene lu

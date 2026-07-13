@@ -62,26 +62,28 @@ func _on_body_entered(body: Node) -> void:
 		if body.has_method("apply_freeze_slow"):
 			body.apply_freeze_slow(0.4, 3.0)
 			
-		# 2. Peluang 20% Heal Player
+		# 2. Peluang 20% Heal Player & Ambil Status Toko + Multiplier
 		var nodes_player = get_tree().get_nodes_in_group("Player")
-		if nodes_player.size() > 0:
-			var player = nodes_player[0]
-			if randf() <= 0.2: # Lolos peluang 20%
-				var health_component = player.get_node_or_null("darahEntity")
-				if health_component and "hp" in health_component:
-					health_component.hp += 1.0
-					print("🌿 NATURE HEAL AKTIF! HP lu bertambah jadi: ", health_component.hp)
-		# ========================================================
-		
-		# --- CARI PLAYER LEWAT GROUP (ANTI GAGAL) ---
-		# Mencari node pertama yang terdaftar di grup "Player"
-		
 		if nodes_player.size() > 0:
 			var node_player = nodes_player[0] # Ambil Player-nya
 			
+			# --- LOGIKA HEAL 20% ---
+			if randf() <= 0.2: # Lolos peluang 20%
+				var health_component = node_player.get_node_or_null("darahEntity")
+				if health_component and "hp" in health_component:
+					health_component.hp += 1.0
+					print("🌿 NATURE HEAL AKTIF! HP lu bertambah jadi: ", health_component.hp)
+			
+			# --- INTEGRASI STATUS TOKO & MULTIPLIER PLAYER ---
+			# A. Tambahkan bonus damage permanen dari Toko (Antidote ATK) jika ada
+			if "shop_bonus_damage" in node_player:
+				damage_akhir += node_player.shop_bonus_damage
+			
+			# B. Kalikan dengan Multiplier Sementara (Power-up Map) jika ada
 			if "damage_multiplier_active" in node_player:
-				damage_akhir = float(damage) * node_player.damage_multiplier_active
-				print("🔥 Peluru ", name, " berhasil dapet multiplier Player lewat Group: ", damage_akhir)
+				damage_akhir = damage_akhir * node_player.damage_multiplier_active
+				
+			print("🔥 Peluru Nature ", name, " | Base + Toko: ", (damage + node_player.shop_bonus_damage), " | Final xMultiplier: ", damage_akhir)
 		else:
 			print("🚨 ERROR: Player belum didaftarkan ke Group 'Player' di Editor Godot!")
 		

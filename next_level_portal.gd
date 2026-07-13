@@ -15,6 +15,8 @@ var is_player_inside: bool = false
 
 func _ready():
 	ui_layer.visible = false
+	current_state = PortalState.START_WAVE # Pengaman: Selalu reset status ke awal saat scene di-load
+	enemies_alive = 0                      # Pengaman: Bersihkan hitungan sisa musuh lama
 	
 	# Hubungkan signal bawaan Area3D
 	body_entered.connect(_on_body_entered)
@@ -54,6 +56,11 @@ func _on_yes_pressed():
 	
 	if current_state == PortalState.START_WAVE:
 		current_state = PortalState.FIGHTING
+		
+		# MUNCULKAN UI WAVE SAAT TOMBOL YES DIKLIK (FIGHTING DIMULAI)
+		get_tree().call_group("UI_Wave", "set_visible", true)
+		get_tree().call_group("UI_Wave", "update_wave_ui")
+		
 		start_wave()
 	elif current_state == PortalState.NEXT_LEVEL:
 		GameManager.go_to_next_level()
@@ -65,15 +72,20 @@ func _on_no_pressed():
 # ==================== LOGIKA WAVE MUSUH ====================
 
 func start_wave():
+	# 👍 PENGAMAN DISESUAIKAN: Hanya stop jika portal keluar dari tree
+	if not is_inside_tree():
+		return
+		
 	print("Memulai Wave: ", GameManager.current_wave)
 	var total_enemies = GameManager.current_wave * 3
 	
 	for i in range(total_enemies):
-		await get_tree().create_timer(0.5).timeout # Jeda spawn antar monster wave
+		if not is_inside_tree():
+			return
+		await get_tree().create_timer(0.5).timeout 
 		spawn_enemy()
 
 func spawn_enemy():
-	# Pengaman jika portal ini adalah sisa level lalu yang sedang mengantre queue_free
 	if not is_inside_tree():
 		return
 		
@@ -81,45 +93,58 @@ func spawn_enemy():
 		print("Peringatan: Belum ada Spawn Points untuk Wave!")
 		return
 		
-	# Menyaring instansi node EnemySpawnWav yang benar-benar aktif di Tree level baru
 	var valid_wave_points: Array = []
 	for point in spawn_points:
 		if is_instance_valid(point):
 			valid_wave_points.append(point)
 			
-	# Pengaman jika seluruh spawner terdeteksi mati/kosong
 	if valid_wave_points.is_empty():
-		print("Peringatan Fatal: Spawner yang diterima portal kondisinya tidak valid di memori!")
+		print("Peringatan Fatal: Spawner tidak valid di memori!")
 		return
 		
-	# Ambil acak salah satu node EnemySpawnWav
 	var random_point = valid_wave_points.pick_random()
 	
-	# Lahirkan monster wave baru
 	var wave_enemy = enemy_scene.instantiate()
 	get_tree().current_scene.add_child(wave_enemy)
 	
-	# Proteksi posisi fisik: Ambil global_position langsung dari node spawner yang valid
 	if "global_position" in random_point:
 		wave_enemy.global_position = random_point.global_position
 	else:
 		wave_enemy.global_position = Vector3.ZERO
 	
-	# Sambungkan sinyal kematian musuh
 	wave_enemy.tree_exited.connect(_on_enemy_defeated)
 	enemies_alive += 1
-	print("WAVE SPAWN: Monster lahir di posisi spawner: ", wave_enemy.global_position)
+	print("WAVE SPAWN: Monster lahir di posisi: ", wave_enemy.global_position)
 
 func _on_enemy_defeated():
+	# 🔴 PENGAMAN UTAMA: Kita pakai variabel enemies_alive sebagai tameng. 
+	# Jika musuh berkurang saat portal sudah mau dihancurkan (pindah scene/exit), 
+	# abaikan saja kodenya agar tidak menaikkan wave secara tidak sengaja.
+	if not is_inside_tree():
+		return
+
 	enemies_alive -= 1
+	
+	# Jika kematian musuh dipicu karena pindah scene/loading, enemies_alive bisa minus banyak.
+	# Kita hanya naikkan wave kalau permainannya memang sedang berjalan normal.
 	if enemies_alive <= 0:
+		# Cek tambahan: jika angka minus (artinya dihapus paksa oleh engine saat ganti scene), abaikan!
+		if enemies_alive < 0:
+			return
+			
 		if GameManager.current_wave < GameManager.MAX_WAVES:
 			GameManager.current_wave += 1
-			await Engine.get_main_loop().create_timer(2.0).timeout
-			start_wave()
+			GameManager.level_changed.emit()
+			
+			if is_inside_tree():
+				await get_tree().create_timer(2.0).timeout
+				if is_inside_tree():
+					start_wave()
 		else:
 			print("Pertempuran selesai! Kembalilah ke Portal untuk naik level.")
 			current_state = PortalState.NEXT_LEVEL
+			
+			get_tree().call_group("UI_Wave", "set_visible", false)
 			
 			if is_player_inside:
 				setup_ui_text()

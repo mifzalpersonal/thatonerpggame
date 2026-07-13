@@ -17,8 +17,6 @@ func _ready():
 		next_level_portal.visible = false
 		next_level_portal.set_deferred("monitoring", false)
 		
-	start_wave()
-
 func start_wave():
 	print("Memulai Wave: ", GameManager.current_wave)
 	# Jumlah musuh: Wave 1 = 3, Wave 2 = 6, Wave 3 = 9 musuh
@@ -39,14 +37,24 @@ func spawn_enemy():
 	enemies_alive += 1
 
 func _on_enemy_defeated():
+	# 👇 PENGAMAN 1: Jika node ini sudah keluar dari game tree (sedang loading/pindah scene), STOP!
+	if not is_inside_tree():
+		return
+
+	# 👇 PENGAMAN 2: Jika level kembali ke 1 (habis reset_game), jangan proses sisa musuh lama!
+	if GameManager.current_level == 1:
+		return
+
 	enemies_alive -= 1
 	if enemies_alive <= 0:
 		if GameManager.current_wave < GameManager.MAX_WAVES:
 			GameManager.current_wave += 1
-			await get_tree().create_timer(3.0).timeout # Jeda 3 detik sebelum wave baru
-			start_wave()
+			await get_tree().create_timer(3.0).timeout 
+			
+			# 👇 PENGAMAN 3: Cek lagi sebelum wave baru benar-benar dimulai
+			if is_inside_tree() and GameManager.current_level > 1:
+				start_wave()
 		else:
-			# Jika sudah menyelesaikan 3 Wave
 			print("Semua Wave Selesai! Portal Terbuka.")
 			if next_level_portal:
 				next_level_portal.visible = true

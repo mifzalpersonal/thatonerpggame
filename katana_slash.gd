@@ -70,15 +70,19 @@ func _on_body_entered(body: Node) -> void:
 					print("🩸 KATANA LIFESTEAL AKTIF! HP lu bertambah jadi: ", health_component.hp)
 		# ========================================================
 		
-		# --- CARI PLAYER LEWAT GROUP (ANTI GAGAL) ---
-		# Mencari node pertama yang terdaftar di grup "Player"
-		
+		# --- INTEGRASI STATUS TOKO & MULTIPLIER PLAYER ---
 		if nodes_player.size() > 0:
 			var node_player = nodes_player[0] # Ambil Player-nya
 			
+			# A. Tambahkan bonus damage permanen dari Toko (Antidote ATK) jika ada
+			if "shop_bonus_damage" in node_player:
+				damage_akhir += node_player.shop_bonus_damage
+			
+			# B. Kalikan dengan Multiplier Sementara (Power-up Map) jika ada
 			if "damage_multiplier_active" in node_player:
-				damage_akhir = float(damage) * node_player.damage_multiplier_active
-				print("🔥 Peluru ", name, " berhasil dapet multiplier Player lewat Group: ", damage_akhir)
+				damage_akhir = damage_akhir * node_player.damage_multiplier_active
+				
+			print("🔥 Peluru Katana ", name, " | Base + Toko: ", (damage + node_player.shop_bonus_damage), " | Final xMultiplier: ", damage_akhir)
 		else:
 			print("🚨 ERROR: Player belum didaftarkan ke Group 'Player' di Editor Godot!")
 		

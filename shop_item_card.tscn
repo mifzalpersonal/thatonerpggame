@@ -2,27 +2,70 @@
 
 [ext_resource type="Script" uid="uid://c4en0wmo10xki" path="res://shop_item_card.gd" id="1_widgl"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l4r40"]
+bg_color = Color(0, 0, 0, 0.40784314)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_13myp"]
+bg_color = Color(0.00566115, 0.0056611523, 0.005661145, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+
 [node name="ShopItemCard" type="PanelContainer" unique_id=1904072370]
+process_mode = 3
 custom_minimum_size = Vector2(200, 320)
 offset_right = 40.0
 offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_l4r40")
 script = ExtResource("1_widgl")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=502715228]
+[node name="CardContent" type="Control" parent="." unique_id=1089125012]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="InfoButton" type="Button" parent="CardContent" unique_id=612381388]
+custom_minimum_size = Vector2(32, 32)
+custom_maximum_size = Vector2(32, 32)
+layout_mode = 1
+offset_left = -11.0
+offset_top = -11.0
+offset_right = 21.0
+offset_bottom = 21.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_13myp")
+text = "?"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CardContent" unique_id=502715228]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemName" type="Label" parent="CardContent/VBoxContainer" unique_id=1119140536]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemPrice" type="Label" parent="CardContent/VBoxContainer" unique_id=793268604]
 layout_mode = 2
 
-[node name="ItemIcon" type="TextureRect" parent="VBoxContainer" unique_id=1993730287]
+[node name="ItemIcon" type="TextureRect" parent="CardContent/VBoxContainer" unique_id=1993730287]
 custom_minimum_size = Vector2(120, 240)
 layout_mode = 2
 expand_mode = 1
 
-[node name="ItemName" type="Label" parent="VBoxContainer" unique_id=1119140536]
+[node name="ItemDesc" type="MarginContainer" parent="CardContent/VBoxContainer" unique_id=51172195]
 layout_mode = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
 
-[node name="ItemDesc" type="Label" parent="VBoxContainer" unique_id=1647587243]
+[node name="ItemDescLabel" type="Label" parent="CardContent/VBoxContainer/ItemDesc" unique_id=858802591]
 layout_mode = 2
-autowrap_mode = 3
-
-[node name="BuyButton" type="Button" parent="VBoxContainer" unique_id=40175025]
-layout_mode = 2
-text = "Beli (0)"

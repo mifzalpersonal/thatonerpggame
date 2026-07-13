@@ -5,13 +5,15 @@
 [ext_resource type="Script" uid="uid://qvnte0g0jk5h" path="res://Map-Asset/Scene/Player/darah.gd" id="2_d6kqq"]
 [ext_resource type="PackedScene" uid="uid://bqk0gkryxb0nm" path="res://Map-Asset/Scene/Enemy/enemy1.tscn" id="3_75v3i"]
 [ext_resource type="PackedScene" uid="uid://f6wccaab1adv" path="res://deadscene.tscn" id="3_qi4r4"]
+[ext_resource type="PackedScene" uid="uid://dh1robv2f1xlv" path="res://buff_bar.tscn" id="6_antmc"]
 [ext_resource type="PackedScene" uid="uid://c4bhokn2ce1fh" path="res://coin_hud.tscn" id="6_o1ivj"]
 [ext_resource type="PackedScene" uid="uid://bix4huq8vk512" path="res://Scene/HealthPoint.tscn" id="7_xhust"]
 [ext_resource type="PackedScene" uid="uid://y4km705r36h1" path="res://pause_menu.tscn" id="8_f7oih"]
 [ext_resource type="PackedScene" uid="uid://0jag52u11qae" path="res://Scene/item_slot.tscn" id="8_qi4r4"]
 [ext_resource type="PackedScene" uid="uid://yumr8c4f0j58" path="res://LevelGUI.tscn" id="9_f7oih"]
+[ext_resource type="PackedScene" uid="uid://bx8fw0c6oehwr" path="res://wave_ui.tscn" id="11_nl0vn"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_antmc"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_nl0vn"]
 viewport_path = NodePath("EnemyUI")
 
 [sub_resource type="Environment" id="Environment_qi4r4"]
@@ -43,10 +45,16 @@ dead_scene = ExtResource("3_qi4r4")
 [node name="musuhbody" parent="." unique_id=404111702 instance=ExtResource("3_75v3i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.34446, 42.819855, -2.7459278)
 
-[node name="UIVisual" parent="musuhbody" index="3" unique_id=1327681699]
-texture = SubResource("ViewportTexture_antmc")
+[node name="UIVisual" parent="musuhbody" index="4" unique_id=1327681699]
+texture = SubResource("ViewportTexture_nl0vn")
 
 [node name="GUI" type="CanvasLayer" parent="." unique_id=2122856101]
+
+[node name="BuffBar" parent="GUI" unique_id=1485494469 instance=ExtResource("6_antmc")]
+offset_left = -59.0
+offset_top = 19.0
+offset_right = -19.0
+offset_bottom = 59.0
 
 [node name="CoinHUD" parent="GUI" unique_id=1413814855 instance=ExtResource("6_o1ivj")]
 
@@ -72,9 +80,11 @@ mouse_filter = 2
 layout_mode = 2
 mouse_filter = 2
 
-[node name="PauseMenu" parent="GUI" unique_id=2044131015 instance=ExtResource("8_f7oih")]
-
 [node name="Control" parent="GUI" unique_id=898299092 instance=ExtResource("9_f7oih")]
+
+[node name="WaveUI" parent="GUI" unique_id=293765340 instance=ExtResource("11_nl0vn")]
+
+[node name="PauseMenu" parent="GUI" unique_id=2044131015 instance=ExtResource("8_f7oih")]
 
 [node name="LevelContainer" type="Node3D" parent="." unique_id=715125515]
 

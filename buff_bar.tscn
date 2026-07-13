@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dh1robv2f1xlv"]
+
+[ext_resource type="Script" uid="uid://bbphwl083odk6" path="res://buff_bar.gd" id="1_diug3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_13myp"]
+bg_color = Color(0.15686275, 0.15686275, 0.15686275, 0.78431374)
+
+[node name="BuffBar" type="PanelContainer" unique_id=1485494469]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_13myp")
+script = ExtResource("1_diug3")
+
+[node name="Margin" type="MarginContainer" parent="." unique_id=2060587947]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="IconList" type="HBoxContainer" parent="Margin" unique_id=870036734]
+layout_mode = 2
+theme_override_constants/separation = 10

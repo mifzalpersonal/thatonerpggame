@@ -4,24 +4,86 @@ var slot_senjata = ["", ""]
 var slot_aktif = 0
 var node_senjata_di_tangan : Node = null
 
+# --- 🛠️ DAFTAR SENJATA YANG TERSEDIA ---
+var daftar_senjata_terbuka = {
+	"sword_slim": false,
+	"katana": false,
+	"hugs": false,
+	"hugs_fire": true,
+	"bow": false,
+	"sword_slim_nature": false
+}
+
 var senjata_sekarang : String:
 	get:
 		return slot_senjata[slot_aktif]
 
+func _ready() -> void:
+	# Hubungkan WeaponManager ke sinyal global GameManager saat toko berhasil menjual senjata
+	if GameManager.has_signal("weapon_unlocked"):
+		GameManager.weapon_unlocked.connect(_on_weapon_bought_from_shop)
+		
+	# Cek scene saat ini. Jika di lobi / main menu, JANGAN pasang senjata dulu!
+	var current_scene_name = get_tree().current_scene.name.to_lower()
+	if "lobby" in current_scene_name or "menu" in current_scene_name:
+		print("🏠 WEAPON MANAGER: Di lobi, menyembunyikan senjata.")
+		slot_senjata = ["", ""]
+		if node_senjata_di_tangan != null:
+			node_senjata_di_tangan.queue_free()
+	else:
+		# Pasang senjata default hanya jika sudah masuk ke map permainan asli
+		if slot_senjata[slot_aktif] == "" and daftar_senjata_terbuka["hugs_fire"]:
+			slot_senjata[slot_aktif] = "hugs_fire"
+			pasang_visual_senjata("hugs_fire")
+
+# Fungsi ini otomatis terpicu begitu tombol "BELI" di toko dipencet
+func _on_weapon_bought_from_shop(weapon_id: String) -> void:
+	var nama_senjata_asli = convert_id_ke_nama_file(weapon_id)
+	
+	if nama_senjata_asli in daftar_senjata_terbuka:
+		# 1. Buka gemboknya di inventory toko
+		daftar_senjata_terbuka[nama_senjata_asli] = true
+		print("🔒 WEAPON MANAGER: Gembok senjata ", nama_senjata_asli, " berhasil terbuka!")
+		
+		# 2. langsung PAKSA PASANG ke slot aktif sekarang (Gantiin senjata lama dari toko)
+		slot_senjata[slot_aktif] = nama_senjata_asli
+		pasang_visual_senjata(nama_senjata_asli)
+		
+		print("⚔️ WEAPON MANAGER: Sukses menukar slot aktif dengan senjata baru: ", nama_senjata_asli)
+
+## Fungsi untuk menerjemahkan ID toko dari GameManager menjadi nama file .tscn kamu
+func convert_id_ke_nama_file(shop_id: String) -> String:
+	match shop_id:
+		"wp_katana": return "katana"
+		"wp_nature": return "sword_slim_nature"
+		"wp_fire": return "hugs_fire"
+		_: return shop_id.replace("wp_", "") 
+
+# --- FUNGSI AMBIL SENJATA (DIPAKAI OLEH CHEST / PETI DI GUA) ---
 func ambil_senjata(nama_barang: String) -> void:
+	# Buka akses otomatis agar senjata dari Chest bisa langsung diambil tanpa terkunci toko
+	if nama_barang in daftar_senjata_terbuka:
+		daftar_senjata_terbuka[nama_barang] = true
+
+	# Jika slot aktif kosong, langsung isi dan pasang visualnya
 	if slot_senjata[slot_aktif] == "":
 		slot_senjata[slot_aktif] = nama_barang
 		print("Slot ", slot_aktif + 1, " diisi: ", nama_barang)
 		pasang_visual_senjata(nama_barang)
-		print("bang lu nemu ", nama_barang)
 		return
 		
+	# Jika slot aktif penuh, cek slot cadangan
 	var slot_cadangan = 1 if slot_aktif == 0 else 0
 	
 	if slot_senjata[slot_cadangan] == "":
 		slot_senjata[slot_cadangan] = nama_barang
 		print("Slot aktif penuh, dimasukkan ke Slot ", slot_cadangan + 1, ": ", nama_barang)
 		return
+	else:
+		# Jika kedua slot penuh, ganti senjata di slot aktif dengan yang baru dari chest
+		print("Kedua slot penuh, menukar senjata di slot aktif dengan: ", nama_barang)
+		slot_senjata[slot_aktif] = nama_barang
+		pasang_visual_senjata(nama_barang)
 
 func ganti_slot(nomor_slot: int) -> void:
 	var indeks_baru = nomor_slot - 1
@@ -47,32 +109,29 @@ func pasang_visual_senjata(nama_barang: String) -> void:
 		var model_baru = blueprint.instantiate()
 		add_child(model_baru)
 		node_senjata_di_tangan = model_baru
+		print("📦 Visual Senjata Berhasil Dipasang: ", path_senjata)
 	else:
-		print("Eror: File senjata ", path_senjata, " gak ketemu!")
+		print("🚨 Eror: File senjata ", path_senjata, " tidak ditemukan di folder project!")
 		
 	# ========================================================
-	# --- TWEAK BARU PASIF SPEED KATANA (TARUH DI PALING BAWAH FUNGSI) ---
+	# --- TWEAK PASIF SPEED KATANA (SAFE VERSION) ---
 	# ========================================================
-	# Ambil acuan ke player (induk dari weapon manager ini)
 	var player = get_parent()
 	if player and "speed" in player:
-		# Kembalikan ke kecepatan normal default lu dulu tiap ganti senjata
-		player.speed = 10.0 # <--- Set sesuai angka speed default di script walk lu
+		player.speed = 10.0 # Set speed default player kamu
 		
-		# Jika beralih memegang katana, dongkrak speed-nya 30%
-		if nama_barang.contains("katana") or nama_barang.contains("Katana"):
+		if nama_barang == "katana":
 			if player.has_method("apply_speed_boost"):
-				# Multiplier: 1.3 (+30%), Durasi: 99999.0 (Biar permanen pas dipegang)
 				player.apply_speed_boost(2.0, 99999.0)
-				print("🩸 PASIF KATANA: Memanggil apply_speed_boost permanen!")
+				print("Base speed dinaikkan karena memegang Katana!")
 		else:
-			# Jika ganti ke senjata lain, matikan pasif katananya pake fungsi timeout bawaan!
-			if "speed_boost_timer" in player and not player.speed_boost_timer.is_stopped():
-				player.speed_boost_timer.stop() # Stop timernya biar gak bocor
+			var timer_boost = player.get_node_or_null("speed_boost_timer")
+			if timer_boost != null and timer_boost.has_method("is_stopped"):
+				if not timer_boost.is_stopped():
+					timer_boost.stop()
 			
 			if player.has_method("_on_speed_boost_timeout"):
-				player._on_speed_boost_timeout() # Panggil fungsi reset murni buatan temen lu!
-				print("🔄 SENJATA DIGANTI: Eksekusi timeout untuk reset speed.")
+				player._on_speed_boost_timeout()
 	# ========================================================
 
 func eksekusi_menyerang() -> void:

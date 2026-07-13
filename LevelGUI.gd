@@ -15,6 +15,10 @@ func _on_level_changed():
 	perbarui_tampilan_level()
 
 func perbarui_tampilan_level():
+	# 👇 PENGAMAN: Jika belum masuk Scene Tree, jangan panggil get_tree().process_frame dulu
+	if not is_inside_tree():
+		return # Atau bisa diganti dengan: await tree_entered
+		
 	# Amankan antrean frame agar node layout siap di memori
 	await get_tree().process_frame
 	
@@ -24,29 +28,24 @@ func perbarui_tampilan_level():
 	
 	# 2. Logika Indikator Kesulitan (1 Api tiap 5 Level, Max 5 Api)
 	if fire_container:
-		# Pastikan container utama apinya sendiri hidup/visible terlebih dahulu!
 		fire_container.visible = true
 		
-		var jumlah_api = clampi(ceil(GameManager.current_level / 5.0), 1, 5)
+		# Menggunakan pembagian float agar pembulatan ceil() berjalan akurat di Godot 4
+		var jumlah_api = clampi(ceil(float(GameManager.current_level) / 5.0), 1, 5)
 		var daftar_slot = fire_container.get_children()
 		
 		for i in range(daftar_slot.size()):
 			if i < jumlah_api:
-				# Hidupkan slot container apinya
 				daftar_slot[i].visible = true
 				
-				# Paksa node di dalamnya (AnimatedSprite2D/Sprite2D) untuk kelihatan dan berputar
 				if daftar_slot[i].get_child_count() > 0:
 					var sprite_api = daftar_slot[i].get_child(0) 
 					if sprite_api:
-						# Pastikan sprite individunya tidak tersembunyi
 						if "visible" in sprite_api:
 							sprite_api.visible = true
-						# Putar animasi apinya secara paksa lewat kode
 						if sprite_api.has_method("play"):
 							sprite_api.play("default")
 			else:
-				# Sembunyikan slot api yang belum waktunya muncul
 				daftar_slot[i].visible = false
 				
 		print("GUI STATUS: Tampilan Level ", GameManager.current_level, " & ", jumlah_api, " Api Berhasil Muncul!")

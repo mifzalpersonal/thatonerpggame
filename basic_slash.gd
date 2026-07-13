@@ -53,15 +53,20 @@ func _on_body_entered(body: Node) -> void:
 		var damage_akhir = float(damage)
 		
 		# --- CARI PLAYER LEWAT GROUP (ANTI GAGAL) ---
-		# Mencari node pertama yang terdaftar di grup "Player"
 		var nodes_player = get_tree().get_nodes_in_group("Player")
 		
 		if nodes_player.size() > 0:
 			var node_player = nodes_player[0] # Ambil Player-nya
 			
+			# 1. Tambahkan bonus damage permanen dari Toko (Antidote ATK) jika ada
+			if "shop_bonus_damage" in node_player:
+				damage_akhir += node_player.shop_bonus_damage
+			
+			# 2. Kalikan dengan Multiplier Sementara dari map jika ada
 			if "damage_multiplier_active" in node_player:
-				damage_akhir = float(damage) * node_player.damage_multiplier_active
-				print("🔥 Peluru ", name, " berhasil dapet multiplier Player lewat Group: ", damage_akhir)
+				damage_akhir = damage_akhir * node_player.damage_multiplier_active
+				
+			print("🔥 Peluru ", name, " | Base + Toko: ", (damage + node_player.shop_bonus_damage), " | Final Akhir: ", damage_akhir)
 		else:
 			print("🚨 ERROR: Player belum didaftarkan ke Group 'Player' di Editor Godot!")
 		

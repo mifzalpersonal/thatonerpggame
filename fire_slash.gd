@@ -45,35 +45,38 @@ func _physics_process(delta: float) -> void:
 		scale = scale_tengah.lerp(scale_akhir, t)
 
 func _on_body_entered(body: Node) -> void:
-	# Ganti "Char3" sesuai nama node Player utama kamu jika berbeda
+	# Abaikan jika menabrak diri sendiri (Player)
 	if body is CharacterBody3D and body.name == "Char3": 
 		return
 		
 	if body.has_method("take_damage"):
-		var damage_akhir = float(damage)
+		# 1. Tentukan base damage awal milik peluru ini
+		var damage_akhir: float = float(damage)
 	
-		# ========================================================
-		# --- TWEAK BARU SENJATA API ---
-		# ========================================================
-		# Panggil fungsi penambah stack burn di enemy.gd
-		if body.has_method("apply_burn_stack"):
-			body.apply_burn_stack()
-		# ========================================================
-
-		
-		# --- CARI PLAYER LEWAT GROUP (ANTI GAGAL) ---
-		# Mencari node pertama yang terdaftar di grup "Player"
+		# --- AMBIL DATA TOKO & MULTIPLIER DARI PLAYER (CENTRALIZED) ---
 		var nodes_player = get_tree().get_nodes_in_group("Player")
 		
 		if nodes_player.size() > 0:
 			var node_player = nodes_player[0] # Ambil Player-nya
 			
+			# A. Tambahkan bonus damage permanen dari Toko (Antidote ATK) jika ada
+			if "shop_bonus_damage" in node_player:
+				damage_akhir += node_player.shop_bonus_damage
+			
+			# B. Kalikan dengan Multiplier Sementara (Power-up Map) jika ada
 			if "damage_multiplier_active" in node_player:
-				damage_akhir = float(damage) * node_player.damage_multiplier_active
-				print("🔥 Peluru ", name, " berhasil dapet multiplier Player lewat Group: ", damage_akhir)
+				damage_akhir = damage_akhir * node_player.damage_multiplier_active
+				
+			print("🔥 Peluru ", name, " | Base + Toko: ", (damage + node_player.shop_bonus_damage), " | Final xMultiplier: ", damage_akhir)
 		else:
-			print("🚨 ERROR: Player belum didaftarkan ke Group 'Player' di Editor Godot!")
+			print("🚨 ERROR: Player belum didaftarkan ke Group 'Player'!")
 		
-		# Kirim damage ke musuh/kardus
-		body.take_damage(damage_akhir)
+		# --- TWEAK BARU STATUS BURN (DIKIRIM SEBELUM MUSUH MATI) ---
+		# Menggunakan 'body' karena itu nama variabel musuh di fungsi ini
+		if body.has_method("apply_burn_stack"):
+			# Kirim damage_akhir yang sudah dihitung agar burn burst-nya ikut makin sakit!
+			body.apply_burn_stack(damage_akhir)
+
+		# 2. Kirim total kalkulasi damage akhir ke musuh
+		body.take_damage(int(damage_akhir))
 		queue_free()

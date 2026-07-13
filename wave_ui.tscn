@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://bx8fw0c6oehwr"]
+
+[ext_resource type="Script" uid="uid://chn2ubaxf5q27" path="res://wave_ui.gd" id="1_y0at1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5s2tv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y0at1"]
+bg_color = Color(0.078431375, 0.078431375, 0.078431375, 0.5882353)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_my1sa"]
+bg_color = Color(0.6627451, 0.15686275, 0.8, 1)
+
+[node name="WaveUI" type="PanelContainer" unique_id=293765340 groups=["UI_Wave"]]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 46.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_5s2tv")
+script = ExtResource("1_y0at1")
+
+[node name="Margin" type="MarginContainer" parent="." unique_id=1987883654]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Layout" type="VBoxContainer" parent="Margin" unique_id=1639150925]
+layout_mode = 2
+
+[node name="WaveBar" type="ProgressBar" parent="Margin/Layout" unique_id=1002884031]
+custom_minimum_size = Vector2(8, 10)
+layout_mode = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_y0at1")
+theme_override_styles/fill = SubResource("StyleBoxFlat_my1sa")
+show_percentage = false
+
+[node name="WaveLabel" type="Label" parent="Margin/Layout" unique_id=1575383486]
+layout_mode = 2

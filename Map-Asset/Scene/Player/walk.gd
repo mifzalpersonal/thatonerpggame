@@ -1,9 +1,14 @@
 extends CharacterBody3D
 
 @export var speed := 10.0
+# --- TAMBAHAN STATUS UNTUK POTION ---
+@export var max_hp: float = 100.0
+var current_hp: float = 100.0
+# ------------------------------------
+
 @onready var anim = $AnimatedSprite3D
 @onready var node_tangan = $Tangan
-@onready var radar_aim = $RadarAim # <--- SISIPAN BARU: Referensi Radar Area3D
+@onready var radar_aim = $RadarAim # Referensi Radar Area3D
 
 # --- TAMBAHAN GRAVITASI 3D ---
 var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -19,11 +24,19 @@ var damage_multiplier_active: float = 1.0
 var damage_boost_timer: Timer
 # ------------------------------
 
+# --- STATUS UTAMA TOKO (SENTRALISASI UNTUK MULTI-WEAPON) ---
+var shop_bonus_damage: int = 0
+var shop_attack_cooldown_multiplier: float = 1.0
+# -----------------------------------------------------------
+
 # Menggunakan var biasa (bukan @onready langsung kaku) agar bisa dicari ulang nanti jika scene berpindah
 var slot_1_ui = null
 var slot_2_ui = null
 
 func _ready() -> void:
+	# Masukkan otomatis ke group "Player" via kode demi keamanan deteksi slash & weapon
+	add_to_group("Player")
+	
 	await get_tree().process_frame
 	# Coba cari node UI saat awal spawn
 	_update_ui_references()
@@ -43,16 +56,18 @@ func _ready() -> void:
 	add_child(damage_boost_timer)
 	# -----------------------------------
 	
-	# FIX: Jangan di-false, biarkan true agar physics dan gravitasi bisa berjalan!
+	# --- MENGHUBUNGKAN EFEK ITEM DARI GAMEMANAGER ---
+	if GameManager.has_signal("item_purchased"):
+		GameManager.item_purchased.connect(_on_item_purchased)
+	
+	# Biarkan true agar physics dan gravitasi bisa berjalan!
 	set_physics_process(true)
 
 func _physics_process(delta):
 	# 1. LOGIKA GRAVITASI DASAR
-	# Jika karakter sedang melayang/tidak menyentuh lantai, tarik ke bawah
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 	else:
-		# Reset kecepatan Y saat menyentuh tanah agar tidak menumpuk energi jatuh
 		velocity.y = 0.0
 
 	var input_dir = Vector3.ZERO
@@ -72,7 +87,6 @@ func _physics_process(delta):
 		input_dir = input_dir.normalized()
 
 	# 2. SIMPAN GERAKAN HORIZONTAL (X & Z)
-	# Menggunakan variabel bantuan agar sumbu Y (gravitasi) tidak tertimpa/terhapus input jalan
 	var target_velocity = input_dir * current_speed
 	velocity.x = target_velocity.x
 	velocity.z = target_velocity.z
@@ -86,27 +100,21 @@ func _physics_process(delta):
 	var target_musuh = ambil_musuh_terdekat()
 	
 	if target_musuh != null:
-		# Pindahkan posisi node_tangan ke poros tengah
 		node_tangan.position = Vector3(0.0, 0.0, 0.0)
 		
-		# Ambil posisi musuh tapi ratakan sumbu Y-nya biar sejajar sama tangan player (anti miring ke bawah)
 		var posisi_target = target_musuh.global_position
 		posisi_target.y = global_position.y 
 		
-		# KUNCI SUCI: Paksa tangan menengok ke target secara instan!
 		node_tangan.look_at(posisi_target, Vector3.UP)
-		
-		# TWEAK FIX: Koreksi rotasi moncong senjata ke arah target (90.0 derajat)
 		node_tangan.rotate_y(deg_to_rad(90.0)) 
 		
-		# Mainkan animasi tubuh player seperti biasa
 		if target_musuh.global_position.x > global_position.x:
 			anim.play("Idle_Left")
 		else:
 			anim.play("Idle_Right")
 			
 	else:
-		# --- LOGIKA ANIMASI 4 ARAH ASLI BAWAAN LU (JALAN JIKA RADAR KOSONG) ---
+		# --- LOGIKA ANIMASI 4 ARAH JALAN JIKA RADAR KOSONG ---
 		if input_dir == Vector3.ZERO:
 			anim.stop()
 		else:
@@ -148,21 +156,54 @@ func _process(delta: float) -> void:
 			if manager_senjata.senjata_sekarang != "":
 				manager_senjata.eksekusi_menyerang()
 
-# --- FUNGSI SPEED BOOST ---
+# --- FUNGSI UTAMA MERESPON PEMBELIAN ITEM DARI TOKO ---
+func _on_item_purchased(item_id: String) -> void:
+	match item_id:
+		"hp_potion":
+			current_hp = min(current_hp + 50.0, max_hp)
+			print("CHAR3: HP dipulihkan! HP Sekarang: ", current_hp, "/", max_hp)
+			
+		"speed_boots":
+			speed += speed * 0.10
+			if speed_boost_timer.is_stopped():
+				current_speed = speed
+			print("CHAR3: Base Speed bertambah permanen! Base Speed: ", speed)
+
+		"atk_buff":
+			shop_bonus_damage += 5
+			print("CHAR3: Bonus ATK Toko bertambah permanen! Total: +", shop_bonus_damage)
+			
+		"atk_speed_buff":
+			shop_attack_cooldown_multiplier *= 0.85
+			print("CHAR3: Cooldown Serang Toko dipotong! Multiplier saat ini: ", shop_attack_cooldown_multiplier)
+
+# --- FUNGSI SPEED BOOST (Temporary / Dari Power Up Map) ---
 func apply_speed_boost(multiplier: float, duration: float) -> void:
 	current_speed = speed * multiplier
 	print("Speed Boost Aktif! Kecepatan sekarang: ", current_speed)
 	speed_boost_timer.start(duration)
+	
+	# --- INTEGRASI UI STATUS ICON ---
+	var buff_ui = get_node_or_null("/root/Main/GUI/BuffBar")
+	if buff_ui:
+		# Ganti path ini sesuai folder aset icon game kamu
+		buff_ui.tambah_status_icon("res://StatusIcon/SpeedUp.png", duration, "temporary_speed")
 
 func _on_speed_boost_timeout() -> void:
 	current_speed = speed
 	print("Speed Boost Habis! Kecepatan kembali normal: ", current_speed)
 
-# --- FUNGSI DAMAGE BOOST (Dipanggil oleh Item Damage Boost) ---
+# --- FUNGSI DAMAGE BOOST (Temporary / Dari Power Up Map) ---
 func apply_damage_boost(multiplier: float, duration: float) -> void:
 	damage_multiplier_active = multiplier
 	print("Damage Boost Aktif! Pengali damage saat ini: x", damage_multiplier_active)
 	damage_boost_timer.start(duration)
+	
+	# --- INTEGRASI UI STATUS ICON ---
+	var buff_ui = get_node_or_null("/root/Main/GUI/BuffBar")
+	if buff_ui:
+		# Ganti path ini sesuai folder aset icon game kamu
+		buff_ui.tambah_status_icon("res://StatusIcon/DamageUp.png", duration, "temporary_damage")
 
 func _on_damage_boost_timeout() -> void:
 	damage_multiplier_active = 1.0 
@@ -190,9 +231,7 @@ func switch_hud_slot(slot_number: int) -> void:
 		slot_2_ui.is_active = true   
 		print("HUD: Slot 2 Aktif")
 
-# ========================================================
-# --- SISIPAN BARU: FUNGSI DETEKSI TARGET ZOMBIE ---
-# ========================================================
+# --- FUNGSI DETEKSI TARGET ZOMBIE ---
 func ambil_musuh_terdekat() -> Node3D:
 	if radar_aim == null:
 		return null

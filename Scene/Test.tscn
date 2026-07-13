@@ -64,9 +64,9 @@ mouse_filter = 2
 layout_mode = 2
 mouse_filter = 2
 
-[node name="PauseMenu" parent="GUI" unique_id=2044131015 instance=ExtResource("8_4t5vi")]
-
 [node name="Control" parent="GUI" unique_id=898299092 instance=ExtResource("9_ad4pf")]
+
+[node name="PauseMenu" parent="GUI" unique_id=2044131015 instance=ExtResource("8_4t5vi")]
 
 [node name="LevelContainer" type="Node3D" parent="." unique_id=1805195151]
 

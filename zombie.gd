@@ -3,7 +3,7 @@ extends BaseEnemy
 # 100% MANUT LEWAT SINI, TINGGAL GANTI ANGKA:
 
 func ambil_max_hp() -> float:
-	return 1.0 # Darah zombie lebih tebel
+	return 500.0 # Darah zombie lebih tebel
 
 func ambil_speed() -> float:
 	return 3.0  # Jalan zombie agak lambat
