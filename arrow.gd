@@ -2,7 +2,11 @@ extends Area3D
 
 @export var speed: float = 30.0
 @export var lifetime: float = 2.5 
-var dmg : float = 15.0
+
+# 🎯 PROPERTI DAMAGE & CRIT (Disinkronkan dengan bow_weapon.gd)
+var damage: float = 15.0 # Sebelumnya 'dmg', disamakan jadi 'damage' agar terbaca oleh Busur
+var is_critical: bool = false # Menerima status apakah tembakan ini Critical dari Busur
+
 var direction: Vector3 = Vector3.RIGHT 
 
 @export var explosion_scene: PackedScene
@@ -24,11 +28,18 @@ func _on_body_entered(body: Node) -> void:
 		
 	print("Panah MENABRAK AKURAT: ", body.name)
 	
-	# Kasih damage & slow ke badan yang ditabrak[cite: 1, 5]
+	# Kasih damage & slow ke badan yang ditabrak
 	if body.has_method("take_damage"):
-		body.take_damage(dmg) #[cite: 1, 5]
+		body.take_damage(damage) # Mengirim damage (otomatis berupa damage biasa / crit hasil kalkulasi Busur)
+		
 	if body.has_method("apply_freeze_slow"):
-		body.apply_freeze_slow(0.6, 4.0) #[cite: 1, 5]
+		body.apply_freeze_slow(0.6, 4.0) 
+		
+	# Pemicu efek visual khusus jika serangan ini Critical!
+	if is_critical:
+		print("💥 BOOM CRITICAL! Munculkan penanda visual tambahan di sini.")
+		# Contoh: kamu bisa memicu guncangan layar (screen shake) ringan, 
+		# memanggil fungsi pop-up text damage merah di musuh, atau efek partikel ekstra.
 		
 	# FIX OPERAN: Oper si 'body' (si zombie) ke fungsi bawah, bukan Vector3!
 	explode_di_target(body)
@@ -49,7 +60,10 @@ func explode_di_target(target_body: Node):
 	# Dorong sumbu Z dikit ke depan (menghadap kamera) biar gak tenggelam di dalam sprite zombienya
 	explosion.position.z = 0.5 
 	
-	# Paksa skala visualnya tetep normal 1,1,1
-	explosion.scale = Vector3(1.0, 1.0, 1.0)
+	# 💡 Tips: Jika tembakan ini Critical, kamu bisa memperbesar skala ledakannya agar lebih dramatis!
+	if is_critical:
+		explosion.scale = Vector3(1.8, 1.8, 1.8) # Ledakan lebih besar saat Crit
+	else:
+		explosion.scale = Vector3(1.0, 1.0, 1.0)
 	
 	queue_free()

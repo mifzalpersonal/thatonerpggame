@@ -1,92 +1,31 @@
-extends Area3D
+extends BaseSlash
 
-@export var speed: float = 2.5
-@export var damage: int = 10
-@export var lifetime: float = 2.5 # Total waktu terbang
+# Semua logika pergerakan, scaling, deteksi player, dan kalkulasi damage toko 
+# otomatis diwarisi dan diurus di latar belakang oleh BaseSlash!
 
-# Ambil referensi node AnimatedSprite3D yang ada di bawah Area3D
-@onready var animated_sprite: AnimatedSprite3D = $AnimatedSprite3D
-
-# Variabel untuk mencatat waktu yang sudah berjalan
-var time_elapsed: float = 0.0
-
-# Tentukan ukuran-ukuran skala di sini (X, Y, Z)
-var scale_awal: Vector3 = Vector3(5, 5, 5)   # Kecil pas keluar dari laras
-var scale_tengah: Vector3 = Vector3(20, 20, 20) # Gede pas di tengah perjalanan
-var scale_akhir: Vector3 = Vector3(15, 15, 15)  # Medium sebelum menghilang
-
-func _ready() -> void:
-	body_entered.connect(_on_body_entered)
-	# Set skala awal pas pertama kali spawn
-	scale = scale_awal
+func _init() -> void:
+	speed = 2.5
+	damage = 10
+	lifetime = 2.5
 	
-	# Putar animasi peluru (ganti "nama_animasi_kamu" sesuai nama di SpriteFrames)
-	if animated_sprite:
-		animated_sprite.play("Slash")
+	# Skala bawaan untuk Slash Nature
+	scale_awal = Vector3(5, 5, 5)
+	scale_tengah = Vector3(20, 20, 20)
+	scale_akhir = Vector3(15, 15, 15)
 
-func _physics_process(delta: float) -> void:
-	# 1. Pergerakan maju
-	global_translate(global_transform.basis.x * speed * delta)
-	
-	# 2. Hitung progress waktu (dari 0.0 sampai 1.0)
-	time_elapsed += delta
-	var progress: float = time_elapsed / lifetime
-	
-	# Jika waktu habis, hapus objek
-	if progress >= 1.0:
-		queue_free()
-		return
-		
-	# 3. Logika Perubahan Ukuran (Kecil -> Gede -> Medium)
-	if progress < 0.5:
-		# Fase Pertama: Dari awal ke tengah (0.0 sampai 0.5)
-		var t: float = progress / 0.5
-		scale = scale_awal.lerp(scale_tengah, t)
-	else:
-		# Fase Kedua: Dari tengah ke akhir (0.5 sampai 1.0)
-		var t: float = (progress - 0.5) / 0.5
-		scale = scale_tengah.lerp(scale_akhir, t)
+# Tulis efek mekanik unik Nature (Freeze Slow & 20% Peluang Heal) di sini
+func _terapkan_efek_unik(body: Node, _damage_terhitung: float) -> void:
+	# 1. Kasih efek slow bawaan (40% slow selama 3 detik) ke musuh
+	if body.has_method("apply_freeze_slow"):
+		body.apply_freeze_slow(0.4, 3.0)
+		print("🌿 [NATURE] Musuh terkena efek Slow!")
 
-func _on_body_entered(body: Node) -> void:
-	# Ganti "Char3" sesuai nama node Player utama kamu jika berbeda
-	if body is CharacterBody3D and body.name == "Char3": 
-		return
-		
-	if body.has_method("take_damage"):
-		var damage_akhir = float(damage)
-		
-		# ========================================================
-		# --- TWEAK BARU SENJATA NATURE ---
-		# ========================================================
-		# 1. Kasih efek slow bawaan (misal 40% selama 3 detik)
-		if body.has_method("apply_freeze_slow"):
-			body.apply_freeze_slow(0.4, 3.0)
-			
-		# 2. Peluang 20% Heal Player & Ambil Status Toko + Multiplier
+	# 2. Peluang 20% Heal Player
+	if randf() <= 0.2: # Lolos peluang 20%
 		var nodes_player = get_tree().get_nodes_in_group("Player")
 		if nodes_player.size() > 0:
-			var node_player = nodes_player[0] # Ambil Player-nya
-			
-			# --- LOGIKA HEAL 20% ---
-			if randf() <= 0.2: # Lolos peluang 20%
-				var health_component = node_player.get_node_or_null("darahEntity")
-				if health_component and "hp" in health_component:
-					health_component.hp += 1.0
-					print("🌿 NATURE HEAL AKTIF! HP lu bertambah jadi: ", health_component.hp)
-			
-			# --- INTEGRASI STATUS TOKO & MULTIPLIER PLAYER ---
-			# A. Tambahkan bonus damage permanen dari Toko (Antidote ATK) jika ada
-			if "shop_bonus_damage" in node_player:
-				damage_akhir += node_player.shop_bonus_damage
-			
-			# B. Kalikan dengan Multiplier Sementara (Power-up Map) jika ada
-			if "damage_multiplier_active" in node_player:
-				damage_akhir = damage_akhir * node_player.damage_multiplier_active
-				
-			print("🔥 Peluru Nature ", name, " | Base + Toko: ", (damage + node_player.shop_bonus_damage), " | Final xMultiplier: ", damage_akhir)
-		else:
-			print("🚨 ERROR: Player belum didaftarkan ke Group 'Player' di Editor Godot!")
-		
-		# Kirim damage ke musuh/kardus
-		body.take_damage(damage_akhir)
-		queue_free()
+			var player = nodes_player[0]
+			var health_component = player.get_node_or_null("darahEntity")
+			if health_component and "hp" in health_component:
+				health_component.hp += 1.0
+				print("🌿 [NATURE] Heal sukses! HP bertambah jadi: ", health_component.hp)

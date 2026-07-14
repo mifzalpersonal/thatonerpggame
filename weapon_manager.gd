@@ -14,6 +14,18 @@ var daftar_senjata_terbuka = {
 	"sword_slim_nature": false
 }
 
+# --- ⚔️ DATABASE STATS FORGE (RESOURCE WEAPONDATA) ---
+# Menghubungkan nama senjata dengan file Resource (.tres) masing-masing.
+# Pastikan kamu sudah membuat file-file .tres ini di folder "res://Weapons/" !
+var database_stats = {
+	"sword_slim": preload("res://Weapons/sword_slim.tres"),
+	"katana": preload("res://Weapons/katana.tres"),
+	"hugs": preload("res://Weapons/hugs.tres"),
+	"hugs_fire": preload("res://Weapons/hugs_fire.tres"),
+	"bow": preload("res://Weapons/bow.tres"),
+	"sword_slim_nature": preload("res://Weapons/sword_slim_nature.tres")
+}
+
 var senjata_sekarang : String:
 	get:
 		return slot_senjata[slot_aktif]
@@ -110,6 +122,13 @@ func pasang_visual_senjata(nama_barang: String) -> void:
 		add_child(model_baru)
 		node_senjata_di_tangan = model_baru
 		print("📦 Visual Senjata Berhasil Dipasang: ", path_senjata)
+		
+		# --- SUNTIK DATA STATS FORGE KE SENJATA YANG BARU DIPASANG ---
+		if database_stats.has(nama_barang):
+			var data_stats = database_stats[nama_barang]
+			if "stats" in node_senjata_di_tangan:
+				node_senjata_di_tangan.stats = data_stats
+				print("⚙️ WEAPON MANAGER: Berhasil menyuntikkan data stats untuk ", nama_barang)
 	else:
 		print("🚨 Eror: File senjata ", path_senjata, " tidak ditemukan di folder project!")
 		
@@ -136,4 +155,8 @@ func pasang_visual_senjata(nama_barang: String) -> void:
 
 func eksekusi_menyerang() -> void:
 	if slot_senjata[slot_aktif] != "":
-		print("Menyerang pake: ", slot_senjata[slot_aktif])
+		# Pemicu fungsi attack() di script senjata masing-masing secara otomatis
+		if node_senjata_di_tangan and node_senjata_di_tangan.has_method("attack"):
+			node_senjata_di_tangan.attack()
+		else:
+			print("Menyerang pake: ", slot_senjata[slot_aktif])

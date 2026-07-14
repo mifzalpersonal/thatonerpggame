@@ -2,7 +2,8 @@ extends Node3D
 
 @export var start_room_scene: PackedScene
 @export var room_scenes: Array[PackedScene]
-@export var shop_room_scene: PackedScene # BARU: Slot untuk memasukkan shop_room.tscn di Inspector
+@export var shop_room_scene: PackedScene # Slot untuk memasukkan shop_room.tscn
+@export var forge_room_scene: PackedScene # BARU: Slot untuk memasukkan ForgeRoom.tscn di Inspector
 @export var end_room_scene: PackedScene
 @export var natural_enemy_scene: PackedScene 
 
@@ -40,18 +41,31 @@ func generate_level():
 
 	# ==================== 2. SPAWN RUANGAN TENGAH ====================
 	var total_middle_rooms = total_rooms - 2
-	# Tentukan indeks ruangan mana yang mau dijadikan toko (misal tepat di tengah-tengah barisan ruangan)
-	var shop_room_index = int(total_middle_rooms / 2)
+	
+	# Tentukan indeks posisi ruangan spesial secara proporsional
+	# Contoh: Toko di sekitar 30% jalan, Forge di sekitar 70% jalan (sebelum portal keluar)
+	var shop_room_index = int(total_middle_rooms * 0.3)
+	var forge_room_index = int(total_middle_rooms * 0.7)
+	
+	# Antisipasi jika ruangan terlalu sedikit agar indeksnya tidak tabrakan
+	if shop_room_index == forge_room_index and total_middle_rooms > 1:
+		forge_room_index = shop_room_index + 1
 
 	for i in range(total_middle_rooms):
 		var room_instance: Node3D
 		
-		# CEK KONDISI: Jika ini level kelipatan 3 DAN perulangan menyentuh indeks tengah, lahirkan TOKO
+		# KONDISI A: Jika ini level kelipatan 3 dan menyentuh indeks toko, lahirkan TOKO
 		if GameManager.is_shop_level() and i == shop_room_index and shop_room_scene != null:
 			room_instance = shop_room_scene.instantiate()
 			print("GENERATOR: Menyisipkan RUANG TOKO pada ruangan tengah indeks ke-", i, " di Level ", GameManager.current_level)
+			
+		# KONDISI B: Jika ini level kelipatan 3 dan menyentuh indeks forge, lahirkan FORGE
+		elif GameManager.is_shop_level() and i == forge_room_index and forge_room_scene != null:
+			room_instance = forge_room_scene.instantiate()
+			print("GENERATOR: Menyisipkan RUANG FORGE pada ruangan tengah indeks ke-", i, " di Level ", GameManager.current_level)
+			
 		else:
-			# Jika bukan level kelipatan 3 atau bukan urutan tengah, lahirkan ruangan acak biasa
+			# Jika bukan ruangan spesial, lahirkan ruangan acak biasa
 			room_instance = room_scenes.pick_random().instantiate()
 			
 		add_child(room_instance)
@@ -67,15 +81,14 @@ func generate_level():
 		# Perbarui titik pasang untuk ruangan berikutnya
 		next_spawn_z = room_instance.global_position.z + current_bounds["max_meter"]
 		
-# ==================== 3. SPAWN RUANGAN END (PORTAL) ====================
+	# ==================== 3. SPAWN RUANGAN END (PORTAL) ====================
 	var end_room = end_room_scene.instantiate()
 	add_child(end_room)
 	
 	var end_gridmap = _ambil_gridmap(end_room)
 	var end_bounds = _dapatkan_batas_z_gridmap(end_gridmap)
 	
-	# PERBAIKAN: Kunci sumbu Y agar SELALU SAMA dengan start_room (yaitu start_room.global_position.y)
-	# Ini akan memaksa ketinggian end_room sejajar rata dengan lantai awal, tidak peduli offset internalnya.
+	# PERBAIKAN: Kunci sumbu Y agar SELALU SAMA dengan start_room
 	end_room.global_position = Vector3(
 		start_room.global_position.x, 
 		start_room.global_position.y, 
@@ -84,7 +97,7 @@ func generate_level():
 	
 	print("GRIDMAP SAKTI: Ketinggian End Room dikunci di Y = ", end_room.global_position.y)
 
-# ==================== 4. PROSES PASCA GENERASI (SCANNING) ====================
+	# ==================== 4. PROSES PASCA GENERASI (SCANNING) ====================
 	# Beri jeda 0.1 detik agar seluruh ruangan (termasuk WaveManager dan EnemySpawnWav) 
 	# benar-benar selesai dilahirkan dan masuk ke dalam Tree dunia game.
 	await get_tree().create_timer(0.1).timeout
@@ -153,7 +166,7 @@ func _dapatkan_batas_z_gridmap(gridmap: GridMap) -> Dictionary:
 		
 	return batas
 
-# Fungsi sortir spawner tetap sama
+# Fungsi sortir spawner
 func _sortir_spawner_pakai_group(node: Node):
 	if node and node is Node3D:
 		if node.is_in_group("WaveSpawner"):

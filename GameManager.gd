@@ -48,11 +48,42 @@ var generator_scene_path: String = "res://Map-Asset/Scene/procedural_map.tscn"
 func _ready() -> void:
 	buat_rak_toko_baru()
 
+# ==============================================================================
+# 🎯 FUNGSI GLOBAL SUNTIK DAMAGE & CRITICAL HIT UNTUK SEMUA PROYEKTIK/SLASH
+# ==============================================================================
+func siapkan_peluru(slash_instance: Node, stats: WeaponData, bonus_damage: int) -> void:
+	if stats == null:
+		print("🚨 GAMEMANAGER: Gagal siapkan peluru karena WeaponData kosong!")
+		return
+		
+	# 1. Kocok damage dasar & cek keberuntungan Critical Hit lewat WeaponData (.tres)
+	var hasil_kocokan = stats.hitung_damage_output()
+	var damage_kocokan = hasil_kocokan["damage"]
+	var apakah_crit = hasil_kocokan["is_critical"]
+	
+	# 2. Tambahkan bonus damage permanen dari pembelian item Toko
+	var total_damage_akhir = damage_kocokan + bonus_damage
+	
+	# 3. Suntikkan datanya ke dalam instansi peluru (Slash/Panah) secara dinamis
+	if "damage" in slash_instance:
+		slash_instance.damage = total_damage_akhir
+		
+	if "is_critical" in slash_instance:
+		slash_instance.is_critical = apakah_crit
+		
+	# --- Debug Log Terpusat ---
+	print("⚔️ SYSTEM FORGE: ", stats.weapon_name, " (Level +", stats.forge_level, ")")
+	if apakah_crit:
+		print("   └─ 💥 CRITICAL HIT! Total Damage disuntik: ", total_damage_akhir)
+	else:
+		print("   └─ Normal Damage disuntik: ", total_damage_akhir)
+
+
 # --- LOGIKA GENERATOR BARANG (GARANSI PASTI TEPAT 4 SLOT UNIK) ---
 func buat_rak_toko_baru() -> void:
 	isi_toko_level_ini.clear()
 	
-	# --- RESET BIYA REROLL KE BASE (10 KOIN) TIAP KALI TOKO BARU DI-GENERATE ---
+	# --- RESET BIAYA REROLL KE BASE (10 KOIN) TIAP KALI TOKO BARU DI-GENERATE ---
 	harga_reroll_sekarang = HARGA_REROLL_BASE
 	print("🎲 GAMEMANAGER: Toko baru didirikan. Harga reroll di-reset kembali ke: ", harga_reroll_sekarang)
 	

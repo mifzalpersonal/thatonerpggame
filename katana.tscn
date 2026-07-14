@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dr5cif6e5dapy" path="res://katana.gd" id="1_8ih5n"]
 [ext_resource type="PackedScene" uid="uid://dphwl4hg7mpqy" path="res://Weapon-Asset/Katana/Katana.gltf" id="1_okte2"]
-[ext_resource type="AudioStream" uid="uid://bri0p24u85l38" path="res://Audio-Asset/323526__kreastricon62__bloody-blade-2.wav" id="3_5f3qk"]
+[ext_resource type="AudioStream" uid="uid://bri0p24u85l38" path="res://afuckingaudiodir/323526__kreastricon62__bloody-blade-2.wav" id="3_5f3qk"]
 
 [sub_resource type="Animation" id="Animation_8ih5n"]
 resource_name = "Attack"

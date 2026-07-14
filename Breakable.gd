@@ -20,10 +20,14 @@ var current_health: float
 func _ready():
 	current_health = max_health
 
-func take_damage(amount: float):
+# 🎯 PERUBAHAN DI SINI: Tambahkan parameter opsional "_is_critical: bool = false"
+# Agar fungsi ini bisa dipanggil dengan 1 argumen ATAU 2 argumen sekaligus tanpa bikin crash.
+# Ganti fungsi take_damage yang lama dengan versi ini:
+func take_damage(amount: float, _type: String = "normal", _is_critical: bool = false) -> void:
 	current_health -= amount
 	if current_health <= 0:
 		destroy_object()
+
 
 func destroy_object():
 	# 1. Jalankan fungsi penentu drop item

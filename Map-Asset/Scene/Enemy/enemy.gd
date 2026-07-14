@@ -181,28 +181,56 @@ func start_attack_cooldown() -> void:
 	await get_tree().create_timer(attack_cooldown).timeout
 	can_attack = true
 
-func take_damage(amount: int, tipe_damage: String = "normal") -> void:
-	current_hp -= amount
-	if hp_bar: hp_bar.value = current_hp
-	spawn_damage_text(amount, tipe_damage)
-	if current_hp <= 0: mati()
+# ==========================================================
+# --- SISTEM HITUNGAN DAMAGE & CRITICAL HIT ---
+# ==========================================================
 
-func spawn_damage_text(amount: int, tipe_damage: String = "normal") -> void:
+# Menerima damage_akhir dan status is_crit dari projectile/weapon
+func take_damage(amount: int, tipe_damage: String = "normal", is_crit: bool = false) -> void:
+	current_hp -= amount
+	if hp_bar: 
+		hp_bar.value = current_hp
+		
+	# Oper status is_crit ke visual generator
+	spawn_damage_text(amount, tipe_damage, is_crit)
+	
+	if current_hp <= 0: 
+		mati()
+
+func spawn_damage_text(amount: int, tipe_damage: String = "normal", is_crit: bool = false) -> void:
+	# 1. JIKA ANGKA DAMAGE SEBELUMNYA MASIH AKTIF (STAKING DAMAGE)
 	if is_instance_valid(teks_damage_terakhir):
 		var damage_sebelumnya = teks_damage_terakhir.text.to_int()
 		teks_damage_terakhir.text = str(damage_sebelumnya + amount)
-		teks_damage_terakhir.scale = Vector3(1.4, 1.4, 1.4)
+		
+		# Jika crit, perbesar visual akumulasinya secara instan!
+		var target_scale = Vector3(2.0, 2.0, 2.0) if is_crit else Vector3(1.4, 1.4, 1.4)
+		teks_damage_terakhir.scale = target_scale
+		
 		var t = create_tween()
 		t.tween_property(teks_damage_terakhir, "scale", Vector3(1.0, 1.0, 1.0), 0.1)
-		atur_warna_outline_teks(teks_damage_terakhir, tipe_damage)
+		
+		var tipe_final = "crit" if is_crit else tipe_damage
+		atur_warna_outline_teks(teks_damage_terakhir, tipe_final)
 		return 
 
+	# 2. SPAWN ANGKA DAMAGE BARU (FLOATING TEXT)
 	if DAMAGE_TEXT_3D:
 		var teks_damage = DAMAGE_TEXT_3D.instantiate()
 		teks_damage.text = str(amount)
+		
+		# Kasih offset acak melayang biar dinamis
 		var offset_acak = Vector3(randf_range(-0.1, 0.1), randf_range(-0.1, 0.1), randf_range(-0.1, 0.1))
 		teks_damage.global_position = global_position + Vector3(0, 2.3, 0) + offset_acak
-		atur_warna_outline_teks(teks_damage, tipe_damage)
+		
+		# Set visual custom jika crit sebelum masuk tree
+		if is_crit:
+			teks_damage.scale = Vector3(1.4, 1.4, 1.4) # Skala dasar awal dibesarkan (karena di damage_text diperkecil)
+			teks_damage.text += "!"
+			atur_warna_outline_teks(teks_damage, "crit")
+		else:
+			atur_warna_outline_teks(teks_damage, tipe_damage)
+			
 		get_tree().current_scene.add_child(teks_damage)
 		teks_damage_terakhir = teks_damage
 
@@ -210,11 +238,19 @@ func atur_warna_outline_teks(label_node: Label3D, tipe: String) -> void:
 	if not label_node: return
 	label_node.outline_render_priority = label_node.render_priority + 1
 	label_node.outline_size = 14
+	
 	match tipe:
-		"bleed": label_node.outline_modulate = Color(0.5, 0.0, 0.0)
-		"burn": label_node.outline_modulate = Color(1.0, 0.2, 0.0)
-		"slow": label_node.outline_modulate = Color(0.0, 0.5, 1.0)
-		_: label_node.outline_modulate = Color(0.1, 0.1, 0.1)
+		"crit":
+			label_node.modulate = Color(1.0, 0.1, 0.1)          # Teks dalam warna merah menyala
+			label_node.outline_modulate = Color(0.4, 0.0, 0.0)  # Outline merah pekat gelap
+		"bleed": 
+			label_node.outline_modulate = Color(0.5, 0.0, 0.0)
+		"burn": 
+			label_node.outline_modulate = Color(1.0, 0.2, 0.0)
+		"slow": 
+			label_node.outline_modulate = Color(0.0, 0.5, 1.0)
+		_: 
+			label_node.outline_modulate = Color(0.1, 0.1, 0.1)
 
 func mati() -> void:
 	if GameManager.has_method("register_enemy_death"):

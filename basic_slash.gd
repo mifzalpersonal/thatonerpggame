@@ -1,75 +1,18 @@
-extends Area3D
+extends BaseSlash
 
-@export var speed: float = 2.5
-@export var damage: int = 10
-@export var lifetime: float = 2.5 # Total waktu terbang
+# Ini adalah skrip untuk tebasan biasa (Basic Slash) kamu.
+# Semua pergerakan, scaling, dan hitungan damage otomatis diurus oleh BaseSlash!
 
-@onready var animated_sprite: AnimatedSprite3D = $AnimatedSprite3D
-
-var time_elapsed: float = 0.0
-
-var scale_awal: Vector3 = Vector3(5, 5, 5)   
-var scale_tengah: Vector3 = Vector3(20, 20, 20) 
-var scale_akhir: Vector3 = Vector3(15, 15, 15)  
-
-# --- TAMBAHAN UNTUK DAMAGE BOOST ---
-var pencipta_peluru: Node3D = null
-
-# Fungsi ini nanti dipanggil oleh script Tangan/Senjata saat spawn peluru ini
-func set_pencipta(player_node: Node3D):
-	pencipta_peluru = player_node
-# -----------------------------------
-
-func _ready() -> void:
-	body_entered.connect(_on_body_entered)
-	scale = scale_awal
+func _init() -> void:
+	speed = 2.5
+	damage = 10
+	lifetime = 2.5
 	
-	if animated_sprite:
-		animated_sprite.play("Slash")
+	# Skala bawaan untuk Basic Slash
+	scale_awal = Vector3(5, 5, 5)
+	scale_tengah = Vector3(20, 20, 20)
+	scale_akhir = Vector3(15, 15, 15)
 
-func _physics_process(delta: float) -> void:
-	global_translate(global_transform.basis.x * speed * delta)
-	
-	time_elapsed += delta
-	var progress: float = time_elapsed / lifetime
-	
-	if progress >= 1.0:
-		queue_free()
-		return
-		
-	if progress < 0.5:
-		var t: float = progress / 0.5
-		scale = scale_awal.lerp(scale_tengah, t)
-	else:
-		var t: float = (progress - 0.5) / 0.5
-		scale = scale_tengah.lerp(scale_akhir, t)
-
-func _on_body_entered(body: Node) -> void:
-	# Ganti "Char3" sesuai nama node Player utama kamu jika berbeda
-	if body is CharacterBody3D and body.name == "Char3": 
-		return
-		
-	if body.has_method("take_damage"):
-		var damage_akhir = float(damage)
-		
-		# --- CARI PLAYER LEWAT GROUP (ANTI GAGAL) ---
-		var nodes_player = get_tree().get_nodes_in_group("Player")
-		
-		if nodes_player.size() > 0:
-			var node_player = nodes_player[0] # Ambil Player-nya
-			
-			# 1. Tambahkan bonus damage permanen dari Toko (Antidote ATK) jika ada
-			if "shop_bonus_damage" in node_player:
-				damage_akhir += node_player.shop_bonus_damage
-			
-			# 2. Kalikan dengan Multiplier Sementara dari map jika ada
-			if "damage_multiplier_active" in node_player:
-				damage_akhir = damage_akhir * node_player.damage_multiplier_active
-				
-			print("🔥 Peluru ", name, " | Base + Toko: ", (damage + node_player.shop_bonus_damage), " | Final Akhir: ", damage_akhir)
-		else:
-			print("🚨 ERROR: Player belum didaftarkan ke Group 'Player' di Editor Godot!")
-		
-		# Kirim damage ke musuh/kardus
-		body.take_damage(damage_akhir)
-		queue_free()
+# Karena ini tebasan biasa tanpa efek unik (no burn, no freeze, dll),
+# kita tidak perlu menulis fungsi _terapkan_efek_unik() di sini.
+# Dia akan otomatis melewati fungsi kosong yang ada di BaseSlash!
