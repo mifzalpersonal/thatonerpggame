@@ -1,11 +1,18 @@
 extends PanelContainer
 
-@onready var item_icon: TextureRect = $CardContent/VBoxContainer/ItemIcon
-@onready var item_name: Label = $CardContent/VBoxContainer/ItemName
-@onready var item_price: Label = $CardContent/VBoxContainer/ItemPrice # <- Node Harga Baru
-@onready var item_desc: MarginContainer = $CardContent/VBoxContainer/ItemDesc # <- Menjadi MarginContainer
-@onready var item_desc_label: Label = $CardContent/VBoxContainer/ItemDesc/ItemDescLabel # <- Teks di dalam Margin
-@onready var info_button: Button = $CardContent/InfoButton
+# Jalur referensi @onready yang sudah disesuaikan dengan struktur Scene di editor
+@onready var item_icon: TextureRect = $CardContent/ItemIcon
+@onready var item_name: Label = $CardContent/ItemName
+
+# Referensi ke HBoxContainer untuk animasi menghilang secara utuh (termasuk CoinIcon)
+@onready var price_container: HBoxContainer = $CardContent/HBoxContainer
+@onready var item_price: Label = $CardContent/HBoxContainer/ItemPrice 
+
+@onready var item_desc: MarginContainer = $CardContent/VBoxContainer/ItemDesc
+@onready var item_desc_label: Label = $CardContent/VBoxContainer/ItemDesc/ItemDescLabel
+
+# InfoButton berada langsung di bawah CardContent
+@onready var info_button: Button = $CardContent/InfoButton 
 
 signal item_purchased(item_data: Dictionary, card_node: PanelContainer)
 
@@ -26,11 +33,10 @@ func _ready() -> void:
 func setup_card(item: Dictionary) -> void:
 	current_item_data = item
 	
-	# --- MENGUBAH TULISAN NAMA & HARGA (DIPISAH VERTIKAL) ---
 	item_name.text = item["name"]
-	item_price.text = str(item["price"]) + " Koin"
+	# Karena sudah ada CoinIcon, kamu bisa hapus teks " Koin" kalau dirasa double icon + tulisan
+	item_price.text = str(item["price"])
 	
-	# Ambil teks deskripsi ke label dalam margin
 	item_desc_label.text = item["desc"]
 	item_desc_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	item_desc_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -49,7 +55,6 @@ func aplikasikan_warna_rarity(rarity: String) -> void:
 		"legendary": warna_kasta = Color.GOLD
 		_: warna_kasta = Color.WHITE
 			
-	# Warnai teks Nama dan Harga secara serasi
 	item_name.add_theme_color_override("font_color", warna_kasta)
 	item_price.add_theme_color_override("font_color", warna_kasta)
 	
@@ -72,17 +77,16 @@ func _on_info_pressed() -> void:
 	if is_showing_desc:
 		info_button.text = "X"
 		
-		# Memudarkan Nama, Harga, dan Icon
+		# Memudarkan Nama, Seluruh Kontainer Harga (Teks + Icon Koin), dan Icon Senjata
 		tween.tween_property(item_name, "modulate:a", 0.0, 0.15)
-		tween.tween_property(item_price, "modulate:a", 0.0, 0.15)
+		tween.tween_property(price_container, "modulate:a", 0.0, 0.15) # <- Mengubah ini
 		tween.tween_property(item_icon, "modulate:a", 0.0, 0.15)
 		
 		await get_tree().create_timer(0.15).timeout
 		item_name.visible = false
-		item_price.visible = false
+		price_container.visible = false # <- Mengubah ini
 		item_icon.visible = false
 		
-		# Memunculkan kotak Margin deskripsi
 		item_desc.visible = true
 		item_desc.modulate.a = 0.0
 		var tween_in = create_tween().set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
@@ -96,13 +100,20 @@ func _on_info_pressed() -> void:
 		await get_tree().create_timer(0.15).timeout
 		item_desc.visible = false
 		
+		# Tampilkan kembali nodenya
 		item_name.visible = true
-		item_price.visible = true
+		price_container.visible = true # <- Mengubah ini
 		item_icon.visible = true
 		
+		# Reset nilai transparansi (alpha) ke 0 sebelum animasi fade-in biar tidak nge-bug/stuck
+		item_name.modulate.a = 0.0
+		price_container.modulate.a = 0.0 # <- Mengubah ini
+		item_icon.modulate.a = 0.0
+		
+		# Animasikan fade-in bareng-bareng
 		var tween_out = create_tween().set_parallel(true).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		tween_out.tween_property(item_name, "modulate:a", 1.0, 0.2)
-		tween_out.tween_property(item_price, "modulate:a", 1.0, 0.2)
+		tween_out.tween_property(price_container, "modulate:a", 1.0, 0.2) # <- Mengubah ini
 		tween_out.tween_property(item_icon, "modulate:a", 1.0, 0.2)
 
 func _on_gui_input(event: InputEvent) -> void:
@@ -123,7 +134,7 @@ func set_terbeli() -> void:
 	item_name.text = "TERBELI!"
 	item_name.visible = true
 	item_name.modulate.a = 1.0
-	item_price.visible = false
+	price_container.visible = false # <- Mengubah ini agar icon koin juga ikut hilang pas terbeli
 	item_icon.visible = false
 	item_desc.visible = false
 	

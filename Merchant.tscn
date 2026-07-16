@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://37ohqgm6m1wt"]
 
 [ext_resource type="Script" uid="uid://b4xi78d7bylak" path="res://Merchant.gd" id="1_swnpy"]
-[ext_resource type="Texture2D" uid="uid://divy6238su4ah" path="res://icon.svg" id="2_wkan3"]
+[ext_resource type="Texture2D" uid="uid://tq5p621gk2pm" path="res://Merchant.png" id="2_yb4f1"]
 [ext_resource type="Texture2D" uid="uid://dfki43hq3gxbl" path="res://Merchant_0.png" id="3_yb4f1"]
 [ext_resource type="Texture2D" uid="uid://b80nssyrhpbpo" path="res://Merchant_1.png" id="4_aviov"]
 [ext_resource type="Texture2D" uid="uid://pci3on82g5ey" path="res://Merchant_2.png" id="5_svdsa"]
@@ -9,14 +9,119 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_13myp"]
 size = Vector3(1.5601196, 1.8549805, 1.081543)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_aviov"]
+atlas = ExtResource("2_yb4f1")
+region = Rect2(0, 288, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_svdsa"]
+atlas = ExtResource("2_yb4f1")
+region = Rect2(0, 336, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ukp21"]
+atlas = ExtResource("2_yb4f1")
+region = Rect2(0, 384, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hq8ts"]
+atlas = ExtResource("2_yb4f1")
+region = Rect2(0, 432, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cf0jo"]
+atlas = ExtResource("2_yb4f1")
+region = Rect2(0, 480, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qtn4l"]
+atlas = ExtResource("2_yb4f1")
+region = Rect2(0, 528, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vmled"]
+atlas = ExtResource("2_yb4f1")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5kfty"]
+atlas = ExtResource("2_yb4f1")
+region = Rect2(0, 192, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tjqn3"]
+atlas = ExtResource("2_yb4f1")
+region = Rect2(0, 240, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3lw1u"]
+atlas = ExtResource("2_yb4f1")
+region = Rect2(0, 288, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jnfma"]
+atlas = ExtResource("2_yb4f1")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ntto7"]
+atlas = ExtResource("2_yb4f1")
+region = Rect2(0, 48, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uk1xc"]
+atlas = ExtResource("2_yb4f1")
+region = Rect2(0, 96, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_syi1i"]
+atlas = ExtResource("2_yb4f1")
+region = Rect2(0, 144, 32, 48)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_13myp"]
 animations = [{
 "frames": [{
+"duration": 2.0,
+"texture": SubResource("AtlasTexture_aviov")
+}, {
 "duration": 1.0,
-"texture": ExtResource("2_wkan3")
+"texture": SubResource("AtlasTexture_svdsa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ukp21")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hq8ts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cf0jo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qtn4l")
+}],
+"loop": 0,
+"name": &"Flicker",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vmled")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5kfty")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tjqn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3lw1u")
 }],
 "loop": 1,
-"name": &"default",
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jnfma")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ntto7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uk1xc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_syi1i")
+}],
+"loop": 0,
+"name": &"Sing",
 "speed": 5.0
 }]
 
@@ -155,8 +260,15 @@ transform = Transform3D(2.6763763, 0, 0, 0, 1, 0, 0, 0, 2.6141508, -0.106261164,
 shape = SubResource("BoxShape3D_13myp")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=290326526]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.82236946)
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -0.28986323, 0.21314597, -0.33328342)
+billboard = 1
+texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_13myp")
+animation = &"Idle"
+autoplay = "Idle"
+speed_scale = 1.5
+
+[node name="Timer" type="Timer" parent="AnimatedSprite3D" unique_id=1076217188]
 
 [node name="Label3D" type="Label3D" parent="." unique_id=1495530638]
 transform = Transform3D(1, 0, 0, 0, 1.2767898, 0, 0, 0, 1, 0, 1.4494715, 0)

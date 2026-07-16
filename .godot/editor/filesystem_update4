@@ -1,13 +1,10 @@
-res://katana.tscn
+res://Merchant.tscn
 res://Map-Asset/Tres/High.tres
 res://Map-Asset/Tres/Enviroment.tres
 res://Map-Asset/Tres/Item.tres
 res://main_menu_model.gdshader
 res://Map-Asset/Scene/Enemy/burn_effect.gdshader
 res://VFX/Fire/enemy_status_effects.gdshader
-res://WeaponData.gd
-res://Weapons/hugs_fire.tres
-res://Scene/Test.tscn
-res://GameManager.gd
-res://forge_ui.tscn
-res://forge_ui.gd
+res://Merchant.gd
+res://forge_npc.tscn
+res://Forge.gd

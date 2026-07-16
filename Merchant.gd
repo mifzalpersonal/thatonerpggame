@@ -1,9 +1,16 @@
 extends Area3D
 
 @onready var interaction_label: Label3D = $Label3D
+@onready var sprite: AnimatedSprite3D = $AnimatedSprite3D
+@onready var idle_timer: Timer = $AnimatedSprite3D/Timer
 
 # Variabel penanda apakah player sedang berada di dekat penjual
 var player_di_dekat_toko: bool = false
+
+# --- VARIABEL ANIMASI ACAK ---
+# Daftar animasi variasi selain idle utama
+var random_idles: Array[String] = ["Flicker", "Sing"]
+var is_playing_rare: bool = false
 
 func _ready() -> void:
 	# Memastikan merchant TETAP berjalan meskipun game sedang di-pause oleh Toko/Menu
@@ -15,6 +22,12 @@ func _ready() -> void:
 	
 	if interaction_label:
 		interaction_label.visible = false
+		
+	# Hubungkan sinyal Timer secara program (atau lewat editor)
+	if idle_timer:
+		idle_timer.one_shot = true
+		idle_timer.timeout.connect(_on_timer_timeout)
+		start_random_timer()
 
 func _process(_delta: float) -> void:
 	# Jika player di dekat toko dan menekan tombol E
@@ -60,3 +73,28 @@ func _on_body_exited(body: Node3D) -> void:
 		player_di_dekat_toko = false
 		if interaction_label:
 			interaction_label.visible = false # Sembunyikan tulisan saat player menjauh
+
+
+# === SISTEM ANIMASI ACAK (FLICKER / SING) ===
+func start_random_timer() -> void:
+	if idle_timer:
+		# Set waktu rapat di kisaran 5 detik
+		idle_timer.wait_time = randf_range(4.5, 5.5)
+		idle_timer.start()
+
+func _on_timer_timeout() -> void:
+	if sprite and not is_playing_rare:
+		is_playing_rare = true
+		
+		# Mengacak antara "Flicker" atau "Sing" (Pastikan huruf kapitalnya SAMA PERSIS dengan di editor)
+		var picked_anim = random_idles.pick_random()
+		sprite.play(picked_anim)
+		
+		# Tunggu hingga animasi sekali putar ini selesai (Pastikan LOOP matikan di editor!)
+		await sprite.animation_finished
+		
+		is_playing_rare = false
+		sprite.play("Idle") # Kembali ke animasi diam utama (Pastikan huruf kapital sesuai editor)
+			
+	# Mulai ulang timer untuk 5 detik berikutnya
+	start_random_timer()

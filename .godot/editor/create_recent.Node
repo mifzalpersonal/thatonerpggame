@@ -1,3 +1,10 @@
+Timer
+TextureRect
+HBoxContainer
+Label
+AnimatedSprite2D
+TextureButton
+Control
 Button
 GridMap
 VBoxContainer
@@ -5,10 +12,3 @@ PanelContainer
 Camera3D
 HSeparator
 Node3D
-SubViewportContainer
-SubViewport
-Label
-HBoxContainer
-RichTextLabel
-Label3D
-CollisionShape3D

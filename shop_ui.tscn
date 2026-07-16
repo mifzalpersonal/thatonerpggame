@@ -1,7 +1,53 @@
 [gd_scene format=3 uid="uid://rsne4t7e3i73"]
 
 [ext_resource type="Script" uid="uid://ckqwwlcfpq86n" path="res://shop_ui.gd" id="1_fscwk"]
+[ext_resource type="Texture2D" uid="uid://d1kcgx100rbft" path="res://Coin.png" id="2_du886"]
 [ext_resource type="FontFile" uid="uid://c1swx3lfqyema" path="res://Font/static/Arimo-Regular.ttf" id="2_l4r40"]
+[ext_resource type="Texture2D" uid="uid://dyj644sil02tr" path="res://ReFresh.png" id="3_dxujh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_13myp"]
+bg_color = Color(0.07284262, 0.072842635, 0.072842576, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_du886"]
+atlas = ExtResource("3_dxujh")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qvybl"]
+atlas = ExtResource("3_dxujh")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_arfta"]
+atlas = ExtResource("3_dxujh")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jsmax"]
+atlas = ExtResource("3_dxujh")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qxwbh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_du886")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qvybl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_arfta")
+}],
+"loop": 1,
+"name": &"Hover",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jsmax")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
 
 [node name="ShopUI" type="CanvasLayer" unique_id=538268889]
 process_mode = 3
@@ -10,17 +56,12 @@ script = ExtResource("1_fscwk")
 
 [node name="PanelContainer" type="Panel" parent="." unique_id=2041924504]
 custom_minimum_size = Vector2(1000, 550)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_13myp")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=520761746]
 layout_mode = 1
@@ -43,10 +84,18 @@ size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 32
 text = "SHOP"
 
-[node name="PlayerCoinLabel" type="Label" parent="PanelContainer/VBoxContainer" unique_id=371794911]
+[node name="Coin" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=1639392186]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "12"
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/VBoxContainer/Coin" unique_id=1576236186]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("2_du886")
+
+[node name="PlayerCoinLabel" type="Label" parent="PanelContainer/VBoxContainer/Coin" unique_id=59291299]
+layout_mode = 2
+text = "test"
 horizontal_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer" unique_id=471900183]
@@ -60,16 +109,39 @@ text = "Tekan (ESC) Untuk Keluar"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="RerollButton" type="Button" parent="." unique_id=838648724]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -415.0
-offset_top = -207.0
-offset_right = -407.0
-offset_bottom = -199.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Reroll"
+[node name="TextureButton2" type="TextureRect" parent="." unique_id=941691945]
+texture_filter = 1
+custom_minimum_size = Vector2(48, 48)
+custom_maximum_size = Vector2(32, 32)
+offset_left = 122.0
+offset_top = 56.0
+offset_right = 154.0
+offset_bottom = 88.0
+offset_transform_position = Vector2(0, 8)
+texture = ExtResource("2_du886")
+
+[node name="RerollLabel" type="Label" parent="." unique_id=1578275303]
+offset_left = 150.0
+offset_top = 58.0
+offset_right = 199.0
+offset_bottom = 87.0
+theme_override_font_sizes/font_size = 18
+text = "Test"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureButton" type="TextureButton" parent="." unique_id=415897208]
+custom_minimum_size = Vector2(64, 64)
+custom_maximum_size = Vector2(64, 64)
+offset_left = 48.0
+offset_top = 40.0
+offset_right = 112.0
+offset_bottom = 104.0
+offset_transform_position = Vector2(0, 8)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TextureButton" unique_id=527653394]
+texture_filter = 1
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_qxwbh")
+frame_progress = 0.83447057
+centered = false

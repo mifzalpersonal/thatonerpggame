@@ -1,14 +1,27 @@
 extends Node3D
 
 @onready var prompt_label: Label3D = $PromptLabel 
+@onready var sprite: AnimatedSprite3D = $AnimatedSprite3D
+@onready var idle_timer: Timer = $AnimatedSprite3D/Timer
 
 var player_di_dalam_area: bool = false
 var player_ref: Node3D = null
+
+# --- VARIABEL ANIMASI ACAK ---
+# Hanya berisi "Flicker" (Pastikan huruf kapitalnya SAMA dengan di editor)
+var random_idles: Array[String] = ["Flicker"]
+var is_playing_rare: bool = false
 
 func _ready() -> void:
 	if prompt_label:
 		prompt_label.visible = false
 	print("🤖 NPC Forge Siap! Menunggu player mendekat...")
+	
+	# Hubungkan sinyal Timer secara otomatis & mulai timer
+	if idle_timer:
+		idle_timer.one_shot = true
+		idle_timer.timeout.connect(_on_timer_timeout)
+		start_random_timer()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if player_di_dalam_area and event.is_action_pressed("interaction"):
@@ -40,11 +53,9 @@ func _on_interaction_area_body_exited(body: Node3D) -> void:
 
 # --- 🛠️ FUNGSI BUKA MENU FORGE ---
 func buka_menu_forge() -> void:
-	# Cari ForgeUI di root game
 	var forge_ui = get_tree().root.find_child("ForgeUI", true, false)
 	
 	if forge_ui == null:
-		# Cari alternatif kalau namanya huruf kecil semua
 		forge_ui = get_tree().root.find_child("forge_ui", true, false)
 		
 	if forge_ui:
@@ -80,13 +91,10 @@ func cari_skrip_senjata_di_player(player: Node3D) -> Node3D:
 	if player == null:
 		return null
 	
-	# Mencari node "Tangan" (huruf T besar) di tubuh Player kamu
 	var node_tangan = player.find_child("Tangan", true, false)
 	
 	if node_tangan:
 		print("📦 Node 'Tangan' ditemukan pada Player.")
-		
-		# DISESUAIKAN: Membaca variabel 'node_senjata_di_tangan' dari skripmu!
 		if "node_senjata_di_tangan" in node_tangan:
 			var senjata = node_tangan.node_senjata_di_tangan
 			if senjata != null:
@@ -100,3 +108,28 @@ func cari_skrip_senjata_di_player(player: Node3D) -> Node3D:
 		print("🚨 ERROR: Node bernama 'Tangan' (T besar) tidak ditemukan di tubuh Player!")
 		
 	return null
+
+
+# === ⏱️ SISTEM ANIMASI ACAK FORGE (FLICKER SETIAP ±5 DETIK) ===
+func start_random_timer() -> void:
+	if idle_timer:
+		# Timer disetel rapat di sekitar 5 detik (4.5 sampai 5.5 detik)
+		idle_timer.wait_time = randf_range(4.5, 5.5)
+		idle_timer.start()
+
+func _on_timer_timeout() -> void:
+	if sprite and not is_playing_rare:
+		is_playing_rare = true
+		
+		# Memainkan animasi Flicker
+		var picked_anim = random_idles.pick_random()
+		sprite.play(picked_anim)
+		
+		# Tunggu hingga kedipan selesai (Loop Flicker harus mati di editor)
+		await sprite.animation_finished
+		
+		is_playing_rare = false
+		sprite.play("Idle") # Kembali ke animasi Idle utama yang looping
+			
+	# Ulangi lagi timernya untuk 5 detik ke depan
+	start_random_timer()
