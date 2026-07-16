@@ -1,49 +1,58 @@
 extends Control
 
-# Sisi Latar Belakang (Sekarang Full Screen)
+# Sisi Latar Belakang (Full Screen)
 @onready var preview_pivot: Node3D = $SubViewportContainer/SubViewport/GridMap/WeaponPreviewPivot
 
-# Sisi Kanan Melayang (Sesuaikan path-nya jika posisi node berubah)
+# Sisi Kanan Melayang
 @onready var weapon_name_label: Label = $PanelKanan/VBoxContainer/WeaponNameLabel
 @onready var weapon_stats_label: Label = $PanelKanan/VBoxContainer/WeaponStatsLabel
 @onready var cost_label: Label = $PanelKanan/VBoxContainer/CostLabel
-@onready var forge_button: Button = $PanelKanan/VBoxContainer/ForgeButton/ForgeButton
+
+# Tombol Utama
+@onready var forge_button: Button = $PanelKanan/VBoxContainer/ForgeButton        # Tombol Kiri / Atas
+@onready var forge_rarity_button: Button = $PanelKanan/VBoxContainer/ForgeRarityButton # Tombol Kanan / Bawah
 @onready var close_button: Button = $PanelKanan/VBoxContainer/CloseButton
 
 # ==========================================
-# 📦 VARIABEL DATA SENJATA
+# 📦 VARIABEL DATA & STATE MACHINE UI
 # ==========================================
 var senjata_aktif: Node3D = null
-var stats_senjata: Resource = null # Menggunakan Resource agar anti-parser error
-var biaya_nempa: int = 100
+var stats_senjata: Resource = null 
+var biaya_nempa_level: int = 100
+var biaya_nempa_rarity: int = 100 # Default di-set 100
+
+enum MenuState { HUB, MENU_LEVEL, MENU_RARITY }
+var current_state: MenuState = MenuState.HUB
+
+const RARITY_COLORS = {
+	"Common": "#ffffff", "Uncommon": "#1ee655", "Rare": "#00bfff", "Epic": "#b026ff", "Legendary": "#ff8c00"
+}
 
 # ==========================================
 # ⚙️ SIKLUS UTAMA (LIFECYCLE)
 # ==========================================
 func _ready() -> void:
-	# Hubungkan tombol Forge ke fungsinya secara dinamis
 	if forge_button and not forge_button.pressed.is_connected(_on_forge_button_pressed):
 		forge_button.pressed.connect(_on_forge_button_pressed)
+		
+	if forge_rarity_button and not forge_rarity_button.pressed.is_connected(_on_forge_rarity_button_pressed):
+		forge_rarity_button.pressed.connect(_on_forge_rarity_button_pressed)
 	
-	# Hubungkan tombol Tutup ke fungsinya secara dinamis
 	if close_button and not close_button.pressed.is_connected(_on_close_button_pressed):
 		close_button.pressed.connect(_on_close_button_pressed)
 		
-	# 🛠️ PERBAIKAN MOUSE FILTER BISA DIPENCET
-	# Memaksa tombol agar bisa menerima klik mouse di Godot
 	if forge_button: forge_button.mouse_filter = Control.MOUSE_FILTER_STOP
+	if forge_rarity_button: forge_rarity_button.mouse_filter = Control.MOUSE_FILTER_STOP
 	if close_button: close_button.mouse_filter = Control.MOUSE_FILTER_STOP
 		
-	# Pastikan UI tersembunyi saat awal permainan
 	visible = false
 
 func _process(delta: float) -> void:
-	# Efek rotasi estetik model 3D senjata di sisi kiri secara perlahan
 	if preview_pivot and preview_pivot.get_child_count() > 0:
 		preview_pivot.rotate_y(delta * 0.6)
 
 # ==========================================
-# 🛠️ FUNGSI UTAMA (DIPANGGIL OLEH NPC FORGE)
+# 🛠️ FUNGSI UTAMA (DIPANGGIL OLEH NPC)
 # ==========================================
 func set_senjata_yang_akan_ditempa(node_senjata: Node3D) -> void:
 	senjata_aktif = node_senjata
@@ -51,130 +60,149 @@ func set_senjata_yang_akan_ditempa(node_senjata: Node3D) -> void:
 	
 	visible = true
 	get_tree().paused = true 
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE # Munculkan cursor mouse
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	
-	# Picu pembaruan visual 3D dan teks info statistik
+	current_state = MenuState.HUB
 	update_preview_3d_senjata()
 	update_tampilan_ui()
+
 # ==========================================
-# 🎥 RENDER 3D SENJATA (SISI KIRI)
+# 🎥 RENDER 3D SENJATA
 # ==========================================
 func update_preview_3d_senjata() -> void:
-	if preview_pivot == null:
-		return
+	if preview_pivot == null or senjata_aktif == null: return
+	for child in preview_pivot.get_children(): child.queue_free()
 		
-	for child in preview_pivot.get_children():
-		child.queue_free()
-		
-	if senjata_aktif == null:
-		return
-		
-	var scene_path = senjata_aktif.scene_file_path
-	var scene_senjata = load(scene_path)
-	
+	var scene_senjata = load(senjata_aktif.scene_file_path)
 	if scene_senjata:
 		var kloning_senjata = scene_senjata.instantiate()
 		preview_pivot.add_child(kloning_senjata)
-		
-		# ========================================================
-		# 🎛️ PENGATURAN POSISI VISUAL SENJATA DI PANEL UI
-		# ========================================================
-		# 1. POSISI (Geser kiri/kanan, atas/bawah, maju/mundur dari kamera)
-		# X: kanan(+)/kiri(-), Y: atas(+)/bawah(-), Z: mendekat(+)/menjauh(-)
 		kloning_senjata.position = Vector3(0.0, -0.5, 0.0) 
-		
-		# 2. ROTASI AWAL (Kemiringan senjata pas pertama kali UI muncul)
-		# Jika senjatanya berdiri tegak/terbalik, putar di sini (gunakan deg_to_rad)
-		kloning_senjata.rotation = Vector3(0, deg_to_rad(0), 0)
-		
-		# 3. SKALA / UKURAN (Jika senjatanya terlalu raksasa atau terlalu kecil di UI)
-		# Ubah angka 1.5 jika ingin lebih besar, atau 0.5 jika ingin diperkecil
-		kloning_senjata.scale = Vector3(0.8,0.8,0.8)
-		# ========================================================
-		
+		kloning_senjata.rotation = Vector3(0, 0, 0)
+		kloning_senjata.scale = Vector3(0.8, 0.8, 0.8)
 		kloning_senjata.set_process(false)
 		kloning_senjata.set_physics_process(false)
 
 # ==========================================
-# 🖥️ UPDATE INFORMASI TEKS (SISI KANAN)
+# 🖥️ CORE LOGIC: DYNAMIC STATE UI RE-RENDER
 # ==========================================
 func update_tampilan_ui() -> void:
-	if stats_senjata == null:
-		return
-		
-	if weapon_name_label == null or weapon_stats_label == null or cost_label == null:
-		print("🚨 ERROR UI: Ada label yang null!")
-		return
-		
-	# Tampilkan Nama Senjata & Tingkat Forge saat ini
-	weapon_name_label.text = stats_senjata.weapon_name + " (Forge +" + str(stats_senjata.forge_level) + ")"
+	if stats_senjata == null: return
 	
-	# Ambil total damage saat ini langsung lewat getter dinamis Resource
+	var nama_rarity = stats_senjata.get_rarity_name()
+	weapon_name_label.text = stats_senjata.weapon_name + " (Forge +" + str(stats_senjata.forge_level) + ")\n[" + nama_rarity + "]"
+	weapon_name_label.modulate = Color(RARITY_COLORS.get(nama_rarity, "#ffffff"))
+	
 	var dmg_sekarang = stats_senjata.total_damage
-	
-	# Hitung simulasi damage untuk level berikutnya (+15% dari base_damage)
-	var lvl_berikutnya = stats_senjata.forge_level + 1
-	var dmg_berikutnya = stats_senjata.base_damage + (stats_senjata.base_damage * 0.15 * lvl_berikutnya)
-	var bonus_nominal = stats_senjata.base_damage * 0.15
-	
-	# Tampilkan daftar statistik ke teks label tengah
-# Ambil data crit dari resource senjata
-	var crit_persen = stats_senjata.crit_chance * 100 # Ubah desimal (0.1) ke bentuk persen (10%)
-	
-	# Tampilkan daftar statistik ke teks label tengah
-	weapon_stats_label.text = (
-		"STATISTIK SENJATA:\n\n" +
-		"• Base Damage: " + str(stats_senjata.base_damage) + "\n" +
-		"• Damage Saat Ini: " + str(dmg_sekarang) + " 🔥\n" +
-		"• Damage Berikutnya: " + str(dmg_berikutnya) + " ⚔️\n" +
-		"• Crit Chance: " + str(crit_persen) + "% 🎯\n" +
-		"• Crit Multiplier: " + str(stats_senjata.crit_multiplier) + "x ⚡\n\n" +
-		"Bonus Menempa: +15% Base DMG (+" + str(bonus_nominal) + ")"
-	)
-	
-	# Kalkulasi biaya upgrade sederhana (naik 100 koin per level forge)
-	biaya_nempa = (stats_senjata.forge_level + 1) * 100 
-	
-	# Tampilkan info uang player saat ini dari CoinManager jika ada variabel globalnya
-	if "koin" in CoinManager: # Sesuaikan dengan nama variabel koin di CoinManager-mu (misal: koin, coins, gold)
-		cost_label.text = "Biaya Upgrade: " + str(biaya_nempa) + " Koin\n(Koin Kamu: " + str(CoinManager.koin) + ")"
-	else:
-		cost_label.text = "Biaya Upgrade: " + str(biaya_nempa) + " Koin"
+	biaya_nempa_level = (stats_senjata.forge_level + 1) * 100 
+	biaya_nempa_rarity = 100 # 🔒 Kunci biaya kasta tetap di 100 Koin
+
+	forge_button.disabled = false
+	forge_rarity_button.disabled = false
+
+	match current_state:
+		MenuState.HUB:
+			weapon_stats_label.text = "Silakan pilih jenis modifikasi senjata yang ingin kamu lakukan di Anvil."
+			cost_label.text = "💰 Uangmu: " + str(GameManager.total_currency) + " Koin"
+			
+			forge_button.text = "▶ Buka Menu Upgrade Level"
+			forge_rarity_button.text = "▶ Buka Menu Forge Kasta"
+			close_button.text = "Keluar UI Anvil"
+			
+		MenuState.MENU_LEVEL:
+			var dmg_level_berikutnya = dmg_sekarang + 5 
+			
+			weapon_stats_label.text = (
+				"MENU UPGRADE LEVEL\n\n" +
+				"• Level Saat Ini: Forge +" + str(stats_senjata.forge_level) + "\n" +
+				"• Damage Sekarang: " + str(dmg_sekarang) + " 🔥\n"
+			)
+			
+			if stats_senjata.forge_level >= 24:
+				weapon_stats_label.text += "• Prospek Damage: LEVEL MAKSIMAL ⚔️"
+				cost_label.text = "💰 Koin Kamu: " + str(GameManager.total_currency)
+				
+				forge_button.text = "LEVEL SUDAH MAKSIMAL!"
+				forge_button.disabled = true
+			else:
+				weapon_stats_label.text += "• Prospek Damage: → " + str(dmg_level_berikutnya) + " (+5 DMG) ⚔️"
+				cost_label.text = "Biaya Upgrade: " + str(biaya_nempa_level) + " Koin\n💰 Koin Kamu: " + str(GameManager.total_currency)
+				
+				forge_button.text = "🔨 EKSEKUSI UPGRADE LEVEL"
+				
+			forge_rarity_button.text = "⬅ Kembali ke Menu Utama"
+			close_button.text = "Tutup"
+			
+		MenuState.MENU_RARITY:
+			var crit_persen = stats_senjata.crit_chance * 100
+			var bonus_crit_kasta = stats_senjata.get_rarity_crit_bonus() * 100
+			
+			var c_common = stats_senjata.chance_common * 100
+			var c_uncommon = stats_senjata.chance_uncommon * 100
+			var c_rare = stats_senjata.chance_rare * 100
+			var c_epic = stats_senjata.chance_epic * 100
+			var c_legendary = stats_senjata.chance_legendary * 100
+			
+			weapon_stats_label.text = (
+				"🎲 ANVIL GACHA KASTA SENJATA 🎲\n\n" +
+				"• Kasta Saat Ini: " + nama_rarity + "\n" +
+				"• Total Damage: " + str(dmg_sekarang) + " 🔥\n" +
+				"• Total Crit Chance: " + str(crit_persen) + "% 🎯 (Bonus Kasta: +" + str(bonus_crit_kasta) + "%)\n\n" +
+				"📋 PELUANG GACHA SENJATA INI:\n" +
+				"• Common: " + str(c_common) + "% | Uncommon: " + str(c_uncommon) + "%\n" +
+				"• Rare: " + str(c_rare) + "% | Epic: " + str(c_epic) + "%\n" +
+				"• Legendary: " + str(c_legendary) + "%\n\n" +
+				"⚠️ Kasta akan langsung diacak ulang setelah dikocok!"
+			)
+			cost_label.text = "Biaya Gacha Kasta: " + str(biaya_nempa_rarity) + " Koin\n💰 Koin Kamu: " + str(GameManager.total_currency)
+			
+			forge_button.text = "🎲 KOCOK KASTA BARU"
+			forge_rarity_button.text = "⬅ Kembali ke Menu Utama"
+			close_button.text = "Tutup"
 
 # ==========================================
-# 🔨 LOGIKA SIGNALS & TOMBOL INTERAKSI
+# 🔨 LOGIKA SIGNALS & ACTION BUTTONS
 # ==========================================
 func _on_forge_button_pressed() -> void:
-	if stats_senjata == null:
-		return
-		
-	# Cek apakah koin player di GameManager cukup untuk menempa
-	if GameManager.total_currency < biaya_nempa:
-		print("❌ Koin tidak cukup untuk menempa senjata!")
-		cost_label.text = "Biaya Upgrade: " + str(biaya_nempa) + " Koin\nKoin Tidak Cukup!"
-		return
-	
-	# Potong koin di GameManager
-	GameManager.total_currency -= biaya_nempa
-	
-	# Picu sinyal bawaan GameManager agar HUD koin di layar utama ikut ter-update otomatis
-	if GameManager.has_signal("currency_changed"):
-		GameManager.currency_changed.emit(GameManager.total_currency)
-		
-	print("💰 Koin terpotong sebesar: ", biaya_nempa, ". Sisa koin: ", GameManager.total_currency)
-	
-	# Naikkan level forge senjata
-	stats_senjata.forge_level += 1
-	print("🔨 Upgrade Sukses! " + stats_senjata.weapon_name + " naik ke Forge +" + str(stats_senjata.forge_level))
-	
-	# Segera perbarui layar UI agar angka koin dan statistik berubah secara realtime
-	update_tampilan_ui()
+	match current_state:
+		MenuState.HUB:
+			current_state = MenuState.MENU_LEVEL
+			update_tampilan_ui()
+			
+		MenuState.MENU_LEVEL:
+			if stats_senjata.forge_level >= 24:
+				print("❌ Level senjata sudah maksimal!")
+				return
+				
+			if GameManager.total_currency < biaya_nempa_level:
+				print("❌ Koin tidak cukup!")
+				return
+			GameManager.total_currency -= biaya_nempa_level
+			stats_senjata.forge_level += 1
+			if GameManager.has_signal("currency_changed"): GameManager.currency_changed.emit(GameManager.total_currency)
+			update_tampilan_ui()
+			
+		MenuState.MENU_RARITY:
+			if GameManager.total_currency < biaya_nempa_rarity:
+				print("❌ Koin tidak cukup!")
+				return
+			var sukses = GameManager.upgrade_weapon_rarity(stats_senjata)
+			if sukses:
+				GameManager.total_currency -= biaya_nempa_rarity
+				if GameManager.has_signal("currency_changed"): GameManager.currency_changed.emit(GameManager.total_currency)
+				update_tampilan_ui()
+
+func _on_forge_rarity_button_pressed() -> void:
+	match current_state:
+		MenuState.HUB:
+			current_state = MenuState.MENU_RARITY
+			update_tampilan_ui()
+			
+		MenuState.MENU_LEVEL, MenuState.MENU_RARITY:
+			current_state = MenuState.HUB
+			update_tampilan_ui()
 
 func _on_close_button_pressed() -> void:
 	visible = false
 	get_tree().paused = false 
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED # Sembunyikan cursor lagi
-
-func _unhandled_input(event: InputEvent) -> void:
-	if visible and (event.is_action_pressed("ui_cancel") or event.is_action_pressed("interact")):
-		_on_close_button_pressed()
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED

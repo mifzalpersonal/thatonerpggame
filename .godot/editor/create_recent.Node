@@ -1,3 +1,4 @@
+Button
 GridMap
 VBoxContainer
 PanelContainer
@@ -7,7 +8,6 @@ Node3D
 SubViewportContainer
 SubViewport
 Label
-Button
 HBoxContainer
 RichTextLabel
 Label3D

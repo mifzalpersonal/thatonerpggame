@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_w3ge2")
-base_damage = 70.0
-crit_chance = 1.0
+weapon_name = "HugsFire"
+base_damage = 75
 metadata/_custom_type_script = "uid://duthkswv7bj7d"

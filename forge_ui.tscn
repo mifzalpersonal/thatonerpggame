@@ -68,6 +68,11 @@ layout_mode = 2
 [node name="ForgeButton" type="Button" parent="PanelKanan/VBoxContainer" unique_id=1861546043]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+text = "Level Up"
+
+[node name="ForgeRarityButton" type="Button" parent="PanelKanan/VBoxContainer" unique_id=1773805636]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
 text = "Forge"
 
 [node name="CloseButton" type="Button" parent="PanelKanan/VBoxContainer" unique_id=398832506]

@@ -19,7 +19,7 @@ var MASTER_ITEMS: Array[Dictionary] = [
 	{"id": "hugs", "name": "Hugs Normal", "price": 50, "desc": "Buka senjata Hugs standar", "rarity": "common", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
 	{"id": "bow", "name": "Busur Panah", "price": 70, "desc": "Buka senjata Bow", "rarity": "rare", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
 	{"id": "wp_fire", "name": "Hugs Fire Blaster", "price": 95, "desc": "Buka Hugs Fire (DoT Burn)", "rarity": "rare", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
-	{"id": "wp_nature", "name": "Tongkat Nature", "price": 85, "desc": "Buka Nature (Efek Slow)", "rarity": "rare", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
+	{"id": "wp_nature", "name": "Tongkat Nature", "price": 85, "desc": "Buka Nature (Efek Slow)", "rarity": "rare", "icon_path": "res://Map-Asset/Scene/procedural_map.tscn"},
 	{"id": "wp_katana", "name": "Katana Terkutuk", "price": 100, "desc": "Buka Katana (Lifesteal)", "rarity": "legendary", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"}
 ]
 
@@ -27,7 +27,7 @@ var MASTER_ITEMS: Array[Dictionary] = [
 var isi_toko_level_ini: Array[Dictionary] = []
 
 # --- VARIABEL: SISTEM CURRENCY & REROLL DINAMIS ---
-var total_currency: int = 150 
+var total_currency: int = 99999 
 const HARGA_REROLL_BASE: int = 10     # Harga awal setiap ganti toko baru
 var harga_reroll_sekarang: int = 10   # Harga berjalan yang akan naik dikali 2
 const MAX_HARGA_REROLL: int = 200     # Batas harga maksimal reroll
@@ -49,41 +49,35 @@ func _ready() -> void:
 	buat_rak_toko_baru()
 
 # ==============================================================================
-# 🎯 FUNGSI GLOBAL SUNTIK DAMAGE & CRITICAL HIT UNTUK SEMUA PROYEKTIK/SLASH
+# 🎯 FUNGSI GLOBAL SUNTIK DAMAGE DENGAN INTEGRASI RARITY FORGE SYSTEM
 # ==============================================================================
 func siapkan_peluru(slash_instance: Node, stats: WeaponData, bonus_damage: int) -> void:
 	if stats == null:
 		print("🚨 GAMEMANAGER: Gagal siapkan peluru karena WeaponData kosong!")
 		return
 		
-	# 1. Kocok damage dasar & cek keberuntungan Critical Hit lewat WeaponData (.tres)
 	var hasil_kocokan = stats.hitung_damage_output()
-	var damage_kocokan = hasil_kocokan["damage"]
+	var damage_kocokan = stats.total_damage + (hasil_kocokan["damage"] - stats.base_damage)
 	var apakah_crit = hasil_kocokan["is_critical"]
 	
-	# 2. Tambahkan bonus damage permanen dari pembelian item Toko
 	var total_damage_akhir = damage_kocokan + bonus_damage
 	
-	# 3. Suntikkan datanya ke dalam instansi peluru (Slash/Panah) secara dinamis
 	if "damage" in slash_instance:
 		slash_instance.damage = total_damage_akhir
 		
 	if "is_critical" in slash_instance:
 		slash_instance.is_critical = apakah_crit
 		
-	# --- Debug Log Terpusat ---
-	print("⚔️ SYSTEM FORGE: ", stats.weapon_name, " (Level +", stats.forge_level, ")")
+	print("⚔️ SYSTEM FORGE: ", stats.weapon_name, " [Rarity: ", stats.get_rarity_name(), "] (Level +", stats.forge_level, ")")
 	if apakah_crit:
-		print("   └─ 💥 CRITICAL HIT! Total Damage disuntik: ", total_damage_akhir)
+		print("    └─ 💥 CRITICAL HIT! Total Damage disuntik: ", total_damage_akhir)
 	else:
-		print("   └─ Normal Damage disuntik: ", total_damage_akhir)
+		print("    └─ Normal Damage disuntik: ", total_damage_akhir)
 
 
 # --- LOGIKA GENERATOR BARANG (GARANSI PASTI TEPAT 4 SLOT UNIK) ---
 func buat_rak_toko_baru() -> void:
 	isi_toko_level_ini.clear()
-	
-	# --- RESET BIAYA REROLL KE BASE (10 KOIN) TIAP KALI TOKO BARU DI-GENERATE ---
 	harga_reroll_sekarang = HARGA_REROLL_BASE
 	print("🎲 GAMEMANAGER: Toko baru didirikan. Harga reroll di-reset kembali ke: ", harga_reroll_sekarang)
 	
@@ -118,17 +112,13 @@ func buat_rak_toko_baru() -> void:
 			
 	print("🛒 GAMEMANAGER: Rak toko dikunci. Total item unik: ", isi_toko_level_ini.size(), "/4")
 
-# --- MEKANIK REQUEST REROLL (PROGRESID MUTLAK COIN MULTIPLIER) ---
+# --- MEKANIK REQUEST REROLL ---
 func request_reroll() -> bool:
 	if total_currency >= harga_reroll_sekarang:
 		total_currency -= harga_reroll_sekarang
 		currency_changed.emit(total_currency)
 		
-		# 1. Jalankan pengacakan rak baru tanpa meriset harga reroll
-		# (Kita bypass panggil sistem pilah manual agar harga_reroll_sekarang tidak ikut reset di buat_rak_toko_baru)
 		acak_tanpa_reset_biaya()
-		
-		# 2. Kalikan biaya reroll saat ini dengan 2, lalu batasi maksimal di 200 koin
 		harga_reroll_sekarang = clampi(harga_reroll_sekarang * 2, HARGA_REROLL_BASE, MAX_HARGA_REROLL)
 		
 		print("🎲 GAMEMANAGER: Reroll sukses! Biaya reroll selanjutnya naik menjadi: ", harga_reroll_sekarang, " Koin.")
@@ -137,7 +127,6 @@ func request_reroll() -> bool:
 	print("GAMEMANAGER: Koin tidak cukup untuk melakukan reroll!")
 	return false
 
-# Fungsi pembantu internal agar sistem acak reroll tidak menabrak fungsi reset bawaan toko baru
 func acak_tanpa_reset_biaya() -> void:
 	isi_toko_level_ini.clear()
 	var item_common: Array[Dictionary] = []
@@ -191,8 +180,8 @@ func load_initial_level():
 
 func go_to_next_level():
 	current_level += 1
-	current_wave = 1 # Kembali ke wave 1 di level baru
-	level_changed.emit() # Memicu UI agar kembali ke posisi WAVE 1 / 3 halus
+	current_wave = 1
+	level_changed.emit()
 	if has_node("/root/SceneChanger"):
 		get_node("/root/SceneChanger").change_scene_to("REGENERATE_MAP")
 	else:
@@ -202,8 +191,6 @@ func execute_map_regeneration():
 	if main_scene:
 		var map_scene = load(generator_scene_path)
 		if map_scene: main_scene.change_map(map_scene)
-	
-	# Panggilan ini otomatis meriset biaya reroll menjadi 10 koin lagi di level/toko baru!
 	buat_rak_toko_baru()
 
 func load_new_level(path: String):
@@ -222,15 +209,14 @@ func get_enemy_stats(base_hp: float, base_atk: float, base_speed: float) -> Dict
 	var mult = 1.0 + (current_level - 1) * 0.25
 	return {"hp": base_hp * mult, "atk": base_atk * mult, "speed": base_speed * 1.05}
 
-## Panggil fungsi ini dari script Spawner / Sistem Wave kamu saat semua musuh di wave tersebut mati
 func maju_ke_wave_selanjutnya() -> void:
 	if current_wave < MAX_WAVES:
 		current_wave += 1
-		level_changed.emit() # Memicu UI Wave secara otomatis untuk melakukan animasi update!
+		level_changed.emit()
 		print("⚔️ GAMEMANAGER: Bersiap! Masuk ke Wave: ", current_wave)
 	else:
 		print("🏆 GAMEMANAGER: Semua Wave di level ini selesai!")
-		go_to_next_level() # Pindah ke stage berikutnya jika wave sudah maksimal
+		go_to_next_level()
 
 func reset_game():
 	current_level = 1
@@ -239,3 +225,43 @@ func reset_game():
 	player_spawn_position = Vector3.ZERO
 	buat_rak_toko_baru()
 	level_changed.emit()
+
+# ==============================================================================
+# 🎲 MEKANIK UPGRADE RARITY FORGE DENGAN SISTEM GACHA ACAK CHANCE INSPECTOR
+# ==============================================================================
+func upgrade_weapon_rarity(weapon_stats: WeaponData) -> bool:
+	if weapon_stats == null:
+		print("🚨 GAMEMANAGER: Gagal upgrade karena WeaponData kosong!")
+		return false
+		
+	var kocokan: float = randf() 
+	var rarity_baru: int = 0
+	
+	var p_common = weapon_stats.chance_common
+	var p_uncommon = p_common + weapon_stats.chance_uncommon
+	var p_rare = p_uncommon + weapon_stats.chance_rare
+	var p_epic = p_rare + weapon_stats.chance_epic
+	
+	if kocokan < p_common:
+		rarity_baru = 0
+	elif kocokan < p_uncommon:
+		rarity_baru = 1
+	elif kocokan < p_rare:
+		rarity_baru = 2
+	elif kocokan < p_epic:
+		rarity_baru = 3
+	else:
+		rarity_baru = 4
+		
+	weapon_stats.current_rarity = rarity_baru as WeaponData.Rarity
+	
+	print("🎲 [GameManager] GACHA BERHASIL!")
+	print("    └─ Senjata    : ", weapon_stats.weapon_name)
+	print("    └─ Kasta Baru : ", weapon_stats.get_rarity_name())
+	print("    └─ Total DMG  : ", weapon_stats.total_damage)
+	return true
+
+func set_weapon_rarity_langsung(weapon_stats: WeaponData, rarity_baru: WeaponData.Rarity) -> void:
+	if weapon_stats != null:
+		weapon_stats.current_rarity = rarity_baru
+		print("💎 RARITY SET: ", weapon_stats.weapon_name, " diubah menjadi ", weapon_stats.get_rarity_name())
