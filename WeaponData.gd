@@ -33,7 +33,7 @@ enum Rarity { COMMON, UNCOMMON, RARE, EPIC, LEGENDARY }
 
 @export_category("Base Critical Hit Setup")
 @export_range(0.0, 1.0) var base_crit_chance: float = 0.05 # 5% Peluang crit dasar bawaan senjata
-@export var crit_multiplier: float = 1.5 # 1.5x damage saat crit default
+@export var crit_multiplier: float = 2.25 # 1.5x damage saat crit default
 
 @export_category("Rarity Gacha Chance (Total must be 1.0 / 100%)")
 @export_range(0.0, 1.0) var chance_common: float = 0.50     # 50%
@@ -56,7 +56,9 @@ var total_damage: int:
 # Variabel kalkulasi akhir crit chance (Base + Bonus Kasta)
 var crit_chance: float:
 	get:
-		return base_crit_chance + get_rarity_crit_bonus()
+		var level_aman = clampi(forge_level, 0, 24)
+		# Ditambahkan (level_aman * 0.01) agar setiap naik level forge, crit naik 1%
+		return base_crit_chance + get_rarity_crit_bonus() + (level_aman * 0.01)
 
 # ==============================================================================
 # 🛠️ FUNGSI INTERNAL PENGHITUNG BONUS KASTA

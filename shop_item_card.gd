@@ -46,6 +46,10 @@ func setup_card(item: Dictionary) -> void:
 		item_icon.texture = load(item["icon_path"])
 		
 	aplikasikan_warna_rarity(item["rarity"])
+	
+	# --- TAMBAHAN BARU: Cek apakah item ini sudah pernah dibeli sebelumnya ---
+	if item.has("is_purchased") and item["is_purchased"] == true:
+		set_terbeli()
 
 func aplikasikan_warna_rarity(rarity: String) -> void:
 	var warna_kasta: Color

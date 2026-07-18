@@ -69,9 +69,9 @@ mouse_filter = 2
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Control" parent="GUI" unique_id=898299092 instance=ExtResource("9_ad4pf")]
-
 [node name="CoinHUD" parent="GUI" unique_id=1413814855 instance=ExtResource("5_rnpuv")]
+
+[node name="Control" parent="GUI" unique_id=898299092 instance=ExtResource("9_ad4pf")]
 
 [node name="ForgeUI" parent="GUI" unique_id=2090259237 instance=ExtResource("7_rnpuv")]
 

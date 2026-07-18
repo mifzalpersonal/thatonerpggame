@@ -2,8 +2,40 @@
 
 [ext_resource type="Script" uid="uid://c400mxnibo1to" path="res://forge_ui.gd" id="1_4l3ak"]
 [ext_resource type="PackedScene" uid="uid://7s7keywpnw88" path="res://ForgeMapUI.tscn" id="2_axunk"]
+[ext_resource type="Texture2D" uid="uid://bxw5ek78crw1g" path="res://Arrwo.png" id="3_1cnrs"]
+[ext_resource type="Texture2D" uid="uid://chu5nkl5giqj3" path="res://UpgradeIcon.png" id="4_v325q"]
+[ext_resource type="Texture2D" uid="uid://booaa358ireiq" path="res://ForgeIcon.png" id="5_fe3ya"]
+[ext_resource type="Texture2D" uid="uid://b00yk6arb3d0n" path="res://Dmage.png" id="6_64yaw"]
+[ext_resource type="Texture2D" uid="uid://du8oukp0vr7m0" path="res://critDmage.png" id="7_h50mr"]
+[ext_resource type="Texture2D" uid="uid://d1kcgx100rbft" path="res://Coin.png" id="8_ky6ci"]
 
 [sub_resource type="World3D" id="World3D_4l3ak"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ciwwa"]
+bg_color = Color(0, 0, 0, 0.5882353)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+expand_margin_bottom = 3.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_13myp"]
+content_margin_left = 3.0
+content_margin_top = 3.0
+content_margin_right = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0, 0, 0, 0.57254905)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 3.0
+expand_margin_top = 3.0
+expand_margin_right = 3.0
+expand_margin_bottom = 3.0
 
 [node name="ForgeUI" type="Control" unique_id=2090259237]
 process_mode = 3
@@ -45,39 +77,219 @@ grow_horizontal = 0
 grow_vertical = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelKanan" unique_id=1217307206]
-layout_mode = 2
+[node name="CloseButton" type="Button" parent="." unique_id=983682393]
+custom_minimum_size = Vector2(64, 64)
+custom_maximum_size = Vector2(64, 64)
+layout_mode = 0
+offset_left = 14.0
+offset_top = 19.0
+offset_right = 78.0
+offset_bottom = 83.0
 
-[node name="WeaponNameLabel" type="Label" parent="PanelKanan/VBoxContainer" unique_id=1975700714]
+[node name="TextureRect" type="TextureRect" parent="CloseButton" unique_id=788229108]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+custom_maximum_size = Vector2(64, 64)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_1cnrs")
+stretch_mode = 3
+
+[node name="WeaponSlot" type="VBoxContainer" parent="." unique_id=121959146]
+custom_minimum_size = Vector2(32, 32)
+custom_maximum_size = Vector2(128, 128)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 14.0
+offset_top = -143.0
+offset_right = 78.0
+offset_bottom = -15.0
+grow_vertical = 2
+
+[node name="Slot1" type="Button" parent="WeaponSlot" unique_id=724392803]
+custom_minimum_size = Vector2(64, 64)
+custom_maximum_size = Vector2(128, 128)
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "1"
+
+[node name="Slot2" type="Button" parent="WeaponSlot" unique_id=752007859]
+custom_minimum_size = Vector2(64, 64)
+custom_maximum_size = Vector2(128, 128)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "2"
+
+[node name="SwitchOptions" type="VBoxContainer" parent="." unique_id=1256573633]
+layout_mode = 0
+offset_left = 596.0
+offset_top = 61.0
+offset_right = 660.0
+offset_bottom = 193.0
+theme_override_constants/separation = 12
+
+[node name="ForgeButton" type="Button" parent="SwitchOptions" unique_id=1861546043]
+custom_minimum_size = Vector2(64, 64)
+custom_maximum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_ciwwa")
+
+[node name="TextureRect" type="TextureRect" parent="SwitchOptions/ForgeButton" unique_id=1491624764]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+custom_maximum_size = Vector2(64, 64)
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 64.0
+texture = ExtResource("4_v325q")
+
+[node name="ForgeRarityButton" type="Button" parent="SwitchOptions" unique_id=1773805636]
+custom_minimum_size = Vector2(64, 64)
+custom_maximum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_13myp")
+
+[node name="TextureRect" type="TextureRect" parent="SwitchOptions/ForgeRarityButton" unique_id=751111728]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+custom_maximum_size = Vector2(64, 64)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("5_fe3ya")
+
+[node name="WeaponNameLabel" type="Label" parent="." unique_id=1975700714]
+layout_mode = 0
+offset_left = 672.0
+offset_top = 32.0
+offset_right = 1154.0
+offset_bottom = 61.0
 theme_override_font_sizes/font_size = 24
 text = "Nama Senjata"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="PanelKanan/VBoxContainer" unique_id=367579162]
+[node name="Stats" type="VBoxContainer" parent="." unique_id=1222382786]
+layout_mode = 0
+offset_left = 696.0
+offset_top = 176.0
+offset_right = 792.0
+offset_bottom = 244.0
+
+[node name="Damage" type="HBoxContainer" parent="Stats" unique_id=1802554469]
 layout_mode = 2
 
-[node name="WeaponStatsLabel" type="Label" parent="PanelKanan/VBoxContainer" unique_id=1340264063]
+[node name="TextureRect" type="TextureRect" parent="Stats/Damage" unique_id=927082826]
+texture_filter = 1
 layout_mode = 2
-size_flags_vertical = 3
-text = "Stats Senjata"
+texture = ExtResource("6_64yaw")
 
-[node name="CostLabel" type="Label" parent="PanelKanan/VBoxContainer" unique_id=811195087]
+[node name="Label" type="Label" parent="Stats/Damage" unique_id=1730005328]
+layout_mode = 2
+text = "Test -->"
+
+[node name="Crit" type="HBoxContainer" parent="Stats" unique_id=1798156753]
 layout_mode = 2
 
-[node name="ForgeButton" type="Button" parent="PanelKanan/VBoxContainer" unique_id=1861546043]
-custom_minimum_size = Vector2(0, 40)
+[node name="TextureRect" type="TextureRect" parent="Stats/Crit" unique_id=328227301]
+texture_filter = 1
 layout_mode = 2
-text = "Level Up"
+texture = ExtResource("7_h50mr")
 
-[node name="ForgeRarityButton" type="Button" parent="PanelKanan/VBoxContainer" unique_id=1773805636]
-custom_minimum_size = Vector2(0, 32)
+[node name="Label" type="Label" parent="Stats/Crit" unique_id=701973018]
 layout_mode = 2
-text = "Forge"
+text = "Test-->"
 
-[node name="CloseButton" type="Button" parent="PanelKanan/VBoxContainer" unique_id=398832506]
+[node name="ConfirmButton" type="Button" parent="." unique_id=1057693699]
+custom_minimum_size = Vector2(440, 64)
+custom_maximum_size = Vector2(440, 64)
+layout_mode = 0
+offset_left = 696.0
+offset_top = 552.0
+offset_right = 1136.0
+offset_bottom = 616.0
+text = "Timpa"
+
+[node name="Cost" type="HBoxContainer" parent="." unique_id=1400654248]
+layout_mode = 0
+offset_left = 696.0
+offset_top = 512.0
+offset_right = 783.0
+offset_bottom = 552.0
+
+[node name="TextureRect" type="TextureRect" parent="Cost" unique_id=1636002550]
+texture_filter = 1
+custom_minimum_size = Vector2(24, 24)
+custom_maximum_size = Vector2(64, 64)
 layout_mode = 2
-text = "Tutup"
+texture = ExtResource("8_ky6ci")
+expand_mode = 2
+stretch_mode = 3
 
-[connection signal="pressed" from="PanelKanan/VBoxContainer/ForgeButton" to="." method="_on_forge_button_pressed"]
-[connection signal="pressed" from="PanelKanan/VBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]
+[node name="CostLabel" type="Label" parent="Cost" unique_id=976646363]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "999"
+
+[node name="InfoLabel" type="Label" parent="." unique_id=52500910]
+layout_mode = 0
+offset_left = 704.0
+offset_top = 136.0
+offset_right = 755.0
+offset_bottom = 165.0
+theme_override_font_sizes/font_size = 24
+text = "King"
+
+[node name="ChanceLabel" type="Label" parent="." unique_id=1714138309]
+layout_mode = 0
+offset_left = 704.0
+offset_top = 296.0
+offset_right = 792.0
+offset_bottom = 325.0
+theme_override_font_sizes/font_size = 24
+text = "Chance"
+
+[node name="ChanceInfo" type="RichTextLabel" parent="ChanceLabel" unique_id=1198330722]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 0
+offset_top = 32.0
+offset_right = 400.0
+offset_bottom = 72.0
+pivot_offset = Vector2(552, 112)
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "ffff"
+fit_content = true
+scroll_active = false
+
+[node name="Uang" type="PanelContainer" parent="." unique_id=1805524242]
+custom_minimum_size = Vector2(190, 0)
+custom_maximum_size = Vector2(190, -1)
+layout_mode = 0
+offset_left = 248.0
+offset_top = 16.0
+offset_right = 438.0
+offset_bottom = 80.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Uang" unique_id=1408615721]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Uang/HBoxContainer" unique_id=1852230032]
+texture_filter = 1
+custom_minimum_size = Vector2(64, 64)
+custom_maximum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("8_ky6ci")
+
+[node name="Currency" type="Label" parent="Uang/HBoxContainer" unique_id=681201054]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "99999"
+
+[connection signal="pressed" from="CloseButton" to="." method="_on_close_button_pressed"]
+[connection signal="pressed" from="WeaponSlot/Slot1" to="." method="_on_slot_1_pressed"]
+[connection signal="pressed" from="SwitchOptions/ForgeButton" to="." method="_on_forge_button_pressed"]
+[connection signal="pressed" from="SwitchOptions/ForgeRarityButton" to="." method="_on_forge_rarity_button_pressed"]
+[connection signal="pressed" from="ConfirmButton" to="." method="_on_confirm_button_pressed"]
