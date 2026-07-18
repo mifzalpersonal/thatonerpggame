@@ -14,4 +14,4 @@ data = {
 }
 
 [node name="Area3D" parent="." unique_id=1062374217 instance=ExtResource("2_xehpp")]
-transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 4.539987, 8.3)
+transform = Transform3D(-1.7484555e-07, 0, -4, 0, 4, 0, 4, 0, -1.7484555e-07, 17, 4.539987, 21.3)

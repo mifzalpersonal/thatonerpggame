@@ -3,7 +3,7 @@ extends Node3D
 @export var start_room_scene: PackedScene
 @export var room_scenes: Array[PackedScene]
 @export var shop_room_scene: PackedScene # Slot untuk memasukkan shop_room.tscn
-@export var forge_room_scene: PackedScene # BARU: Slot untuk memasukkan ForgeRoom.tscn di Inspector
+@export var forge_room_scene: PackedScene # Slot untuk memasukkan ForgeRoom.tscn di Inspector
 @export var end_room_scene: PackedScene
 @export var natural_enemy_scene: PackedScene 
 
@@ -51,6 +51,9 @@ func generate_level():
 	if shop_room_index == forge_room_index and total_middle_rooms > 1:
 		forge_room_index = shop_room_index + 1
 
+	# Fitur Baru: Cek apakah level saat ini adalah kelipatan 4 untuk ForgeArea
+	var is_forge_level: bool = (GameManager.current_level % 2 == 0)
+
 	for i in range(total_middle_rooms):
 		var room_instance: Node3D
 		
@@ -59,8 +62,8 @@ func generate_level():
 			room_instance = shop_room_scene.instantiate()
 			print("GENERATOR: Menyisipkan RUANG TOKO pada ruangan tengah indeks ke-", i, " di Level ", GameManager.current_level)
 			
-		# KONDISI B: Jika ini level kelipatan 3 dan menyentuh indeks forge, lahirkan FORGE
-		elif GameManager.is_shop_level() and i == forge_room_index and forge_room_scene != null:
+		# KONDISI B: Jika ini level kelipatan 4 dan menyentuh indeks forge, lahirkan FORGE
+		elif is_forge_level and i == forge_room_index and forge_room_scene != null:
 			room_instance = forge_room_scene.instantiate()
 			print("GENERATOR: Menyisipkan RUANG FORGE pada ruangan tengah indeks ke-", i, " di Level ", GameManager.current_level)
 			
@@ -98,8 +101,7 @@ func generate_level():
 	print("GRIDMAP SAKTI: Ketinggian End Room dikunci di Y = ", end_room.global_position.y)
 
 	# ==================== 4. PROSES PASCA GENERASI (SCANNING) ====================
-	# Beri jeda 0.1 detik agar seluruh ruangan (termasuk WaveManager dan EnemySpawnWav) 
-	# benar-benar selesai dilahirkan dan masuk ke dalam Tree dunia game.
+	# Beri jeda 0.1 detik agar seluruh ruangan selesai dilahirkan ke Tree dunia game.
 	await get_tree().create_timer(0.1).timeout
 	
 	wave_spawn_points.clear()

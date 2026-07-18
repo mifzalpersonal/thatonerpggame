@@ -42,6 +42,7 @@ _data = {
 }
 
 [node name="sword_slim" type="Node3D" unique_id=1601140274]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
 script = ExtResource("1_u7log")
 
 [node name="blockbench_export" parent="." unique_id=1263126298 instance=ExtResource("1_n61fb")]

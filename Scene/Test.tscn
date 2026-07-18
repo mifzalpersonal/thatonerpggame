@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://carkkis1fay4q" path="res://forge_ui.tscn" id="7_rnpuv"]
 [ext_resource type="PackedScene" uid="uid://y4km705r36h1" path="res://pause_menu.tscn" id="8_4t5vi"]
 [ext_resource type="PackedScene" uid="uid://yumr8c4f0j58" path="res://LevelGUI.tscn" id="9_ad4pf"]
+[ext_resource type="PackedScene" uid="uid://dfb1pgfpk2ggk" path="res://forge_map.tscn" id="12_856tt"]
+[ext_resource type="PackedScene" uid="uid://6cxtuv7cy8bn" path="res://WeaponChest.tscn" id="13_beufa"]
 
 [sub_resource type="Environment" id="Environment_xrcxu"]
 background_mode = 1
@@ -85,3 +87,18 @@ transform = Transform3D(1, 0, 0, 0, -0.3812742, 0.924462, 0, -0.924462, -0.38127
 light_color = Color(1, 0.6666667, 0.26666668, 1)
 light_energy = 3.0
 shadow_enabled = true
+
+[node name="ForgeMap" parent="." unique_id=1914544465 instance=ExtResource("12_856tt")]
+transform = Transform3D(1, 0, 0, 0, 0.9999711, -0.0076026698, 0, 0.0076026698, 0.9999711, 0, -6.0157795, 71.21306)
+
+[node name="WeaponChest" parent="." unique_id=1020326057 instance=ExtResource("13_beufa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.176918, -2.805674, 52.372414)
+
+[node name="WeaponChest2" parent="." unique_id=1359188790 instance=ExtResource("13_beufa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.176918, -2.805674, 44.056118)
+
+[node name="WeaponChest3" parent="." unique_id=93336750 instance=ExtResource("13_beufa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.800552, -2.805674, 44.056118)
+
+[node name="WeaponChest4" parent="." unique_id=591120403 instance=ExtResource("13_beufa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.800552, -2.805674, 53.15162)

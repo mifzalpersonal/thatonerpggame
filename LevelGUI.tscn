@@ -173,3 +173,5 @@ scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_owrxk")
 frame_progress = 0.4421751
 speed_scale = 3.0
+
+[node name="Tmer" type="Timer" parent="." unique_id=910555510]

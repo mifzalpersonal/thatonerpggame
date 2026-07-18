@@ -16,11 +16,11 @@ var MASTER_ITEMS: Array[Dictionary] = [
 	{"id": "speed_boots", "name": "Sepatu Gesit", "price": 35, "desc": "Speed +10%", "rarity": "common", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
 	{"id": "atk_buff", "name": "Antidote ATK", "price": 45, "desc": "Attack +5", "rarity": "rare", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
 	{"id": "atk_speed_buff", "name": "Cincin Waktu", "price": 40, "desc": "Atk Speed +15%", "rarity": "rare", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
-	{"id": "hugs", "name": "Hugs Normal", "price": 50, "desc": "Buka senjata Hugs standar", "rarity": "common", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
-	{"id": "bow", "name": "Busur Panah", "price": 70, "desc": "Buka senjata Bow", "rarity": "rare", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
-	{"id": "wp_fire", "name": "Hugs Fire Blaster", "price": 95, "desc": "Buka Hugs Fire (DoT Burn)", "rarity": "rare", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
-	{"id": "wp_nature", "name": "Tongkat Nature", "price": 85, "desc": "Buka Nature (Efek Slow)", "rarity": "rare", "icon_path": "res://Map-Asset/Scene/procedural_map.tscn"},
-	{"id": "wp_katana", "name": "Katana Terkutuk", "price": 100, "desc": "Buka Katana (Lifesteal)", "rarity": "legendary", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"}
+	{"id": "hugs", "name": "Hugs Normal", "price": 100, "desc": "Buka senjata Hugs standar", "rarity": "common", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
+	{"id": "bow", "name": "Busur Panah", "price": 255, "desc": "Buka senjata Bow", "rarity": "rare", "icon_path": "res://bowace.png"},
+	{"id": "wp_fire", "name": "Hugs Fire Blaster", "price": 333, "desc": "Buka Hugs Fire (DoT Burn)", "rarity": "rare", "icon_path": "res://sword3.png"},
+	{"id": "wp_nature", "name": "Tongkat Nature", "price": 300, "desc": "Buka Nature (Efek Slow)", "rarity": "rare", "icon_path": "res://Sword2.png"},
+	{"id": "wp_katana", "name": "Katana Terkutuk", "price": 1000, "desc": "Buka Katana (Lifesteal)", "rarity": "legendary", "icon_path": "res://Katana.png"}
 ]
 
 # Variabel untuk mengunci isi toko saat ini agar tidak berubah-ubah tiap dibuka-tutup
@@ -202,8 +202,13 @@ func register_enemy_death():
 		total_currency += 10
 		currency_changed.emit(total_currency)
 
+# Toko aktif setiap kelipatan 3 level
 func is_shop_level() -> bool:
 	return current_level % 3 == 0
+
+# BARU: ForgeArea aktif setiap kelipatan 4 level
+func is_forge_level() -> bool:
+	return current_level % 2 == 0
 
 func get_enemy_stats(base_hp: float, base_atk: float, base_speed: float) -> Dictionary:
 	var mult = 1.0 + (current_level - 1) * 0.25

@@ -12,8 +12,9 @@
 [ext_resource type="PackedScene" uid="uid://0jag52u11qae" path="res://Scene/item_slot.tscn" id="8_qi4r4"]
 [ext_resource type="PackedScene" uid="uid://yumr8c4f0j58" path="res://LevelGUI.tscn" id="9_f7oih"]
 [ext_resource type="PackedScene" uid="uid://bx8fw0c6oehwr" path="res://wave_ui.tscn" id="11_nl0vn"]
+[ext_resource type="PackedScene" uid="uid://carkkis1fay4q" path="res://forge_ui.tscn" id="12_m7yu5"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_nl0vn"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_4uyis"]
 viewport_path = NodePath("EnemyUI")
 
 [sub_resource type="Environment" id="Environment_qi4r4"]
@@ -46,7 +47,7 @@ dead_scene = ExtResource("3_qi4r4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.34446, 42.819855, -2.7459278)
 
 [node name="UIVisual" parent="musuhbody" index="4" unique_id=1327681699]
-texture = SubResource("ViewportTexture_nl0vn")
+texture = SubResource("ViewportTexture_4uyis")
 
 [node name="GUI" type="CanvasLayer" parent="." unique_id=2122856101]
 
@@ -83,6 +84,8 @@ mouse_filter = 2
 [node name="Control" parent="GUI" unique_id=898299092 instance=ExtResource("9_f7oih")]
 
 [node name="WaveUI" parent="GUI" unique_id=293765340 instance=ExtResource("11_nl0vn")]
+
+[node name="ForgeUI" parent="GUI" unique_id=2090259237 instance=ExtResource("12_m7yu5")]
 
 [node name="PauseMenu" parent="GUI" unique_id=2044131015 instance=ExtResource("8_f7oih")]
 
