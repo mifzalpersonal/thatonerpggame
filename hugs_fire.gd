@@ -1,5 +1,5 @@
 # ==============================================================================
-# hugs_fire.gd (Menggunakan Helper GameManager)
+# hugs_fire.gd (Sudah Disesuaikan dengan Sistem Sentralisasi Player)
 # ==============================================================================
 extends Node3D
 
@@ -12,21 +12,17 @@ const SLASH_PROJECTILE_SCENE = preload("res://fire_slash.tscn")
 @onready var muzzle: Marker3D = $Muzzle
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
 
-# --- TAMBAHAN VARIABEL COOLDOWN ---
+# --- VARIABEL COOLDOWN ---
 @export var attack_cooldown: float = 0.5
 var bisa_serang: bool = true
 # ----------------------------------
 
-# --- VARIABEL BARU: BONUS SUNTIKAN EFEK TOKO ---
-var bonus_damage: int = 0
-# -----------------------------------------------
-
 func _ready() -> void:
-	# Hubungkan senjata ke GameManager agar merespon saat item toko dibeli
-	if GameManager.has_signal("item_purchased"):
-		GameManager.item_purchased.connect(_on_item_purchased)
+	# 🎯 BERSIH: Tidak perlu menyambungkan sinyal item_purchased di sini
+	# agar tidak terjadi tabrakan data ganda dengan Player.gd
+	pass
 
-# 🟢 FUNGSI UTAMA SERANG (Dipanggil otomatis oleh WeaponManager lewat eksekusi_menyerang)
+# 🟢 FUNGSI UTAMA SERANG (Dipanggil otomatis oleh WeaponManager)
 func attack() -> void:
 	if not bisa_serang:
 		return
@@ -35,7 +31,7 @@ func attack() -> void:
 		print("🚨 Peringatan: Senjata ini belum terhubung dengan WeaponData (.tres)!")
 		return
 		
-	# Jalankan rentetan fungsi menyerangmu
+	# Jalankan rentetan fungsi menyerang
 	shoot_slash()
 	mainkan_sfx_tebasan()
 	mainkan_sfx_tebasan2()
@@ -47,51 +43,39 @@ func play_attack_animation() -> void:
 		anim_player.stop() 
 		anim_player.play("Attack")
 
-@export var slash_scale_multiplier: float = 10.0
-
-# 🟢 _process SEKARANG BERSIH DARI INPUT DETECT (Karena sudah diatur terpusat)
 func _process(_delta: float) -> void:
 	pass
 
-# ==============================================================================
-# 🎯 PERUBAHAN DI SINI: LEBIH SINGKAT, BERSIH, & MUDAH DITIRU!
-# ==============================================================================
+# 🟢 FUNGSI MENEMBAKKAN SLASHER
 func shoot_slash() -> void:
 	var slash_instance = SLASH_PROJECTILE_SCENE.instantiate()
 	get_tree().root.add_child(slash_instance)
 	slash_instance.global_transform = muzzle.global_transform
 	
-	# 🔥 CUKUP PANGGIL 1 BARIS SAKTI INI:
-	# GameManager akan otomatis mengurus: status forge, hitung crit, 
-	# menambah bonus toko, lalu langsung menyuntikkannya ke slash_instance!
-	GameManager.siapkan_peluru(slash_instance, stats, bonus_damage)
-
+	# Ambil data bonus_damage murni (+50) yang dikirim oleh Player melalui script Tangan
+	var damage_toko = 0
+	if get_parent() and "shop_bonus_damage" in get_parent():
+		damage_toko = get_parent().shop_bonus_damage
+		
+	# 🔥 GameManager langsung memproses damage akhir (+50 penuh dari toko!)
+	GameManager.siapkan_peluru(slash_instance, stats, damage_toko)
 
 # --- FUNGSI UNTUK MENGATUR JEDA ---
 func mulai_cooldown() -> void:
 	bisa_serang = false # Kunci serangan
 	
-	# Bikin Timer instan lewat kode
-	var timer = get_tree().create_timer(attack_cooldown)
+	# Ambil multiplier cooldown dari Tangan.gd untuk mempercepat serangan (Cincin Waktu)
+	var current_cooldown = attack_cooldown
+	if get_parent() and "shop_attack_cooldown_multiplier" in get_parent():
+		current_cooldown *= get_parent().shop_attack_cooldown_multiplier
+		
+	# Bikin Timer instan lewat kode dengan batas minimal 0.1 detik biar tidak zero-division
+	var timer = get_tree().create_timer(max(0.1, current_cooldown))
 	
-	# Pas timernya habis (timeout), panggil fungsi untuk buka kunci serang
+	# Pas timernya habis (timeout), buka kembali kunci serang
 	timer.timeout.connect(func(): bisa_serang = true)
 
-# --- FUNGSI MERESPON EFEK ITEM TOKO ---
-func _on_item_purchased(item_id: String) -> void:
-	match item_id:
-		"atk_buff":
-			# Tambah base damage senjata secara permanen
-			bonus_damage += 5
-			print("⚔️ WEAPON: Antidote ATK dibeli! Bonus damage senjata saat ini: +", bonus_damage)
-			
-		"atk_speed_buff":
-			# Potong waktu cooldown sebesar 15% (artinya menyerang 15% lebih cepat)
-			attack_cooldown *= 0.85
-			# Batasi agar cooldown tidak menyentuh angka 0 atau terlalu minus (gameplay guard)
-			attack_cooldown = max(0.1, attack_cooldown)
-			print("⚔️ WEAPON: Cincin Waktu dibeli! Cooldown tebasan dipercepat menjadi: ", attack_cooldown, " detik")
-
+# --- SFX AUDIO ENGINE ---
 func mainkan_sfx_tebasan() -> void:
 	var template_sfx = get_node_or_null("SfxSlash")
 	if template_sfx != null and template_sfx.stream != null:

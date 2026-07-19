@@ -1,5 +1,5 @@
 # ==============================================================================
-# bow_weapon.gd (Skrip senjata Busur Panah yang sudah mendukung Crit)
+# bow_weapon.gd (Skrip Busur - Terintegrasi Sistem Sentralisasi & Crit)
 # ==============================================================================
 extends Node3D
 
@@ -43,23 +43,37 @@ func shoot_arrow() -> void:
 	# Samakan posisi dan arah rotasi global panah dengan Muzzle senjata
 	arrow_instance.global_transform = muzzle.global_transform
 	
+	# 🟢 Ambil data bonus_damage murni dari toko yang dikelola Player via script Tangan (Parent)
+	var damage_toko = 0
+	if get_parent() and "shop_bonus_damage" in get_parent():
+		damage_toko = get_parent().shop_bonus_damage
+	
 	# 🎯 1. KALKULASI CRITICAL DAMAGE DARI WEAPON DATA
 	var hasil_serangan: Dictionary = stats.hitung_damage_output()
-	var damage_akhir: float = hasil_serangan["damage"]
+	
+	# Tambahkan damage dasar + damage toko baru kemudian dikalikan crit jika beruntung,
+	# atau gunakan damage_toko sebagai flat tambahan di akhir sesuai mekanik base game kamu.
+	# Di sini kita tambahkan langsung ke damage akhir agar dihitung bersih:
+	var damage_akhir: float = hasil_serangan["damage"] + damage_toko
 	var apakah_crit: bool = hasil_serangan["is_critical"]
 	
 	# Suntikkan damage akhir hasil kalkulasi ke anak panah
 	if "damage" in arrow_instance:
 		arrow_instance.damage = damage_akhir
 		
-		# (Opsional) Jika di script arrow.gd kamu nanti ditambahkan variabel 'is_critical'
 		if "is_critical" in arrow_instance:
 			arrow_instance.is_critical = apakah_crit
 			
 		if apakah_crit:
-			print("💥 CRITICAL SHOT! ", stats.weapon_name, " mendaratkan Crit sebesar: ", damage_akhir)
+			print("💥 CRITICAL SHOT! ", stats.weapon_name, " mendaratkan Crit + Buff Toko sebesar: ", damage_akhir)
 		else:
-			print("⚔️ WEAPON: ", stats.weapon_name, " menembakkan Arrow biasa! Damage: ", damage_akhir)
+			print("⚔️ WEAPON: ", stats.weapon_name, " menembakkan Arrow biasa + Buff Toko! Damage: ", damage_akhir)
+	
+	# 🟢 2. Oper data player dari metadata ke anak panah jika peluru membutuhkannya
+	if has_meta("pencipta"):
+		var node_player = get_meta("pencipta")
+		if arrow_instance.has_method("set_pencipta"):
+			arrow_instance.set_pencipta(node_player)
 	
 	# Kasih tahu arah terbang panah
 	if "direction" in arrow_instance:
@@ -68,7 +82,14 @@ func shoot_arrow() -> void:
 # --- FUNGSI UNTUK MENGATUR JEDA ---
 func mulai_cooldown() -> void:
 	bisa_serang = false
-	await get_tree().create_timer(attack_cooldown).timeout
+	
+	# Ambil multiplier cooldown dari Tangan.gd untuk mempercepat durasi reload panah
+	var current_cooldown = attack_cooldown
+	if get_parent() and "shop_attack_cooldown_multiplier" in get_parent():
+		current_cooldown *= get_parent().shop_attack_cooldown_multiplier
+		
+	# Menggunakan await timer dengan batas aman minimal 0.05 detik
+	await get_tree().create_timer(max(0.05, current_cooldown)).timeout
 	bisa_serang = true
 
 func mainkan_sfx_tebasan() -> void:

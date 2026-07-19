@@ -1,58 +1,34 @@
-extends PanelContainer
+# ==============================================================================
+# item_slot.gd (Full Code - Transisi Murni Mengikuti Slot Angka 1 & 2)
+# ==============================================================================
+extends Control
 
-# Referensi ke node anak
-@onready var control_container = $ControlContainer
-@onready var slot_background = $ControlContainer/SlotBackground
-@onready var item_icon = $ItemIcon
-
-var is_full: bool = false
-var current_item_name: String = ""
-
-# Status apakah slot ini sedang aktif dipakai/dipilih oleh player
-var is_active: bool = false : set = set_active
+@onready var weapon_sprite = $AnimatedSprite2D
 
 func _ready() -> void:
-	clear_slot()
+	# Masukkan ke dalam grup agar bisa ditembak langsung oleh WeaponManager.gd
+	add_to_group("HUD_Slot")
 	
-	# 1. Pastikan Centered aktif, lalu lempar posisi sprite tepat ke TENGAH parent
-	slot_background.centered = true
-	slot_background.position = size / 2
-	
-	# 2. RUMUS AUTO-SCALE: Paksa ukuran AnimatedSprite2D mengikuti ukuran PanelContainer
-	# Diubah dari "pasif" menjadi "default" sesuai nama di editor kamu
-	var frame_texture = slot_background.sprite_frames.get_frame_texture("Default", 0)
-	if frame_texture != null:
-		var sprite_size = frame_texture.get_size()
-		slot_background.scale = size / sprite_size
-	
-	# Jalankan animasi "default" (diam/tidak aktif) di awal game
-	slot_background.play("Default")
+	if weapon_sprite:
+		weapon_sprite.stop()
+		weapon_sprite.frame = 0
 
-# Fungsi Setter yang dipanggil saat player menekan tombol 1 atau 2
-func set_active(value: bool) -> void:
-	is_active = value
-	
-	# PENGAMAN: Jika game baru jalan dan node belum siap, tunggu sampai siap
-	if not is_node_ready():
-		await ready
+## Fungsi utama memutar animasi transisi swap (Dipanggil oleh WeaponManager / Player)
+func mainkan_animasi_tukar() -> void:
+	if weapon_sprite:
+		weapon_sprite.frame = 0 # Reset frame ke awal sebelum transisi dimulai
+		weapon_sprite.play()    # Jalankan animasi (Pastikan opsi 'Loop' mati di sprite settings SpriteFrames)
 		
-	if is_active:
-		slot_background.stop() 
-		slot_background.play("Aktif") # Memutar animasi "aktif" saat dipilih
-		print(name, " memutar animasi: Aktif")
-	else:
-		slot_background.stop()
-		slot_background.play("Default") # Kembali ke animasi "default" saat tidak dipilih
-		slot_background.frame = 0 
-		print(name, " memutar animasi: Default")
-
-func set_item(item_texture: Texture2D, item_name: String) -> void:
-	if item_texture != null:
-		item_icon.texture = item_texture
-		item_icon.show()
-		is_full = true
-		current_item_name = item_name
-
-func clear_slot() -> void:
-	item_icon.texture = null
-	item_icon.hide()
+	# --- OPTIONAL: UPDATE IKON VISUAL BERDASARKAN SENJATA AKTIF ---
+	# Jika AnimatedSprite2D kamu memiliki nama animasi yang sama dengan nama senjata 
+	# (Contoh nama animasi: "sword_slim", "katana", ""), kamu bisa aktifkan kode di bawah ini:
+	
+	# var player = get_tree().get_first_node_in_group("Player")
+	# if player and player.has_node("Tangan"):
+	# 	var manager_senjata = player.get_node("Tangan")
+	# 	var nama_senjata = manager_senjata.slot_senjata[manager_senjata.slot_aktif]
+	#
+	# 	if nama_senjata == "":
+	# 		weapon_sprite.animation = "default" # Pasang animasi tangan kosong / default
+	# 	elif weapon_sprite.sprite_frames.has_animation(nama_senjata):
+	# 		weapon_sprite.animation = nama_senjata

@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_hytus")
-base_damage = 35.0
+weapon_name = "BowAce"
 metadata/_custom_type_script = "uid://duthkswv7bj7d"

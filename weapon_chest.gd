@@ -41,33 +41,39 @@ func _kalomasuk(body : Node3D) -> void:
 func _kalokeluar(body : Node3D) -> void:
 	if body is CharacterBody3D:
 		player_deket = null
-		$PetunjukE.visible = false # Memperbaiki typo dari PetunjukE agar konsisten dengan tulisanmu
+		$PetunjukE.visible = false
 		print("lu ngga deket chest")
 
 func buka_peti() -> void:
 	udah_kebuka = true
 	$PetunjukE.visible = false
 	
-	# === Bagian Animasi Baru ===
+	# === Bagian Animasi Peti Terbuka ===
 	if anim_player and anim_player.has_animation("Open"):
 		anim_player.play("Open")
 		print("SISTEM: Memutar animasi Open Peti!")
-		# Opsional: Jika ingin senjata baru muncul SETELAH peti selesai terbuka, 
-		# kamu bisa tambahkan line di bawah ini:
-		# await anim_player.animation_finished 
 	else:
 		push_warning("Peringatan: Node AnimationPlayer atau animasi bernama 'Open' tidak ditemukan!")
-	# ===========================
 	
+	# === Logika Gacha Penentuan Senjata ===
 	var indeks_acak = randi() % daftar_senjata.size()
-	print(indeks_acak)
 	var senjata_terpilih = daftar_senjata[indeks_acak]
-	print(senjata_terpilih)
+	print("📦 GACHA RESULT: ", senjata_terpilih)
 	
+	# Instantiate objek senjata
 	var hasil_gacha = weapon_drop.instantiate()
-	# Menaikkan sedikit spawn Y ke 1.5 agar tidak bertabrakan dengan tutup peti saat terbuka
-	hasil_gacha.global_position = global_position + Vector3(0, 1.5, 0)
+	
+	# 🔥 SOLUSI 1: Tentukan nama senjata DULUAN sebelum masuk ke Scene Tree dunia game
+	# Ini supaya fungsi _ready() di WeaponDrop melahirkan model 3D yang tepat, bukan Katana default.
 	hasil_gacha.nama_senjata = senjata_terpilih
 	
+	# Masukkan senjata ke dunia game
 	get_tree().current_scene.add_child(hasil_gacha)
-	print("you just opened a chest")
+	
+	# 🔥 SOLUSI 2: Samakan rotasi 3D (Basis) senjata agar persis menghadap sesuai arah peti
+	hasil_gacha.global_transform.basis = global_transform.basis
+	
+	# Posisikan senjata melayang 1.5 meter tegak lurus ke atas kepala peti
+	hasil_gacha.global_position = global_position + (global_transform.basis.y * 1.5)
+	
+	print("📦 CHEST GACHA: Sukses spawn ", senjata_terpilih, " menghadap sesuai arah peti!")

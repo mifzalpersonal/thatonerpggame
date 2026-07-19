@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cvht6bxa5jo4m"]
 
 [ext_resource type="MeshLibrary" uid="uid://c51rudjw8drhk" path="res://Map-Asset/Tres/High.tres" id="1_l2rim"]
-[ext_resource type="PackedScene" uid="uid://6cxtuv7cy8bn" path="res://WeaponChest.tscn" id="3_m5qaj"]
 [ext_resource type="MeshLibrary" uid="uid://d4lcgjxj2m1nl" path="res://Map-Asset/Tres/Enviroment.tres" id="4_ejnk4"]
 [ext_resource type="MeshLibrary" uid="uid://dhjh5f3g587tr" path="res://Map-Asset/Tres/Enviroment2.tres" id="4_mjujy"]
 
@@ -21,14 +20,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8348522, 10.160315, -119.35
 [node name="ExitMarker" type="Marker3D" parent="." unique_id=1073505478]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.4265175, 0, -131.36798)
 
-[node name="ChestIn" type="Node3D" parent="." unique_id=2104334829]
+[node name="ChestSpawner" type="Node3D" parent="." unique_id=2104334829]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 6)
 
-[node name="WeaponChest" parent="ChestIn" unique_id=1020326057 instance=ExtResource("3_m5qaj")]
-transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, 0, 3.1547492, -101.77913)
+[node name="Marker3D" type="Marker3D" parent="ChestSpawner" unique_id=412972136]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 74, 3, -69)
 
-[node name="WeaponChest2" parent="ChestIn" unique_id=1127741160 instance=ExtResource("3_m5qaj")]
-transform = Transform3D(-1, 0, -1.509958e-07, 0, 1, 0, 1.509958e-07, 0, -1, -6, 3.1547492, -101.77913)
+[node name="Marker3D2" type="Marker3D" parent="ChestSpawner" unique_id=1055772654]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 74, 3, -103)
+
+[node name="Marker3D3" type="Marker3D" parent="ChestSpawner" unique_id=991395380]
+transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, -92.435196, 3, -102.28444)
+
+[node name="Marker3D4" type="Marker3D" parent="ChestSpawner" unique_id=81098400]
+transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, -81.564804, 3, -61.715557)
 
 [node name="Enviroment" type="GridMap" parent="." unique_id=406412086]
 mesh_library = ExtResource("4_ejnk4")

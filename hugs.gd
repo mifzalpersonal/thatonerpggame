@@ -1,5 +1,5 @@
 # ==============================================================================
-# basic_weapon.gd (Skrip Senjata Kedua - Basic Weapon)
+# basic_weapon.gd (Sudah Disesuaikan dengan Sistem Sentralisasi Player)
 # ==============================================================================
 extends Node3D
 
@@ -17,16 +17,12 @@ const SLASH_PROJECTILE_SCENE = preload("res://BasicSlash.tscn")
 var bisa_serang: bool = true
 # ----------------------------------
 
-# --- VARIABEL BARU: BONUS SUNTIKAN EFEK TOKO ---
-var bonus_damage: int = 0
-# -----------------------------------------------
-
 @export var slash_scale_multiplier: float = 10.0
 
 func _ready() -> void:
-	# Hubungkan senjata ke GameManager agar merespon saat item toko dibeli
-	if GameManager.has_signal("item_purchased"):
-		GameManager.item_purchased.connect(_on_item_purchased)
+	# 🎯 BERSIH: Tidak perlu menyambungkan sinyal item_purchased di sini
+	# agar tidak terjadi tabrakan data ganda dengan Player.gd
+	pass
 
 func play_attack_animation() -> void:
 	if anim_player.has_animation("Attack"):
@@ -53,7 +49,13 @@ func attack() -> void:
 
 func mulai_cooldown() -> void:
 	bisa_serang = false
-	var timer = get_tree().create_timer(attack_cooldown)
+	
+	# Ambil multiplier cooldown dari Tangan.gd untuk mempercepat serangan (Cincin Waktu)
+	var current_cooldown = attack_cooldown
+	if get_parent() and "shop_attack_cooldown_multiplier" in get_parent():
+		current_cooldown *= get_parent().shop_attack_cooldown_multiplier
+		
+	var timer = get_tree().create_timer(max(0.05, current_cooldown))
 	timer.timeout.connect(func(): bisa_serang = true)
 
 # --- FUNGSI SPAWN PELURU (MENGGUNAKAN DAMAGE FORGE + OPER PLAYER) ---
@@ -66,12 +68,17 @@ func shoot_slash() -> void:
 	if "scale" in slash_instance:
 		slash_instance.scale *= (slash_scale_multiplier / 10.0)
 	
-	# 🎯 1. Serahkan perhitungan damage, bonus toko, dan crit ke GameManager
-	GameManager.siapkan_peluru(slash_instance, stats, bonus_damage)
+	# Ambil data bonus_damage murni (+50) yang dikirim oleh Player melalui script Tangan (Parent)
+	var damage_toko = 0
+	var node_tangan = get_parent()
+	if node_tangan != null and "shop_bonus_damage" in node_tangan:
+		damage_toko = node_tangan.shop_bonus_damage
+	
+	# 🎯 1. Serahkan perhitungan damage akhir (+50 penuh dari toko!) ke GameManager
+	GameManager.siapkan_peluru(slash_instance, stats, damage_toko)
 	
 	# --- CARI PLAYER SECARA LANGSUNG VIA PARENT HIERARCHY ---
 	# Struktur di scene-mu: Player (Char3) -> Tangan -> Senjata ini
-	var node_tangan = get_parent()
 	if node_tangan != null:
 		var node_player = node_tangan.get_parent() # Ini mengarah langsung ke Char3
 		
@@ -83,18 +90,7 @@ func shoot_slash() -> void:
 		else:
 			print("🚨 Gagal nemu Player di parent! Cek susunan nodemu di scene.")
 
-# --- FUNGSI MERESPON EFEK ITEM TOKO ---
-func _on_item_purchased(item_id: String) -> void:
-	match item_id:
-		"atk_buff":
-			bonus_damage += 5
-			print("⚔️ BASIC WEAPON: Antidote ATK dibeli! Bonus damage: +", bonus_damage)
-			
-		"atk_speed_buff":
-			attack_cooldown *= 0.85
-			attack_cooldown = max(0.05, attack_cooldown) # Batas aman cooldown
-			print("⚔️ BASIC WEAPON: Cincin Waktu dibeli! Cooldown dipercepat menjadi: ", attack_cooldown, " detik")
-
+# --- SFX AUDIO ENGINE ---
 func mainkan_sfx_tebasan() -> void:
 	var template_sfx = get_node_or_null("SfxSlash")
 	

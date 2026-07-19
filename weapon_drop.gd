@@ -117,8 +117,10 @@ func tampilkan_model_senjata() -> void:
 				model_container.add_child(instance_model)
 				matikan_collision_internal(instance_model)
 				
-				# Posisi X diatur ke -0.90
-				instance_model.position = Vector3(-0.90, 0.0, 0.0)
+				#  PERBAIKAN: Set ke 0 agar berada di poros tengah rotasi Marker3D Chest
+				instance_model.position = Vector3.ZERO
+				#  PERBAIKAN: Reset basis rotasi lokal agar sinkron dengan sumbu rotasi parent/marker
+				instance_model.rotation = Vector3.ZERO
 	else:
 		push_error("Model tidak ditemukan untuk key: " + key_model)
 
@@ -130,10 +132,7 @@ func update_label_senjata() -> void:
 		add_child(label)
 		label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 		
-	# Posisi Y dinaikkan agar teks menggantung pas di atas model
 	label.position = Vector3(0, 1.2, 0) 
-	
-	# Booster ukuran teks agar besar dan tetap tajam di ruang 3D
 	label.font_size = 48
 	label.pixel_size = 0.015
 	
@@ -157,7 +156,6 @@ func _on_body_entered(body: Node3D) -> void:
 		if "slot_senjata" in tangan:
 			var slot_aktif = tangan.slot_aktif
 			
-			# Hanya mengecek dan mengambil otomatis ke slot aktif
 			if tangan.slot_senjata[slot_aktif] == "":
 				suntik_data_ke_resource_tangan(tangan, nama_senjata, rarity, forge_level)
 				
@@ -173,6 +171,7 @@ func _on_body_exited(body: Node3D) -> void:
 		player_di_area = null
 
 func _process(delta: float) -> void:
+	# Efek melayang naik turun tetap berjalan di sumbu lokal Y
 	if model_container:
 		total_waktu += delta
 		model_container.position.y = sin(total_waktu * 3.0) * 0.15

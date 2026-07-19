@@ -14,7 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://bx8fw0c6oehwr" path="res://wave_ui.tscn" id="11_nl0vn"]
 [ext_resource type="PackedScene" uid="uid://carkkis1fay4q" path="res://forge_ui.tscn" id="12_m7yu5"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_4uyis"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_m7yu5"]
 viewport_path = NodePath("EnemyUI")
 
 [sub_resource type="Environment" id="Environment_qi4r4"]
@@ -47,9 +47,15 @@ dead_scene = ExtResource("3_qi4r4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.34446, 42.819855, -2.7459278)
 
 [node name="UIVisual" parent="musuhbody" index="4" unique_id=1327681699]
-texture = SubResource("ViewportTexture_4uyis")
+texture = SubResource("ViewportTexture_m7yu5")
 
 [node name="GUI" type="CanvasLayer" parent="." unique_id=2122856101]
+
+[node name="ItemSlot" parent="GUI" unique_id=733294834 instance=ExtResource("8_qi4r4")]
+offset_left = -555.0
+offset_top = 124.0
+offset_right = -491.0
+offset_bottom = 188.0
 
 [node name="BuffBar" parent="GUI" unique_id=1485494469 instance=ExtResource("6_antmc")]
 offset_left = -59.0
@@ -60,25 +66,6 @@ offset_bottom = 59.0
 [node name="CoinHUD" parent="GUI" unique_id=1413814855 instance=ExtResource("6_o1ivj")]
 
 [node name="GameUI" parent="GUI" unique_id=651630163 instance=ExtResource("7_xhust")]
-mouse_filter = 2
-
-[node name="ItemContainer" type="HBoxContainer" parent="GUI" unique_id=1146870071]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 36.0
-offset_top = -92.0
-offset_right = 168.0
-offset_bottom = -28.0
-grow_vertical = 0
-mouse_filter = 2
-
-[node name="ItemSlot" parent="GUI/ItemContainer" unique_id=10156569 instance=ExtResource("8_qi4r4")]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="ItemSlot2" parent="GUI/ItemContainer" unique_id=210039798 instance=ExtResource("8_qi4r4")]
-layout_mode = 2
 mouse_filter = 2
 
 [node name="Control" parent="GUI" unique_id=898299092 instance=ExtResource("9_f7oih")]

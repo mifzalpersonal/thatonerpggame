@@ -32,7 +32,8 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 
 [node name="WaveBar" type="ProgressBar" parent="Margin/Layout" unique_id=1002884031]
-custom_minimum_size = Vector2(8, 10)
+custom_minimum_size = Vector2(256, 16)
+custom_maximum_size = Vector2(512, 32)
 layout_mode = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_y0at1")
 theme_override_styles/fill = SubResource("StyleBoxFlat_my1sa")
@@ -40,3 +41,6 @@ show_percentage = false
 
 [node name="WaveLabel" type="Label" parent="Margin/Layout" unique_id=1575383486]
 layout_mode = 2
+theme_override_colors/font_outline_color = Color(0.58266115, 0.00019772112, 0.56606716, 1)
+theme_override_constants/outline_size = 8
+text = "Wave"

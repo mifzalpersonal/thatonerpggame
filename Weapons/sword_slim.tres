@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_b1pik")
-base_damage = 25.0
+weapon_name = "Sword Slim"
 metadata/_custom_type_script = "uid://duthkswv7bj7d"

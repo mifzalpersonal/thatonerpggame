@@ -1,5 +1,5 @@
 # ==============================================================================
-# fast_weapon_variant.gd (Atau nama skrip senjata variasi cepatmu)
+# fast_weapon_variant.gd (Sudah Disesuaikan dengan Sistem Sentralisasi Player)
 # ==============================================================================
 extends Node3D
 
@@ -17,14 +17,10 @@ const SLASH_PROJECTILE_SCENE = preload("res://BasicSlash.tscn")
 var bisa_serang: bool = true
 # ----------------------------------
 
-# --- VARIABEL BARU: BONUS SUNTIKAN EFEK TOKO ---
-var bonus_damage: int = 0
-# -----------------------------------------------
-
 func _ready() -> void:
-	# Hubungkan senjata ke GameManager agar merespon saat item toko dibeli
-	if GameManager.has_signal("item_purchased"):
-		GameManager.item_purchased.connect(_on_item_purchased)
+	# 🎯 BERSIH: Tidak perlu menyambungkan sinyal item_purchased di sini
+	# agar tidak terjadi tabrakan data ganda dengan Player.gd
+	pass
 
 func play_attack_animation() -> void:
 	if anim_player.has_animation("Attack"):
@@ -33,9 +29,6 @@ func play_attack_animation() -> void:
 		mainkan_sfx_tebasan2()
 		anim_player.play("Attack")
 
-@export var slash_scale_multiplier: float = 10.0
-
-# 🟢 _process SEKARANG BERSIH DARI INPUT (Karena diatur terpusat di WeaponManager)
 func _process(_delta: float) -> void:
 	pass
 
@@ -58,8 +51,13 @@ func shoot_slash() -> void:
 	get_tree().root.add_child(slash_instance)
 	slash_instance.global_transform = muzzle.global_transform
 	
-	# 🎯 1. Serahkan perhitungan damage, bonus, dan crit ke GameManager (Cukup 1 baris sakti!)
-	GameManager.siapkan_peluru(slash_instance, stats, bonus_damage)
+	# Ambil data bonus_damage murni (+50) yang dikirim oleh Player melalui script Tangan (Parent)
+	var damage_toko = 0
+	if get_parent() and "shop_bonus_damage" in get_parent():
+		damage_toko = get_parent().shop_bonus_damage
+	
+	# 🎯 1. Serahkan perhitungan damage akhir (+50 penuh dari toko!) ke GameManager
+	GameManager.siapkan_peluru(slash_instance, stats, damage_toko)
 	
 	# 🟢 2. Ambil data titipan player yang diset di metadata, lalu oper ke peluru
 	if has_meta("pencipta"):
@@ -74,54 +72,42 @@ func shoot_slash() -> void:
 func mulai_cooldown() -> void:
 	bisa_serang = false # Kunci serangan
 	
-	# Bikin Timer instan lewat kode
-	var timer = get_tree().create_timer(attack_cooldown)
+	# Ambil multiplier cooldown dari Tangan.gd untuk mempercepat serangan (Cincin Waktu)
+	var current_cooldown = attack_cooldown
+	if get_parent() and "shop_attack_cooldown_multiplier" in get_parent():
+		current_cooldown *= get_parent().shop_attack_cooldown_multiplier
+		
+	# Bikin Timer instan lewat kode dengan batas minimal 0.05 detik biar tidak overheat
+	var timer = get_tree().create_timer(max(0.05, current_cooldown))
 	
 	# Pas timernya habis (timeout), buka kembali kunci serang
 	timer.timeout.connect(func(): bisa_serang = true)
 
-# --- FUNGSI MERESPON EFEK ITEM TOKO ---
-func _on_item_purchased(item_id: String) -> void:
-	match item_id:
-		"atk_buff":
-			bonus_damage += 5
-			print("⚔️ WEAPON: Antidote ATK dibeli! Bonus damage: +", bonus_damage)
-			
-		"atk_speed_buff":
-			attack_cooldown *= 0.85
-			attack_cooldown = max(0.05, attack_cooldown) # Batas aman agar tidak overheat/0 detik
-			print("⚔️ WEAPON: Cincin Waktu dibeli! Cooldown dipercepat menjadi: ", attack_cooldown, " detik")
-	
+# --- SFX AUDIO ENGINE ---
 func mainkan_sfx_tebasan() -> void:
 	var template_sfx = get_node_or_null("SfxSlash")
-	
 	if template_sfx != null and template_sfx.stream != null:
 		var sfx_baru = AudioStreamPlayer3D.new()
-		
 		sfx_baru.stream = template_sfx.stream
 		sfx_baru.volume_db = template_sfx.volume_db
 		sfx_baru.max_distance = template_sfx.max_distance
 		sfx_baru.bus = template_sfx.bus
 		sfx_baru.global_transform = global_transform
 		sfx_baru.pitch_scale = randf_range(0.95, 1.05)
-		
 		get_tree().root.add_child(sfx_baru)
 		sfx_baru.play()
 		sfx_baru.finished.connect(func(): sfx_baru.queue_free())
 		
 func mainkan_sfx_tebasan2() -> void:
 	var template_sfx = get_node_or_null("SfxSlash2")
-	
 	if template_sfx != null and template_sfx.stream != null:
 		var sfx_baru = AudioStreamPlayer3D.new()
-		
 		sfx_baru.stream = template_sfx.stream
 		sfx_baru.volume_db = template_sfx.volume_db
 		sfx_baru.max_distance = template_sfx.max_distance
 		sfx_baru.bus = template_sfx.bus
 		sfx_baru.global_transform = global_transform
 		sfx_baru.pitch_scale = randf_range(0.95, 1.05)
-		
 		get_tree().root.add_child(sfx_baru)
 		sfx_baru.play()
 		sfx_baru.finished.connect(func(): sfx_baru.queue_free())

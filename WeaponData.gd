@@ -22,7 +22,7 @@ enum Rarity { COMMON, UNCOMMON, RARE, EPIC, LEGENDARY }
 @export var legendary_bonus_damage: int = 110
 
 # ==============================================================================
-# 🎯 DIATUR DI INSPECTOR: BONUS CRIT CHANCE PER RARITY (Tulis 0.03 untuk 3%)
+# 🎯 DIATUR DI INSPECTOR: BONUS CRIT CHANCE PER RARITY
 # ==============================================================================
 @export_group("Rarity Crit Bonuses")
 @export_range(0.0, 1.0) var common_bonus_crit: float = 0.0
@@ -32,39 +32,36 @@ enum Rarity { COMMON, UNCOMMON, RARE, EPIC, LEGENDARY }
 @export_range(0.0, 1.0) var legendary_bonus_crit: float = 0.20  # 20%
 
 @export_category("Base Critical Hit Setup")
-@export_range(0.0, 1.0) var base_crit_chance: float = 0.05 # 5% Peluang crit dasar bawaan senjata
-@export var crit_multiplier: float = 2.25 # 1.5x damage saat crit default
+@export_range(0.0, 1.0) var base_crit_chance: float = 0.05
+@export var crit_multiplier: float = 2.25
 
-@export_category("Rarity Gacha Chance (Total must be 1.0 / 100%)")
-@export_range(0.0, 1.0) var chance_common: float = 0.50     # 50%
-@export_range(0.0, 1.0) var chance_uncommon: float = 0.30   # 30%
-@export_range(0.0, 1.0) var chance_rare: float = 0.15       # 15%
-@export_range(0.0, 1.0) var chance_epic: float = 0.04       # 4%
-@export_range(0.0, 1.0) var chance_legendary: float = 0.01  # 1%
+@export_category("Rarity Gacha Chance")
+@export_range(0.0, 1.0) var chance_common: float = 0.50
+@export_range(0.0, 1.0) var chance_uncommon: float = 0.30
+@export_range(0.0, 1.0) var chance_rare: float = 0.15
+@export_range(0.0, 1.0) var chance_epic: float = 0.04
+@export_range(0.0, 1.0) var chance_legendary: float = 0.01
 
 # ==============================================================================
 # 🔄 GETTER DINAMIS UNTUK TOTAL DAMAGE & TOTAL CRIT CHANCE
 # ==============================================================================
 
-# Variabel kalkulasi akhir damage yang dibaca oleh GameManager
+# Total damage dasar bawaan senjata (tanpa buff toko)
 var total_damage: int:
 	get:
-		# Kunci level tempaan secara internal agar kalkulasi matematika damage mentok di level 24
 		var level_aman = clampi(forge_level, 0, 24)
 		return base_damage + get_rarity_bonus() + (level_aman * 5)
 
-# Variabel kalkulasi akhir crit chance (Base + Bonus Kasta)
+# Total crit chance bawaan senjata
 var crit_chance: float:
 	get:
 		var level_aman = clampi(forge_level, 0, 24)
-		# Ditambahkan (level_aman * 0.01) agar setiap naik level forge, crit naik 1%
 		return base_crit_chance + get_rarity_crit_bonus() + (level_aman * 0.01)
 
 # ==============================================================================
 # 🛠️ FUNGSI INTERNAL PENGHITUNG BONUS KASTA
 # ==============================================================================
 
-# Ambil bonus damage berdasarkan kasta rarity aktif
 func get_rarity_bonus() -> int:
 	match current_rarity:
 		Rarity.COMMON: return common_bonus_damage
@@ -74,7 +71,6 @@ func get_rarity_bonus() -> int:
 		Rarity.LEGENDARY: return legendary_bonus_damage
 	return 0
 
-# Ambil bonus crit berdasarkan kasta rarity aktif
 func get_rarity_crit_bonus() -> float:
 	match current_rarity:
 		Rarity.COMMON: return common_bonus_crit
@@ -84,7 +80,6 @@ func get_rarity_crit_bonus() -> float:
 		Rarity.LEGENDARY: return legendary_bonus_crit
 	return 0.0
 
-# Mendapatkan string nama Rarity (untuk visual UI)
 func get_rarity_name() -> String:
 	match current_rarity:
 		Rarity.COMMON: return "Common"
@@ -95,13 +90,14 @@ func get_rarity_name() -> String:
 	return "Unknown"
 
 # ==============================================================================
-# 🎲 SISTEM KANG KOCOK DAMAGE & CRIT SAAT PELURU DILEPAS
+# 🎲 SISTEM KOCOK DAMAGE & CRIT SAAT SERANGAN DIEKSEKUSI
 # ==============================================================================
-func hitung_damage_output() -> Dictionary:
-	var akhir_damage: float = float(total_damage)
+# Sekarang menerima parameter `bonus_toko` langsung dari script Node (Player/Tangan)
+func hitung_damage_output(bonus_toko: int = 0) -> Dictionary:
+	# Gabungkan damage dasar dari Resource dengan buff toko yang aktif secara real-time
+	var akhir_damage: float = float(total_damage + bonus_toko)
 	var apakah_crit: bool = false
 	
-	# Kocok menggunakan gabungan total crit_chance dinamis (Base + Rarity)
 	if randf() <= crit_chance:
 		apakah_crit = true
 		akhir_damage = akhir_damage * crit_multiplier
@@ -110,3 +106,12 @@ func hitung_damage_output() -> Dictionary:
 		"damage": int(akhir_damage),
 		"is_critical": apakah_crit
 	}
+
+func get_full_formatted_name() -> String:
+	var teks_rarity = get_rarity_name() # Mengambil "Common", "Epic", dll.
+	
+	# Memformat forge level menjadi (+X), jika masih 0 tetap (+0) atau dikosongkan sesuai seleramu
+	var teks_forge = "(+" + str(forge_level) + ")"
+		
+	# Hasil akhir sesuai format baru: Katana(+5) [Legendary]
+	return weapon_name + teks_forge + " [" + teks_rarity + "]"

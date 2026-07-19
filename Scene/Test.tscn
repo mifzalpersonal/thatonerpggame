@@ -50,24 +50,11 @@ dead_scene = ExtResource("4_ibeux")
 [node name="GameUI" parent="GUI" unique_id=651630163 instance=ExtResource("6_856tt")]
 mouse_filter = 2
 
-[node name="ItemContainer" type="HBoxContainer" parent="GUI" unique_id=725133657]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 36.0
-offset_top = -92.0
-offset_right = 168.0
-offset_bottom = -28.0
-grow_vertical = 0
-mouse_filter = 2
-
-[node name="ItemSlot" parent="GUI/ItemContainer" unique_id=10156569 instance=ExtResource("7_beufa")]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="ItemSlot2" parent="GUI/ItemContainer" unique_id=1520921869 instance=ExtResource("7_beufa")]
-layout_mode = 2
-mouse_filter = 2
+[node name="ItemSlot" parent="GUI" unique_id=733294834 instance=ExtResource("7_beufa")]
+offset_left = -555.0
+offset_top = 124.0
+offset_right = -491.0
+offset_bottom = 188.0
 
 [node name="CoinHUD" parent="GUI" unique_id=1413814855 instance=ExtResource("5_rnpuv")]
 

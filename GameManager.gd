@@ -12,14 +12,14 @@ const MAX_WAVES: int = 3
 
 # --- DATA MASTER ITEM TOKO DENGAN RARITY ---
 var MASTER_ITEMS: Array[Dictionary] = [
-	{"id": "hp_potion", "name": "Ramuan HP", "price": 20, "desc": "Pulihkan 50 HP", "rarity": "common", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
-	{"id": "speed_boots", "name": "Sepatu Gesit", "price": 35, "desc": "Speed +10%", "rarity": "common", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
-	{"id": "atk_buff", "name": "Antidote ATK", "price": 45, "desc": "Attack +5", "rarity": "rare", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
-	{"id": "atk_speed_buff", "name": "Cincin Waktu", "price": 40, "desc": "Atk Speed +15%", "rarity": "rare", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
-	{"id": "hugs", "name": "Hugs Normal", "price": 100, "desc": "Buka senjata Hugs standar", "rarity": "common", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
-	{"id": "bow", "name": "Busur Panah", "price": 255, "desc": "Buka senjata Bow", "rarity": "rare", "icon_path": "res://bowace.png"},
-	{"id": "wp_fire", "name": "Hugs Fire Blaster", "price": 333, "desc": "Buka Hugs Fire (DoT Burn)", "rarity": "rare", "icon_path": "res://sword3.png"},
-	{"id": "wp_nature", "name": "Tongkat Nature", "price": 300, "desc": "Buka Nature (Efek Slow)", "rarity": "rare", "icon_path": "res://Sword2.png"},
+	{"id": "hp_potion", "name": "Hp Potion", "price": 150, "desc": "Tambah Kapasitas Jantung +1", "rarity": "common", "icon_path": "res://HealthPoint.png"},
+	{"id": "speed_boots", "name": "Speed Potion", "price": 100, "desc": "Speed +10%", "rarity": "common", "icon_path": "res://Speed.png"},
+	{"id": "atk_buff", "name": "Attack Potion", "price": 100, "desc": "Attack +50", "rarity": "rare", "icon_path": "res://atk.png"},
+	{"id": "atk_speed_buff", "name": "Attack Speed Potion", "price": 100, "desc": "Atk Speed +15%", "rarity": "rare", "icon_path": "res://Atkspeed.png"},
+	{"id": "hugs", "name": "Hugs", "price": 100, "desc": "Buka senjata Hugs standar", "rarity": "common", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
+	{"id": "bow", "name": "BowAce", "price": 255, "desc": "Buka senjata Bow", "rarity": "rare", "icon_path": "res://bowace.png"},
+	{"id": "wp_fire", "name": "Hugs Fire", "price": 333, "desc": "Buka Hugs Fire (DoT Burn)", "rarity": "rare", "icon_path": "res://sword3.png"},
+	{"id": "wp_nature", "name": "Sword Slim Nature", "price": 300, "desc": "Buka Nature (Efek Slow)", "rarity": "rare", "icon_path": "res://Sword2.png"},
 	{"id": "wp_katana", "name": "Katana Terkutuk", "price": 1000, "desc": "Buka Katana (Lifesteal)", "rarity": "legendary", "icon_path": "res://Katana.png"}
 ]
 
@@ -56,11 +56,11 @@ func siapkan_peluru(slash_instance: Node, stats: WeaponData, bonus_damage: int) 
 		print("🚨 GAMEMANAGER: Gagal siapkan peluru karena WeaponData kosong!")
 		return
 		
-	var hasil_kocokan = stats.hitung_damage_output()
-	var damage_kocokan = stats.total_damage + (hasil_kocokan["damage"] - stats.base_damage)
+	# 🔥 PERBAIKAN UTAMA: Masukkan parameter `bonus_damage` langsung ke fungsi kocokan Resource!
+	# Ini memastikan nilai buff toko (+50) ikut dihitung sebelum/sesudah kritikal secara akurat.
+	var hasil_kocokan = stats.hitung_damage_output(bonus_damage)
+	var total_damage_akhir = hasil_kocokan["damage"]
 	var apakah_crit = hasil_kocokan["is_critical"]
-	
-	var total_damage_akhir = damage_kocokan + bonus_damage
 	
 	if "damage" in slash_instance:
 		slash_instance.damage = total_damage_akhir
@@ -86,6 +86,10 @@ func buat_rak_toko_baru() -> void:
 	var item_legendary: Array[Dictionary] = []
 	
 	for item in MASTER_ITEMS:
+		# 🔥 Hapus status terbeli saat membuat toko baru di level baru
+		if item.has("is_purchased"):
+			item.erase("is_purchased")
+			
 		if item["rarity"] == "common": item_common.append(item)
 		elif item["rarity"] == "rare": item_rare.append(item)
 		elif item["rarity"] == "legendary": item_legendary.append(item)
@@ -134,6 +138,10 @@ func acak_tanpa_reset_biaya() -> void:
 	var item_legendary: Array[Dictionary] = []
 	
 	for item in MASTER_ITEMS:
+		# 🔥 Hapus status terbeli saat reroll agar bisa dibeli lagi saat muncul kembali
+		if item.has("is_purchased"):
+			item.erase("is_purchased")
+			
 		if item["rarity"] == "common": item_common.append(item)
 		elif item["rarity"] == "rare": item_rare.append(item)
 		elif item["rarity"] == "legendary": item_legendary.append(item)

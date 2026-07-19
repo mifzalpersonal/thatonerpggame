@@ -1,75 +1,79 @@
 [gd_scene format=3 uid="uid://0jag52u11qae"]
 
-[ext_resource type="Texture2D" uid="uid://dqvqu2mf1pfev" path="res://GUI/Asset/1Itemslot.png" id="1_0myub"]
 [ext_resource type="Script" uid="uid://dji3mfjjj582o" path="res://GUI/Script/item_slot.gd" id="1_i83bl"]
-[ext_resource type="Texture2D" uid="uid://bgrlq737yj5dd" path="res://GUI/Asset/Itemslot.png" id="2_i83bl"]
+[ext_resource type="Texture2D" uid="uid://dhl4oubfabinp" path="res://ReFreshb.png" id="2_pr46h"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_owrxk"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_47eiu"]
+atlas = ExtResource("2_pr46h")
+region = Rect2(0, 0, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7v0y0"]
-atlas = ExtResource("1_0myub")
-region = Rect2(0, 128, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_nnuyw"]
+atlas = ExtResource("2_pr46h")
+region = Rect2(0, 32, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qa65c"]
-atlas = ExtResource("1_0myub")
-region = Rect2(0, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_f46i5"]
+atlas = ExtResource("2_pr46h")
+region = Rect2(0, 64, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_krddc"]
-atlas = ExtResource("1_0myub")
-region = Rect2(0, 64, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gc4yl"]
-atlas = ExtResource("2_i83bl")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_13myp"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_owrxk"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7v0y0")
+"texture": SubResource("AtlasTexture_47eiu")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qa65c")
+"texture": SubResource("AtlasTexture_nnuyw")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_krddc")
+"texture": SubResource("AtlasTexture_f46i5")
 }],
-"loop": 1,
-"name": &"Aktif",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gc4yl")
-}],
-"loop": 1,
-"name": &"Default",
+"loop": 0,
+"name": &"default",
 "speed": 5.0
 }]
 
-[node name="ItemSlot" type="PanelContainer" unique_id=10156569]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_owrxk"]
+bg_color = Color(0, 0, 0, 0.39215687)
+
+[node name="ItemSlot" type="Control" unique_id=733294834]
 custom_minimum_size = Vector2(64, 64)
-custom_maximum_size = Vector2(64, 64)
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 32.0
-offset_top = -75.0
-offset_right = 96.0
-offset_bottom = -11.0
-grow_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_owrxk")
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_i83bl")
 
-[node name="ControlContainer" type="Control" parent="." unique_id=518683807]
-layout_mode = 2
-
-[node name="SlotBackground" type="AnimatedSprite2D" parent="ControlContainer" unique_id=447166119]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=30880224]
 texture_filter = 1
-sprite_frames = SubResource("SpriteFrames_13myp")
-animation = &"Aktif"
-frame_progress = 0.26147726
-centered = false
+position = Vector2(64, 108)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_owrxk")
+frame = 2
+frame_progress = 1.0
 
-[node name="ItemIcon" type="TextureRect" parent="." unique_id=399501432]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=169342561]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 6.0
+offset_right = 98.0
+offset_bottom = 46.0
+
+[node name="Label" type="Label" parent="HBoxContainer" unique_id=706055304]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_owrxk")
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="HBoxContainer" unique_id=230386810]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_owrxk")
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1

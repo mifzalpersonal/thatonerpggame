@@ -1,3 +1,6 @@
+# ==============================================================================
+# Player.gd (Full Code - Murni Input Angka 1 & 2)
+# ==============================================================================
 extends CharacterBody3D
 
 @export var speed := 10.0
@@ -29,9 +32,10 @@ var shop_bonus_damage: int = 0
 var shop_attack_cooldown_multiplier: float = 1.0
 # -----------------------------------------------------------
 
-# Menggunakan var biasa (bukan @onready langsung kaku) agar bisa dicari ulang nanti jika scene berpindah
-var slot_1_ui = null
-var slot_2_ui = null
+# 🎯 UI SLOT BARU: Menggunakan satu referensi terpusat untuk display tunggal
+var weapon_display_ui = null
+# Slot aktif yang sedang dipilih (default: slot 1)
+var slot_aktif_sekarang: int = 1
 
 func _ready() -> void:
 	# Masukkan otomatis ke group "Player" via kode demi keamanan deteksi slash & weapon
@@ -59,6 +63,9 @@ func _ready() -> void:
 	# --- MENGHUBUNGKAN EFEK ITEM DARI GAMEMANAGER ---
 	if GameManager.has_signal("item_purchased"):
 		GameManager.item_purchased.connect(_on_item_purchased)
+	
+	# Sinkronisasi awal data toko ke node Tangan jika sudah ready
+	_sinkronisasi_ke_tangan()
 	
 	# Biarkan true agar physics dan gravitasi bisa berjalan!
 	set_physics_process(true)
@@ -138,44 +145,85 @@ func _physics_process(delta):
 					node_tangan.rotation_degrees.y = 90.0
 	# ========================================================
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if has_node("Tangan"):
 		var manager_senjata = get_node("Tangan")
 		
+		# Input Manual Angka 1
 		if Input.is_action_just_pressed("Item1"):
 			switch_hud_slot(1)
 			if manager_senjata.has_method("ganti_slot"):
 				manager_senjata.ganti_slot(1)
 				
+		# Input Manual Angka 2
 		if Input.is_action_just_pressed("Item2"):
 			switch_hud_slot(2)
 			if manager_senjata.has_method("ganti_slot"):
 				manager_senjata.ganti_slot(2)
 		
+		# 🛡️ PENGAMAN ATTACK: Mencegah serangan/eror crash ketika slot aktif bernilai kosong ("")
 		if Input.is_action_just_pressed("attack"):
-			if manager_senjata.senjata_sekarang != "":
+			if manager_senjata.slot_senjata[manager_senjata.slot_aktif] != "":
+				_sinkronisasi_ke_tangan()
 				manager_senjata.eksekusi_menyerang()
+			else:
+				print("❌ Player: Tidak bisa menyerang karena sedang tangan kosong!")
 
 # --- FUNGSI UTAMA MERESPON PEMBELIAN ITEM DARI TOKO ---
 func _on_item_purchased(item_id: String) -> void:
 	match item_id:
 		"hp_potion":
-			current_hp = min(current_hp + 50.0, max_hp)
-			print("CHAR3: HP dipulihkan! HP Sekarang: ", current_hp, "/", max_hp)
+			var health_node = get_node_or_null("darahEntity") 
+			
+			if health_node and health_node.has_method("heal"):
+				health_node.heal(1.0) 
+				print("CHAR3: Potion dibeli, memicu fungsi heal() dinamis.")
+			else:
+				print("🚨 CHAR3: Node kesehatan tidak ditemukan di Player!")
 			
 		"speed_boots":
-			speed += speed * 0.10
-			if speed_boost_timer.is_stopped():
-				current_speed = speed
-			print("CHAR3: Base Speed bertambah permanen! Base Speed: ", speed)
+			if speed + 3.0 <= 50.0:
+				speed += 3.0 
+				if speed_boost_timer.is_stopped():
+					current_speed = speed
+				print("CHAR3: Base Speed bertambah! Base Speed: ", speed)
+			else:
+				if speed < 50.0:
+					speed = 50.0
+					if speed_boost_timer.is_stopped():
+						current_speed = speed
+					print("CHAR3: Speed mencapai batas maksimal mutlak (Cap 50)!")
+				else:
+					print("🚫 CHAR3: Gagal beli! Kecepatan jalan sudah maksimal (Cap 50).")
 
 		"atk_buff":
-			shop_bonus_damage += 5
+			shop_bonus_damage += 50
 			print("CHAR3: Bonus ATK Toko bertambah permanen! Total: +", shop_bonus_damage)
-			
+			_sinkronisasi_ke_tangan()
+
 		"atk_speed_buff":
-			shop_attack_cooldown_multiplier *= 0.85
-			print("CHAR3: Cooldown Serang Toko dipotong! Multiplier saat ini: ", shop_attack_cooldown_multiplier)
+			var multiplier_baru = shop_attack_cooldown_multiplier / 1.5
+			
+			if multiplier_baru >= 0.3:
+				shop_attack_cooldown_multiplier = multiplier_baru
+				print("CHAR3: Cooldown Serang Toko dipotong! Multiplier saat ini: ", shop_attack_cooldown_multiplier)
+				_sinkronisasi_ke_tangan()
+			else:
+				if shop_attack_cooldown_multiplier > 0.3:
+					shop_attack_cooldown_multiplier = 0.3
+					print("CHAR3: Attack Speed mencapai batas maksimal mutlak (Cap 0.3)!")
+					_sinkronisasi_ke_tangan()
+				else:
+					print("🚫 CHAR3: Gagal beli! Attack Speed sudah maksimal (Cap 0.3).")
+
+# --- FUNGSI SINKRONISASI DATA DINAMIS KE NODE WEAPON MANAGER ---
+func _sinkronisasi_ke_tangan() -> void:
+	var manager_senjata = get_node_or_null("Tangan")
+	if manager_senjata:
+		if "shop_bonus_damage" in manager_senjata:
+			manager_senjata.shop_bonus_damage = shop_bonus_damage
+		if "shop_attack_cooldown_multiplier" in manager_senjata:
+			manager_senjata.shop_attack_cooldown_multiplier = shop_attack_cooldown_multiplier
 
 # --- FUNGSI SPEED BOOST (Temporary / Dari Power Up Map) ---
 func apply_speed_boost(multiplier: float, duration: float) -> void:
@@ -183,10 +231,8 @@ func apply_speed_boost(multiplier: float, duration: float) -> void:
 	print("Speed Boost Aktif! Kecepatan sekarang: ", current_speed)
 	speed_boost_timer.start(duration)
 	
-	# --- INTEGRASI UI STATUS ICON ---
 	var buff_ui = get_node_or_null("/root/Main/GUI/BuffBar")
 	if buff_ui:
-		# Ganti path ini sesuai folder aset icon game kamu
 		buff_ui.tambah_status_icon("res://StatusIcon/SpeedUp.png", duration, "temporary_speed")
 
 func _on_speed_boost_timeout() -> void:
@@ -199,37 +245,33 @@ func apply_damage_boost(multiplier: float, duration: float) -> void:
 	print("Damage Boost Aktif! Pengali damage saat ini: x", damage_multiplier_active)
 	damage_boost_timer.start(duration)
 	
-	# --- INTEGRASI UI STATUS ICON ---
 	var buff_ui = get_node_or_null("/root/Main/GUI/BuffBar")
 	if buff_ui:
-		# Ganti path ini sesuai folder aset icon game kamu
 		buff_ui.tambah_status_icon("res://StatusIcon/DamageUp.png", duration, "temporary_damage")
 
 func _on_damage_boost_timeout() -> void:
 	damage_multiplier_active = 1.0 
 	print("Damage Boost Habis! Damage kembali normal.")
 
-# Fungsi internal untuk mencari ulang UI jika sewaktu-waktu null
+# --- 🎯 UPDATE REFERENSI UI BARU ---
 func _update_ui_references():
-	if slot_1_ui == null:
-		slot_1_ui = get_node_or_null("/root/Main/GUI/ItemContainer/ItemSlot")
-	if slot_2_ui == null:
-		slot_2_ui = get_node_or_null("/root/Main/GUI/ItemContainer/ItemSlot2")
+	if weapon_display_ui == null:
+		weapon_display_ui = get_tree().root.find_child("ItemSlot", true, false)
+		
+		if weapon_display_ui == null:
+			weapon_display_ui = get_node_or_null("/root/Main/GUI/ItemSlot")
 
+# --- 🎯 LOGIKA TUNGGAL PERGANTIAN HUD SLOT MURNI PEMICU ANIMASI ---
 func switch_hud_slot(slot_number: int) -> void:
+	slot_aktif_sekarang = slot_number
 	_update_ui_references()
 	
-	if slot_1_ui == null or slot_2_ui == null:
+	if weapon_display_ui == null:
 		return
 		
-	if slot_number == 1:
-		slot_1_ui.is_active = true   
-		slot_2_ui.is_active = false  
-		print("HUD: Slot 1 Aktif")
-	elif slot_number == 2:
-		slot_1_ui.is_active = false  
-		slot_2_ui.is_active = true   
-		print("HUD: Slot 2 Aktif")
+	if weapon_display_ui.has_method("mainkan_animasi_tukar"):
+		weapon_display_ui.mainkan_animasi_tukar()
+		print("HUD: Mengirim sinyal mainkan animasi tukar untuk slot: ", slot_number)
 
 # --- FUNGSI DETEKSI TARGET ZOMBIE ---
 func ambil_musuh_terdekat() -> Node3D:
