@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://dh35iit8j22wa"]
-
-[ext_resource type="Script" uid="uid://duthkswv7bj7d" path="res://WeaponData.gd" id="1_b1pik"]
-
-[resource]
-script = ExtResource("1_b1pik")
-weapon_name = "Sword Slim"
-metadata/_custom_type_script = "uid://duthkswv7bj7d"
