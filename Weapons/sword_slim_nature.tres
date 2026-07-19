@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3 uid="uid://lks88slw71us"]
+
+[ext_resource type="Script" uid="uid://duthkswv7bj7d" path="res://WeaponData.gd" id="1_1kv0j"]
+
+[resource]
+script = ExtResource("1_1kv0j")
+weapon_name = "Sword Slim Nature"
+metadata/_custom_type_script = "uid://duthkswv7bj7d"

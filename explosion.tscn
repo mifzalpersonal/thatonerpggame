@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://coloix2rj5oym"]
+
+[ext_resource type="Script" uid="uid://3v5ag2yod0h3" path="res://explosion.gd" id="1_w8ob6"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_13myp"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_cxkwo"]
+direction = Vector3(0, 1, 0)
+spread = 100.0
+initial_velocity_min = 3.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, -2, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x7rc5"]
+albedo_color = Color(0.64705884, 0.9529412, 0.9882353, 1)
+billboard_mode = 2
+
+[sub_resource type="QuadMesh" id="QuadMesh_lyyur"]
+material = SubResource("StandardMaterial3D_x7rc5")
+
+[node name="Explosion" type="Area3D" unique_id=63536992]
+script = ExtResource("1_w8ob6")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=725533443]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+shape = SubResource("BoxShape3D_13myp")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1208283644]
+emitting = false
+amount = 50
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_cxkwo")
+draw_pass_1 = SubResource("QuadMesh_lyyur")

@@ -1,0 +1,59 @@
+[gd_scene format=4 uid="uid://dv078wnnf3um0"]
+
+[ext_resource type="Texture2D" uid="uid://1ltuyuqrjpt4" path="res://ENV2_0.png" id="1_grcy6"]
+[ext_resource type="PackedScene" uid="uid://xn6kxu1k364d" path="res://GRus1.gltf" id="4_l5at7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkfbe"]
+resource_name = "material_0"
+transparency = 2
+alpha_scissor_threshold = 0.05
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("1_grcy6")
+texture_filter = 0
+texture_repeat = false
+metadata/_gltf_primary_texture_coord = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_08ngu"]
+_surfaces = [{
+"aabb": AABB(-2.220446e-16, -0.5, -0.5, 1.75, 1, 1),
+"format": 34896613377,
+"index_count": 12,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUA"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("////f///AAAAAP9/AAAAAP///38AAAAAAAD/f///AAD//////38AAAAAAAD/fwAA//8AAP9/AAAAAP///38AAA==")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_yob1d"]
+resource_name = "blockbench_export_mesh"
+_surfaces = [{
+"aabb": AABB(-2.220446e-16, -0.5, -0.5, 1.75, 1, 1),
+"attribute_data": PackedByteArray("/9//fwAAAAD/3wAAAAD/f//f/38AAAAA/98AAAAA/38="),
+"format": 34896613399,
+"index_count": 12,
+"index_data": PackedByteArray("AAABAAIAAAADAAEABAAFAAYABAAHAAUA"),
+"material": SubResource("StandardMaterial3D_pkfbe"),
+"name": "material_0",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray("////f////78AAP9/AAD/v////38AAP+/AAD/f////7///////3///wAAAAD/f/////8AAP9///8AAP///3///////3////9/////f////3////9/////f////3////9/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_08ngu")
+
+[node name="Enviroment2" type="Node3D" unique_id=926359235]
+
+[node name="blockbench_export2" type="Node3D" parent="." unique_id=504612336]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5678656, 0, 0)
+
+[node name="Root" type="MeshInstance3D" parent="blockbench_export2" unique_id=1465317772]
+transform = Transform3D(0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0)
+mesh = SubResource("ArrayMesh_yob1d")
+
+[node name="blockbench_export3" parent="." unique_id=400334103 instance=ExtResource("4_l5at7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1262517, 0, 0)

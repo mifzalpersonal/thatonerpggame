@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://c4bhokn2ce1fh"]
+
+[ext_resource type="Script" uid="uid://4s0nmiog2ldl" path="res://coin_hud.gd" id="1_xteer"]
+[ext_resource type="Texture2D" uid="uid://d1kcgx100rbft" path="res://Coin.png" id="2_a112e"]
+
+[node name="CoinHUD" type="CanvasLayer" unique_id=1413814855]
+script = ExtResource("1_xteer")
+
+[node name="CoinIcon" type="TextureRect" parent="." unique_id=171482014]
+texture_filter = 1
+custom_minimum_size = Vector2(32, 32)
+custom_maximum_size = Vector2(64, 64)
+offset_left = 10.0
+offset_top = 266.0
+offset_right = 42.0
+offset_bottom = 298.0
+scale = Vector2(2, 2)
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("2_a112e")
+expand_mode = 1
+stretch_mode = 3
+
+[node name="CoinLabel" type="Label" parent="." unique_id=660150782]
+texture_filter = 1
+offset_left = 67.0
+offset_top = 279.0
+offset_right = 142.0
+offset_bottom = 317.0
+theme_override_colors/font_outline_color = Color(0.733002, 2.7554854e-06, 6.738305e-07, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 32
+text = "dsad"

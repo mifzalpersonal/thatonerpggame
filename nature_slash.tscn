@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://cf4460a20lyxu"]
+
+[ext_resource type="Script" uid="uid://brerpq8kj6unf" path="res://nature_slash.gd" id="1_4vt7r"]
+[ext_resource type="Texture2D" uid="uid://ctvtb0qwrdicg" path="res://Weapon-Asset/sword_slim/nature_ver/Slash3.png" id="2_syl6o"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h8iml"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_syl6o")
+}],
+"loop": 0,
+"name": &"Slash",
+"speed": 3.0
+}]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4ye4i"]
+size = Vector3(0.27124023, 0.5907593, 0.05935669)
+
+[node name="NatureSlash" type="Area3D" unique_id=674966519]
+script = ExtResource("1_4vt7r")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=689755296]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_h8iml")
+animation = &"Slash"
+speed_scale = 1.5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=414879490]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.010262936, 0.027191162, 0.0019073486)
+shape = SubResource("BoxShape3D_4ye4i")

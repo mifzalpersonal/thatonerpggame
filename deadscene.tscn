@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://f6wccaab1adv"]
+
+[ext_resource type="Script" uid="uid://deysuwl8eb1hh" path="res://deadscene.gd" id="1_7fouf"]
+[ext_resource type="Texture2D" uid="uid://b16teeofe25xa" path="res://Gameover.png" id="2_bj20j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xv8wr"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lxma4"]
+
+[node name="Deadscene" type="Control" unique_id=580349084]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_7fouf")
+
+[node name="Background" type="ColorRect" parent="." unique_id=485754190]
+layout_mode = 0
+offset_right = 1154.0
+offset_bottom = 651.0
+mouse_filter = 2
+color = Color(0.05490196, 0.05490196, 0.05490196, 0.39215687)
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=764862786]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -550.0
+offset_top = -205.0
+offset_right = 570.0
+offset_bottom = -65.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bj20j")
+
+[node name="MenuContainer" type="VBoxContainer" parent="." unique_id=891251770]
+custom_minimum_size = Vector2(256, 64)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -127.0
+offset_top = -22.0
+offset_right = 129.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 12
+
+[node name="Lobby" type="Button" parent="MenuContainer" unique_id=242555968]
+process_mode = 3
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xv8wr")
+text = "Lobby
+"
+
+[node name="MainMenu" type="Button" parent="MenuContainer" unique_id=993022425]
+process_mode = 3
+custom_minimum_size = Vector2(0, 64)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxEmpty_lxma4")
+text = "Main Menu"
+
+[connection signal="pressed" from="MenuContainer/Lobby" to="." method="_on_lobby_pressed"]
+[connection signal="pressed" from="MenuContainer/MainMenu" to="." method="_on_main_menu_pressed"]

@@ -1,0 +1,135 @@
+[gd_scene format=3 uid="uid://ce6q0vd0luaye"]
+
+[ext_resource type="Script" uid="uid://dlugomsiag3ge" path="res://zombie.gd" id="1_igrnh"]
+[ext_resource type="Texture2D" uid="uid://cb4xdes2px2c" path="res://Character-Asset/Enemy/Plant/Enemy_type_plant_idle-Sheet.png" id="2_70p8c"]
+[ext_resource type="Texture2D" uid="uid://dlrftoa4tfbp0" path="res://Character-Asset/Enemy/Plant/Enemy_type_plant_attack-Sheet.png" id="3_u3vjf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7qo2m"]
+atlas = ExtResource("2_70p8c")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fvehy"]
+atlas = ExtResource("2_70p8c")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hyugm"]
+atlas = ExtResource("2_70p8c")
+region = Rect2(64, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jm6gk"]
+atlas = ExtResource("2_70p8c")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycveu"]
+atlas = ExtResource("3_u3vjf")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emkmr"]
+atlas = ExtResource("3_u3vjf")
+region = Rect2(32, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y86tx"]
+atlas = ExtResource("3_u3vjf")
+region = Rect2(64, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjc28"]
+atlas = ExtResource("3_u3vjf")
+region = Rect2(96, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ad1nv"]
+atlas = ExtResource("3_u3vjf")
+region = Rect2(128, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n3fyg"]
+atlas = ExtResource("3_u3vjf")
+region = Rect2(160, 0, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4kxuq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7qo2m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fvehy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hyugm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jm6gk")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycveu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_emkmr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y86tx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fjc28")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ad1nv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n3fyg")
+}],
+"loop": 0,
+"name": &"new_animation",
+"speed": 12.0
+}]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fspii"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ifbf7"]
+bg_color = Color(0.20784314, 0.20784314, 0.20784314, 0.8039216)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qxwbh"]
+bg_color = Color(0.6627451, 0.15686275, 0.8, 1)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_sgr4k"]
+viewport_path = NodePath("EnemyUI")
+
+[node name="musuhbody" type="CharacterBody3D" unique_id=404111702]
+script = ExtResource("1_igrnh")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=1135376981]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 2.5506306, 0)
+billboard = 1
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_4kxuq")
+animation = &"new_animation"
+frame = 5
+frame_progress = 1.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1994943877]
+transform = Transform3D(2.3443997, 0, 0, 0, 3.5608358, 0, 0, 0, 1.9698501, 0, 1.536356, 0)
+shape = SubResource("BoxShape3D_fspii")
+
+[node name="EnemyUI" type="SubViewport" parent="." unique_id=296590919]
+transparent_bg = true
+size = Vector2i(250, 25)
+
+[node name="HPBar" type="ProgressBar" parent="EnemyUI" unique_id=948342671]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 15
+theme_override_styles/background = SubResource("StyleBoxFlat_ifbf7")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qxwbh")
+show_percentage = false
+
+[node name="UIVisual" type="Sprite3D" parent="." unique_id=1327681699]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.3455229, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_sgr4k")

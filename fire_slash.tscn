@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://cshpxyvl578l5"]
+
+[ext_resource type="Script" uid="uid://rfn2wd7ckks7" path="res://fire_slash.gd" id="1_e6o6s"]
+[ext_resource type="Texture2D" uid="uid://duhl6dvi7txin" path="res://Weapon-Asset/Huges/Huges_fire/slash_fire.png" id="1_ivpky"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e6o6s"]
+atlas = ExtResource("1_ivpky")
+region = Rect2(0, 0, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fs6ot"]
+atlas = ExtResource("1_ivpky")
+region = Rect2(0, 64, 32, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8410l"]
+atlas = ExtResource("1_ivpky")
+region = Rect2(0, 128, 32, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5ydpd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e6o6s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fs6ot")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8410l")
+}],
+"loop": 0,
+"name": &"Slash",
+"speed": 3.0
+}]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yxsja"]
+size = Vector3(0.27124023, 0.5907593, 0.05935669)
+
+[node name="FireSlash" type="Area3D" unique_id=697547576]
+script = ExtResource("1_e6o6s")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=1498031693]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_5ydpd")
+animation = &"Slash"
+frame = 2
+frame_progress = 1.0
+speed_scale = 1.5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=747821001]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -0.010262936, 0.027191162, 0.0019073486)
+shape = SubResource("BoxShape3D_yxsja")

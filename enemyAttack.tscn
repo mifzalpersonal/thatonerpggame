@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://to7hn1nswsme"]
+
+[ext_resource type="Script" uid="uid://dt81lxh3ns5r3" path="res://enemyAttack.gd" id="1_lfduw"]
+[ext_resource type="Texture2D" uid="uid://snw6q7e13rl5" path="res://Character-Asset/VFX/fireball-Sheet.png" id="2_lfduw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_idiwa"]
+atlas = ExtResource("2_lfduw")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0gi4k"]
+atlas = ExtResource("2_lfduw")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dfi32"]
+atlas = ExtResource("2_lfduw")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfasq"]
+atlas = ExtResource("2_lfduw")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jcac1"]
+atlas = ExtResource("2_lfduw")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bq2a0"]
+atlas = ExtResource("2_lfduw")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h8iml"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_idiwa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0gi4k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dfi32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfasq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jcac1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bq2a0")
+}],
+"loop": 1,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4ye4i"]
+size = Vector3(0.27124023, 0.5907593, 0.1634674)
+
+[node name="enemyAttack" type="Area3D" unique_id=674966519]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+script = ExtResource("1_lfduw")
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=689755296]
+transform = Transform3D(-1.3113416e-07, -3, 0, 3, -1.3113416e-07, 0, 0, 0, 3, 0, 0, 0)
+texture_filter = 0
+sprite_frames = SubResource("SpriteFrames_h8iml")
+animation = &"new_animation"
+speed_scale = 1.5
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=414879490]
+transform = Transform3D(1, 0, 0, 0, -4.3711392e-08, -1, 0, 1, -4.3711392e-08, 0, 0, 0)
+shape = SubResource("BoxShape3D_4ye4i")

@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://mc2gbuolbjs2"]
+
+[ext_resource type="Script" uid="uid://dr5cif6e5dapy" path="res://katana.gd" id="1_8ih5n"]
+[ext_resource type="PackedScene" uid="uid://dphwl4hg7mpqy" path="res://Weapon-Asset/Katana/Katana.gltf" id="1_okte2"]
+[ext_resource type="AudioStream" uid="uid://bri0p24u85l38" path="res://afuckingaudiodir/323526__kreastricon62__bloody-blade-2.wav" id="3_5f3qk"]
+
+[sub_resource type="Animation" id="Animation_8ih5n"]
+resource_name = "Attack"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blockbench_export:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0009999999, 0.16666667, 0.36666667, 0.37, 0.56666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, -1.5707964), Vector3(0, 0, -0.764364), Vector3(0, 0, -1.91798), Vector3(0, 0, -2.2212436), Vector3(0, 0, -1.5707964)]
+}
+
+[sub_resource type="Animation" id="Animation_5f3qk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blockbench_export:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, -1.5707964)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rregi"]
+_data = {
+&"Attack": SubResource("Animation_8ih5n"),
+&"RESET": SubResource("Animation_5f3qk")
+}
+
+[node name="Katana" type="Node3D" unique_id=1594083825]
+script = ExtResource("1_8ih5n")
+
+[node name="Muzzle" type="Marker3D" parent="." unique_id=979009705]
+transform = Transform3D(0.99999624, 0.0027506317, 0, -0.0027506317, 0.99999624, 0, 0, 0, 1, 2, 0, -1.5)
+
+[node name="blockbench_export" parent="." unique_id=637615911 instance=ExtResource("1_okte2")]
+transform = Transform3D(-4.3711367e-08, 0.9999995, 0, -0.9999995, -4.3711367e-08, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=723288439]
+libraries/ = SubResource("AnimationLibrary_rregi")
+autoplay = &"Attack"
+speed_scale = 1.831
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1802745044]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.21221745, 2.7832334, 4.453072)
+fov = 101.38106
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1312469688]
+light_energy = 0.549
+
+[node name="SfxSlash" type="AudioStreamPlayer3D" parent="." unique_id=952397652]
+stream = ExtResource("3_5f3qk")
