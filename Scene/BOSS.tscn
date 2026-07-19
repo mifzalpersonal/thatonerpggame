@@ -10,46 +10,97 @@
 [ext_resource type="Texture2D" uid="uid://ciaiul7rf4ow3" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_WingBL.png" id="8_6ny8i"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
+radius = 1.8041992
+height = 5.3569336
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r3i81"]
+atlas = ExtResource("1_1fuji")
+region = Rect2(25, 2, 14.154209, 13)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lhvhq"]
+atlas = ExtResource("2_6hwwk")
+region = Rect2(20, 13, 24, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ip5p"]
+atlas = ExtResource("3_ohdyy")
+region = Rect2(16, 27, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gg2x0"]
+atlas = ExtResource("4_hgqes")
+region = Rect2(2, 15, 60, 46)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_127tl"]
+atlas = ExtResource("5_m0in0")
+region = Rect2(8, 12, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vkldl"]
+atlas = ExtResource("6_w2l6b")
+region = Rect2(44, 12, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33fvo"]
+atlas = ExtResource("7_gb8g6")
+region = Rect2(47, 32, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0rhph"]
+atlas = ExtResource("8_6ny8i")
+region = Rect2(5, 32, 12, 12)
 
 [node name="CharacterBody3D" type="CharacterBody3D" unique_id=2014738208]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1275040774]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.725994, 0)
 shape = SubResource("CapsuleShape3D_g4v7s")
 
 [node name="Node" type="Node" parent="." unique_id=264470170]
 
 [node name="head" type="Sprite3D" parent="Node" unique_id=973203586]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.39435, 0)
+pixel_size = 0.1
 texture_filter = 0
 render_priority = 4
-texture = ExtResource("1_1fuji")
+texture = SubResource("AtlasTexture_r3i81")
 
 [node name="UpperBody" type="Sprite3D" parent="Node" unique_id=1590584670]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7131705, 0)
+pixel_size = 0.1
 texture_filter = 0
 render_priority = 3
-texture = ExtResource("2_6hwwk")
+texture = SubResource("AtlasTexture_lhvhq")
 
 [node name="LowerBody" type="Sprite3D" parent="Node" unique_id=1486444061]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8061771, 0)
+pixel_size = 0.1
 texture_filter = 0
 render_priority = 2
-texture = ExtResource("3_ohdyy")
+texture = SubResource("AtlasTexture_0ip5p")
 
 [node name="Cape" type="Sprite3D" parent="Node" unique_id=54006535]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4582453, 0)
+pixel_size = 0.1
 texture_filter = 0
 render_priority = 1
-texture = ExtResource("4_hgqes")
+texture = SubResource("AtlasTexture_gg2x0")
 
 [node name="Wing_1" type="Sprite3D" parent="Node" unique_id=165322534]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 4.442, 0)
+pixel_size = 0.1
 texture_filter = 0
-texture = ExtResource("5_m0in0")
+texture = SubResource("AtlasTexture_127tl")
 
 [node name="Wing_2" type="Sprite3D" parent="Node" unique_id=1826149565]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0852304, 4.4600353, 0)
+pixel_size = 0.1
 texture_filter = 0
-texture = ExtResource("6_w2l6b")
+texture = SubResource("AtlasTexture_vkldl")
 
 [node name="Wing_3" type="Sprite3D" parent="Node" unique_id=2144705411]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.2117043, 2.3233213, 0)
+pixel_size = 0.1
 texture_filter = 0
-texture = ExtResource("7_gb8g6")
+texture = SubResource("AtlasTexture_33fvo")
 
 [node name="Wing_4" type="Sprite3D" parent="Node" unique_id=1763574574]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 2.3, 0)
+pixel_size = 0.1
 texture_filter = 0
-texture = ExtResource("8_6ny8i")
+texture = SubResource("AtlasTexture_0rhph")
