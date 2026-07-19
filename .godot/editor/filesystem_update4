@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 res://Scene/Test.tscn
 res://Map-Asset/Tres/High.tres
 res://Map-Asset/Tres/Enviroment.tres
@@ -35,3 +36,12 @@ res://Weapons/bow.tres
 res://Weapons/hugs.tres
 res://forge_ui.gd
 res://Map-Asset/Scene/Main.tscn
+=======
+res://Scene/BOSS.tscn
+res://main_menu_model.gdshader
+res://Map-Asset/Scene/Enemy/burn_effect.gdshader
+res://VFX/Fire/enemy_status_effects.gdshader
+res://Map-Asset/Tres/High.tres
+res://Map-Asset/Tres/Enviroment.tres
+res://Map-Asset/Tres/Enviroment2.tres
+>>>>>>> 9354a61d9b0fb6419b49bdf7e1cad3b88ced046e

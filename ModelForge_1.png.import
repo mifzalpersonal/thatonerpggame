@@ -2,23 +2,21 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tnco4g5dxbim"
-path="res://.godot/imported/ModelForge_1.png-b38a45b3864cd0b571b85f012b3f5164.ctex"
+uid="uid://8l05q2cwqnkh"
+path.s3tc="res://.godot/imported/ModelForge_1.png-b38a45b3864cd0b571b85f012b3f5164.s3tc.ctex"
 metadata={
-"vram_texture": false
-}
-generator_parameters={
-"md5": "4a3ecc830f58b5d0089b83d786e4d9f0"
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://ModelForge_1.png"
-dest_files=["res://.godot/imported/ModelForge_1.png-b38a45b3864cd0b571b85f012b3f5164.ctex"]
+dest_files=["res://.godot/imported/ModelForge_1.png-b38a45b3864cd0b571b85f012b3f5164.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

@@ -1,10 +1,14 @@
+<<<<<<< HEAD
+=======
+res://Character-Asset/Enemy/Boss/
+res://Map-Asset/Tres/
+>>>>>>> 9354a61d9b0fb6419b49bdf7e1cad3b88ced046e
 res://
 res://GUI/Script/
 res://Map-Asset/Tres/
 res://Weapons/
 res://VFX/Fire/
 res://Scene/
-res://Character-Asset/Enemy/Boss/
 res://Character-Asset/Enemy/Slime/
 res://Character-Asset/Enemy/Plant/
 res://Character-Asset/Enemy/Wisp/

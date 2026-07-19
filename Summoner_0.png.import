@@ -2,14 +2,11 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bh7gsf4wmp6ny"
+uid="uid://bytuw5f5axiw5"
 path.s3tc="res://.godot/imported/Summoner_0.png-fdc4deca66adc945ab1f6425c32150cb.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
-}
-generator_parameters={
-"md5": "b61cb282720726cb67801615c1442e11"
 }
 
 [deps]

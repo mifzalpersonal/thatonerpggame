@@ -3,20 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ciaiul7rf4ow3"
-path.s3tc="res://.godot/imported/testsprite_Boss_WingBL.png-c6f53db680a091bc03b69d216686bedd.s3tc.ctex"
+path="res://.godot/imported/testsprite_Boss_WingBL.png-c6f53db680a091bc03b69d216686bedd.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://Character-Asset/Enemy/Boss/testsprite_Boss_WingBL.png"
-dest_files=["res://.godot/imported/testsprite_Boss_WingBL.png-c6f53db680a091bc03b69d216686bedd.s3tc.ctex"]
+dest_files=["res://.godot/imported/testsprite_Boss_WingBL.png-c6f53db680a091bc03b69d216686bedd.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
