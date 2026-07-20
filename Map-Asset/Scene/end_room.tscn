@@ -4,7 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://c4pi7qpyxm5ra" path="res://Map-Asset/Scene/IntractivePortal.tscn" id="2_iekss"]
 [ext_resource type="PackedScene" uid="uid://bqk0gkryxb0nm" path="res://Map-Asset/Scene/Enemy/enemy1.tscn" id="3_iekss"]
 [ext_resource type="MeshLibrary" uid="uid://d4lcgjxj2m1nl" path="res://Map-Asset/Tres/Enviroment.tres" id="4_c4syj"]
+[ext_resource type="PackedScene" uid="uid://ce6q0vd0luaye" path="res://Map-Asset/Scene/Enemy/enemy2.tscn" id="4_r0sv3"]
 [ext_resource type="MeshLibrary" uid="uid://dhjh5f3g587tr" path="res://Map-Asset/Tres/Enviroment2.tres" id="5_bcu1a"]
+[ext_resource type="PackedScene" uid="uid://bslvwa15ft2ob" path="res://BOSS.tscn" id="5_c4eby"]
 
 [node name="EndRoom" type="Node3D" unique_id=1165996451]
 
@@ -22,7 +24,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.32155, 0, -0.11806965)
 
 [node name="IntractivePortal" parent="." unique_id=427671805 instance=ExtResource("2_iekss")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.156, 3, -3.181)
-enemy_scene = ExtResource("3_iekss")
+wave_enemy_1 = ExtResource("3_iekss")
+wave_enemy_2 = ExtResource("4_r0sv3")
+boss_scene = ExtResource("5_c4eby")
 
 [node name="WaveManager" type="Node3D" parent="." unique_id=1891604444]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 2.2437897, 0)

@@ -1,57 +1,62 @@
 [gd_scene format=3 uid="uid://bslvwa15ft2ob"]
 
-[ext_resource type="Texture2D" uid="uid://c454wkwegfkod" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_Head.png" id="1_1fuji"]
-[ext_resource type="Texture2D" uid="uid://d10dayh2koy43" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_UpperBody.png" id="2_6hwwk"]
-[ext_resource type="Texture2D" uid="uid://b84oljhxf10x0" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_LowerBody.png" id="3_ohdyy"]
-[ext_resource type="Texture2D" uid="uid://y21jwv0q6ns7" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_Cape.png" id="4_hgqes"]
-[ext_resource type="Texture2D" uid="uid://b42cqmrfm0itd" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_WingTL.png" id="5_m0in0"]
-[ext_resource type="Texture2D" uid="uid://cq1i7b6q6ft0g" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_WingTR.png" id="6_w2l6b"]
-[ext_resource type="Texture2D" uid="uid://d2irtdryjrst7" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_WingBR.png" id="7_gb8g6"]
-[ext_resource type="Texture2D" uid="uid://ciaiul7rf4ow3" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_WingBL.png" id="8_6ny8i"]
+[ext_resource type="Script" uid="uid://bmp6xg6iijegy" path="res://boss.gd" id="1_a3vjo"]
+[ext_resource type="PackedScene" uid="uid://to7hn1nswsme" path="res://enemyAttack.tscn" id="2_ds5iq"]
+[ext_resource type="Texture2D" uid="uid://c454wkwegfkod" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_Head.png" id="2_pmd4t"]
+[ext_resource type="Texture2D" uid="uid://d10dayh2koy43" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_UpperBody.png" id="3_ds5iq"]
+[ext_resource type="Texture2D" uid="uid://b84oljhxf10x0" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_LowerBody.png" id="4_kojea"]
+[ext_resource type="Texture2D" uid="uid://y21jwv0q6ns7" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_Cape.png" id="5_t1txu"]
+[ext_resource type="Texture2D" uid="uid://b42cqmrfm0itd" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_WingTL.png" id="6_3c6qn"]
+[ext_resource type="Texture2D" uid="uid://cq1i7b6q6ft0g" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_WingTR.png" id="7_70ldk"]
+[ext_resource type="Texture2D" uid="uid://d2irtdryjrst7" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_WingBR.png" id="8_r8sj3"]
+[ext_resource type="Texture2D" uid="uid://ciaiul7rf4ow3" path="res://Character-Asset/Enemy/Boss/testsprite_Boss_WingBL.png" id="9_3naul"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_g4v7s"]
 radius = 1.8041992
 height = 5.3569336
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r3i81"]
-atlas = ExtResource("1_1fuji")
+atlas = ExtResource("2_pmd4t")
 region = Rect2(25, 2, 14.154209, 13)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lhvhq"]
-atlas = ExtResource("2_6hwwk")
+atlas = ExtResource("3_ds5iq")
 region = Rect2(20, 13, 24, 23)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0ip5p"]
-atlas = ExtResource("3_ohdyy")
+atlas = ExtResource("4_kojea")
 region = Rect2(16, 27, 32, 36)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gg2x0"]
-atlas = ExtResource("4_hgqes")
+atlas = ExtResource("5_t1txu")
 region = Rect2(2, 15, 60, 46)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_127tl"]
-atlas = ExtResource("5_m0in0")
+atlas = ExtResource("6_3c6qn")
 region = Rect2(8, 12, 12, 12)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vkldl"]
-atlas = ExtResource("6_w2l6b")
+atlas = ExtResource("7_70ldk")
 region = Rect2(44, 12, 12, 12)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_33fvo"]
-atlas = ExtResource("7_gb8g6")
+atlas = ExtResource("8_r8sj3")
 region = Rect2(47, 32, 12, 12)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0rhph"]
-atlas = ExtResource("8_6ny8i")
+atlas = ExtResource("9_3naul")
 region = Rect2(5, 32, 12, 12)
 
 [node name="CharacterBody3D" type="CharacterBody3D" unique_id=2014738208]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+script = ExtResource("1_a3vjo")
+projectile_scene = ExtResource("2_ds5iq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1275040774]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.725994, 0)
 shape = SubResource("CapsuleShape3D_g4v7s")
 
-[node name="Node" type="Node" parent="." unique_id=264470170]
+[node name="Node" type="Node3D" parent="." unique_id=738965534]
 
 [node name="head" type="Sprite3D" parent="Node" unique_id=973203586]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.39435, 0)
@@ -104,3 +109,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.2, 2.3, 0)
 pixel_size = 0.1
 texture_filter = 0
 texture = SubResource("AtlasTexture_0rhph")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1286663047]

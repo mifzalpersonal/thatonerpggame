@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://yumr8c4f0j58" path="res://LevelGUI.tscn" id="9_ad4pf"]
 [ext_resource type="PackedScene" uid="uid://dfb1pgfpk2ggk" path="res://forge_map.tscn" id="12_856tt"]
 [ext_resource type="PackedScene" uid="uid://6cxtuv7cy8bn" path="res://WeaponChest.tscn" id="13_beufa"]
+[ext_resource type="PackedScene" uid="uid://bslvwa15ft2ob" path="res://BOSS.tscn" id="14_4t5vi"]
 
 [sub_resource type="Environment" id="Environment_xrcxu"]
 background_mode = 1
@@ -40,6 +41,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.9879756, 0)
 
 [node name="CharacterBody3D" parent="." unique_id=2050083730 instance=ExtResource("1_mypys")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5839884, 2.9700055, -3.0101395)
+
+[node name="Camera3D" parent="CharacterBody3D/CameraPivot" parent_id_path=PackedInt32Array(2050083730, 59797104) index="0" unique_id=1662372830]
+transform = Transform3D(-1, 0, 8.7422784e-08, 0, 1.0000001, 0, -8.7422784e-08, 0, -1.0000001, 0, -0.03748083, -15.986982)
 
 [node name="darahEntity" type="Node" parent="CharacterBody3D" unique_id=747236415]
 script = ExtResource("3_kw75h")
@@ -89,3 +93,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.800552, -2.805674, 44.0561
 
 [node name="WeaponChest4" parent="." unique_id=591120403 instance=ExtResource("13_beufa")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.800552, -2.805674, 53.15162)
+
+[node name="CharacterBody3D2" parent="." unique_id=2014738208 instance=ExtResource("14_4t5vi")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.26585388, -2.8603592, 50.78221)
+
+[editable path="CharacterBody3D"]

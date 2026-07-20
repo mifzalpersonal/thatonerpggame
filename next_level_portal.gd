@@ -1,7 +1,10 @@
 extends Area3D
 
-@export var enemy_scene: PackedScene
-@export var spawn_points: Array = [] # Dibuat generik dan kosong agar diisi otomatis oleh Generator
+# 🔥 REVISI SLOT: Mengganti slot tunggal dengan slot acak kroco dan satu slot boss
+@export var wave_enemy_1: PackedScene # Slot untuk Kroco 1 (e.g. enemy1.tscn)
+@export var wave_enemy_2: PackedScene # Slot untuk Kroco 2 (e.g. enemy2.tscn)
+@export var boss_scene: PackedScene   # Slot untuk BOSS.tscn
+@export var spawn_points: Array = [] # Diisi otomatis secara sakti oleh Generator
 
 @onready var ui_layer = $CanvasLayer
 @onready var ui_label = $CanvasLayer/Panel/ConfirmLabel
@@ -71,26 +74,47 @@ func _on_no_pressed():
 
 # ==================== LOGIKA WAVE MUSUH ====================
 
+# ==================== LOGIKA WAVE MUSUH ====================
+
 func start_wave():
-	# 👍 PENGAMAN DISESUAIKAN: Hanya stop jika portal keluar dari tree
 	if not is_inside_tree():
 		return
 		
 	print("Memulai Wave: ", GameManager.current_wave)
-	var total_enemies = GameManager.current_wave * 3
 	
+	# 🔥 FITUR LOKAL LU: TIAP 3 LEVEL, MAX WAVES DI ALTAR NAMBAH 1
+	var tambahan_wave = int(GameManager.current_level / 3)
+	GameManager.MAX_WAVES = 3 + tambahan_wave
+	
+	if spawn_points.is_empty(): 
+		print("Peringatan: Belum ada Spawn Points untuk Wave!")
+		return
+		
+	# 🔥 FITUR UTAMA: DI LEVEL 5 DAN WAVE TERAKHIR -> SPAWN BOSS UTAMA
+	if GameManager.current_level == 1 and GameManager.current_wave == 1:
+	#if GameManager.current_level == 5 and GameManager.current_wave == GameManager.MAX_WAVES:
+		print("🚨 PERINGATAN: KONDISI BOSS TERPENUHI! SPAWNING THE BOSS!")
+		spawn_boss()
+		return # Berhenti di sini agar kroco biasa tidak keluar
+	
+	# 🔥 PERBAIKAN SAKTI: SPAWN KROCO PELAN-PELAN PAKE JEDA
+	var total_enemies = GameManager.current_wave * 3
 	for i in range(total_enemies):
-		if not is_inside_tree():
+		# Pengaman: Cek setiap iterasi kalau-kalau player mati/pindah scene pas lagi nunggu jeda
+		if not is_inside_tree() or current_state != PortalState.FIGHTING:
 			return
-		await get_tree().create_timer(0.5).timeout 
+			
 		spawn_enemy()
-
+		
+		# Kasih jeda 0.8 detik sebelum melahirkan kroco berikutnya biar gak numpuk dan mental
+		await get_tree().create_timer(0.8).timeout
+# REVISI SPAWN KROCO: Logika acak 50/50
 func spawn_enemy():
 	if not is_inside_tree():
 		return
 		
-	if spawn_points.is_empty(): 
-		print("Peringatan: Belum ada Spawn Points untuk Wave!")
+	if wave_enemy_1 == null or wave_enemy_2 == null:
+		print("Peringatan: Slot wave enemy 1 atau 2 masih kosong!")
 		return
 		
 	var valid_wave_points: Array = []
@@ -99,12 +123,18 @@ func spawn_enemy():
 			valid_wave_points.append(point)
 			
 	if valid_wave_points.is_empty():
-		print("Peringatan Fatal: Spawner tidak valid di memori!")
 		return
 		
 	var random_point = valid_wave_points.pick_random()
 	
-	var wave_enemy = enemy_scene.instantiate()
+	# Kocok probabilitas 50% / 50% untuk variasi musuh
+	var terpilih_scene: PackedScene
+	if randf() < 0.5:
+		terpilih_scene = wave_enemy_1
+	else:
+		terpilih_scene = wave_enemy_2
+		
+	var wave_enemy = terpilih_scene.instantiate()
 	get_tree().current_scene.add_child(wave_enemy)
 	
 	if "global_position" in random_point:
@@ -116,19 +146,44 @@ func spawn_enemy():
 	enemies_alive += 1
 	print("WAVE SPAWN: Monster lahir di posisi: ", wave_enemy.global_position)
 
+# 🔥 FUNGSI BARU: Khusus melahirkan Sang Boss Utama
+func spawn_boss():
+	if boss_scene == null:
+		print("Error: Scene Boss belum di-drag ke slot Inspector Portal!")
+		# Failsafe: spawn kroco biasa kalau lupa masukin boss
+		var total_enemies = GameManager.current_wave * 3
+		for i in range(total_enemies): spawn_enemy()
+		return
+		
+	var valid_wave_points: Array = []
+	for point in spawn_points:
+		if is_instance_valid(point):
+			valid_wave_points.append(point)
+			
+	if valid_wave_points.is_empty():
+		return
+		
+	var random_point = valid_wave_points.pick_random()
+	var boss = boss_scene.instantiate()
+	
+	get_tree().current_scene.add_child(boss)
+	
+	if "global_position" in random_point:
+		boss.global_position = random_point.global_position
+	else:
+		boss.global_position = Vector3.ZERO
+		
+	boss.tree_exited.connect(_on_enemy_defeated)
+	enemies_alive += 1
+	print("🚨 BOSS SPAWN: Sang Boss Utama lahir di posisi: ", boss.global_position)
+
 func _on_enemy_defeated():
-	# 🔴 PENGAMAN UTAMA: Kita pakai variabel enemies_alive sebagai tameng. 
-	# Jika musuh berkurang saat portal sudah mau dihancurkan (pindah scene/exit), 
-	# abaikan saja kodenya agar tidak menaikkan wave secara tidak sengaja.
 	if not is_inside_tree():
 		return
 
 	enemies_alive -= 1
 	
-	# Jika kematian musuh dipicu karena pindah scene/loading, enemies_alive bisa minus banyak.
-	# Kita hanya naikkan wave kalau permainannya memang sedang berjalan normal.
 	if enemies_alive <= 0:
-		# Cek tambahan: jika angka minus (artinya dihapus paksa oleh engine saat ganti scene), abaikan!
 		if enemies_alive < 0:
 			return
 			

@@ -49,7 +49,7 @@ script = ExtResource("1_u7log")
 transform = Transform3D(-1.09278474e-07, 2.5, 0, -2.5, -1.09278474e-07, 0, 0, 0, 2.5, 0, 0, 0)
 
 [node name="Muzzle" type="Marker3D" parent="." unique_id=1594499758]
-transform = Transform3D(0.99999624, 0.0027506317, 0, -0.0027506317, 0.99999624, 0, 0, 0, 1, 2, 0, -0.8)
+transform = Transform3D(0.99999624, 0.0027506317, 0, -0.0027506317, 0.99999624, 0, 0, 0, 1, 2, 0, -0.75)
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=881752222]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.21221745, 2.7832334, 4.453072)
