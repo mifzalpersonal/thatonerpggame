@@ -202,7 +202,7 @@ frame_progress = 1.0
 transform = Transform3D(1, 0, 0, 0, 0.70710677, -0.70710677, 0, 0.70710677, 0.70710677, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPivot" unique_id=1662372830]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 0, 0, -13)
+transform = Transform3D(-1, 8.4703295e-22, 8.74228e-08, 1.04016245e-08, 0.9928967, 0.118980736, -8.680179e-08, 0.118980736, -0.9928967, 0, 1.8177581, -26.135178)
 current = true
 fov = 80.0
 near = 0.001

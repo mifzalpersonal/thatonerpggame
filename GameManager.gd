@@ -8,7 +8,7 @@ var main_scene = null
 
 var current_level: int = 1
 var current_wave: int = 1
-var MAX_WAVES: int = 3 # Diubah jadi non-const agar bisa ditambah dinamis oleh Altar
+var MAX_WAVES: int = 3 # Diubah dinamis oleh perpindahan level secara otomatis
 
 # --- DATA MASTER ITEM TOKO DENGAN RARITY ---
 var MASTER_ITEMS: Array[Dictionary] = [
@@ -56,7 +56,6 @@ func siapkan_peluru(slash_instance: Node, stats: WeaponData, bonus_damage: int) 
 		print("🚨 GAMEMANAGER: Gagal siapkan peluru karena WeaponData kosong!")
 		return
 		
-	# 🔥 INTEGRASI VERSI COMMIT BARU TEMEN LU: Masukkan bonus_damage ke hitung_damage_output
 	var hasil_kocokan = stats.hitung_damage_output(bonus_damage)
 	var total_damage_akhir = hasil_kocokan["damage"]
 	var apakah_crit = hasil_kocokan["is_critical"]
@@ -84,7 +83,6 @@ func buat_rak_toko_baru() -> void:
 	var item_legendary: Array[Dictionary] = []
 	
 	for item in MASTER_ITEMS:
-		# 🔥 INTEGRASI: Hapus status terbeli saat membuat toko baru
 		if item.has("is_purchased"):
 			item.erase("is_purchased")
 			
@@ -136,7 +134,6 @@ func acak_tanpa_reset_biaya() -> void:
 	var item_legendary: Array[Dictionary] = []
 	
 	for item in MASTER_ITEMS:
-		# 🔥 INTEGRASI: Hapus status terbeli saat reroll
 		if item.has("is_purchased"):
 			item.erase("is_purchased")
 			
@@ -187,6 +184,12 @@ func load_initial_level():
 func go_to_next_level():
 	current_level += 1
 	current_wave = 1
+	
+	# 🔥 KALKULASI DINAMIS: Update MAX_WAVES global setiap kelipatan 3 level game!
+	var tambahan_wave = int(current_level / 3)
+	MAX_WAVES = 3 + tambahan_wave
+	print("📈 GAMEMANAGER: Level naik ke ", current_level, ". Max Wave diubah jadi: ", MAX_WAVES)
+	
 	level_changed.emit()
 	if has_node("/root/SceneChanger"):
 		get_node("/root/SceneChanger").change_scene_to("REGENERATE_MAP")
@@ -197,6 +200,11 @@ func execute_map_regeneration():
 	if main_scene:
 		var map_scene = load(generator_scene_path)
 		if map_scene: main_scene.change_map(map_scene)
+		
+	# 🔥 PENGAMAN: Samakan kalkulasi dinamis saat map diregenerasi
+	var tambahan_wave = int(current_level / 3)
+	MAX_WAVES = 3 + tambahan_wave
+	
 	buat_rak_toko_baru()
 
 func load_new_level(path: String):
@@ -219,8 +227,6 @@ func is_forge_level() -> bool:
 func get_enemy_stats(base_hp: float, base_atk: float, base_speed: float) -> Dictionary:
 	var mult = 1.0 + (current_level - 1) * 0.25
 	var hp_dasar_level = base_hp * mult
-	
-	# 🔥 DIKUNCI: Fitur scaling HP kroco wave dari versi lokal lu tetep aktif!
 	var tambahan_hp_wave = (current_wave - 1) * 50.0
 	
 	return {
@@ -241,6 +247,7 @@ func maju_ke_wave_selanjutnya() -> void:
 func reset_game():
 	current_level = 1
 	current_wave = 1
+	MAX_WAVES = 3
 	total_currency = 0
 	player_spawn_position = Vector3.ZERO
 	buat_rak_toko_baru()

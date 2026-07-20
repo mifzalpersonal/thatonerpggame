@@ -15,6 +15,7 @@ var current_state = PortalState.START_WAVE
 
 var enemies_alive: int = 0
 var is_player_inside: bool = false
+var player_ref: CharacterBody3D = null
 
 func _ready():
 	ui_layer.visible = false
@@ -32,6 +33,7 @@ func _ready():
 func _on_body_entered(body):
 	if body.name == "Char3" or body.is_in_group("Player"):
 		is_player_inside = true
+		player_ref = body as CharacterBody3D # Simpan referensi player untuk kalkulasi spawn boss
 		setup_ui_text()
 
 func _on_body_exited(body):
@@ -74,40 +76,32 @@ func _on_no_pressed():
 
 # ==================== LOGIKA WAVE MUSUH ====================
 
-# ==================== LOGIKA WAVE MUSUH ====================
-
 func start_wave():
 	if not is_inside_tree():
 		return
 		
 	print("Memulai Wave: ", GameManager.current_wave)
 	
-	# 🔥 FITUR LOKAL LU: TIAP 3 LEVEL, MAX WAVES DI ALTAR NAMBAH 1
-	var tambahan_wave = int(GameManager.current_level / 3)
-	GameManager.MAX_WAVES = 3 + tambahan_wave
-	
 	if spawn_points.is_empty(): 
 		print("Peringatan: Belum ada Spawn Points untuk Wave!")
 		return
 		
-	# 🔥 FITUR UTAMA: DI LEVEL 5 DAN WAVE TERAKHIR -> SPAWN BOSS UTAMA
-	if GameManager.current_level == 1 and GameManager.current_wave == 1:
-	#if GameManager.current_level == 5 and GameManager.current_wave == GameManager.MAX_WAVES:
+	# 🔥 SKENARIO LOCK BOSS: AKTIF DI LEVEL 3 PADA WAVE MAKSIMAL
+	#if GameManager.current_level == 3 and GameManager.current_wave == GameManager.MAX_WAVES:
+	if GameManager.current_level == 1 and GameManager.current_wave:
 		print("🚨 PERINGATAN: KONDISI BOSS TERPENUHI! SPAWNING THE BOSS!")
 		spawn_boss()
 		return # Berhenti di sini agar kroco biasa tidak keluar
 	
-	# 🔥 PERBAIKAN SAKTI: SPAWN KROCO PELAN-PELAN PAKE JEDA
+	# 🔥 SPAWN KROCO PELAN-PELAN PAKE JEDA
 	var total_enemies = GameManager.current_wave * 3
 	for i in range(total_enemies):
-		# Pengaman: Cek setiap iterasi kalau-kalau player mati/pindah scene pas lagi nunggu jeda
 		if not is_inside_tree() or current_state != PortalState.FIGHTING:
 			return
 			
 		spawn_enemy()
-		
-		# Kasih jeda 0.8 detik sebelum melahirkan kroco berikutnya biar gak numpuk dan mental
 		await get_tree().create_timer(0.8).timeout
+
 # REVISI SPAWN KROCO: Logika acak 50/50
 func spawn_enemy():
 	if not is_inside_tree():
@@ -127,7 +121,6 @@ func spawn_enemy():
 		
 	var random_point = valid_wave_points.pick_random()
 	
-	# Kocok probabilitas 50% / 50% untuk variasi musuh
 	var terpilih_scene: PackedScene
 	if randf() < 0.5:
 		terpilih_scene = wave_enemy_1
@@ -147,35 +140,36 @@ func spawn_enemy():
 	print("WAVE SPAWN: Monster lahir di posisi: ", wave_enemy.global_position)
 
 # 🔥 FUNGSI BARU: Khusus melahirkan Sang Boss Utama
+# 🔥 PERBAIKAN: Melahirkan Boss di tempat jauh (Spawn Point acak generator map)
 func spawn_boss():
 	if boss_scene == null:
 		print("Error: Scene Boss belum di-drag ke slot Inspector Portal!")
-		# Failsafe: spawn kroco biasa kalau lupa masukin boss
 		var total_enemies = GameManager.current_wave * 3
 		for i in range(total_enemies): spawn_enemy()
 		return
 		
+	var boss = boss_scene.instantiate()
+	get_tree().current_scene.add_child(boss)
+	
+	# 🔥 DILAHIRKAN JAUH: Cari titik spawn acak dari map generator, jangan nempel di player!
 	var valid_wave_points: Array = []
 	for point in spawn_points:
 		if is_instance_valid(point):
 			valid_wave_points.append(point)
 			
-	if valid_wave_points.is_empty():
-		return
-		
-	var random_point = valid_wave_points.pick_random()
-	var boss = boss_scene.instantiate()
-	
-	get_tree().current_scene.add_child(boss)
-	
-	if "global_position" in random_point:
+	if not valid_wave_points.is_empty():
+		var random_point = valid_wave_points.pick_random()
 		boss.global_position = random_point.global_position
 	else:
-		boss.global_position = Vector3.ZERO
+		# Failsafe jika titik spawn kosong, taruh agak jauh di koordinat X
+		if player_ref != null:
+			boss.global_position = player_ref.global_position + Vector3(15.0, 1.0, 15.0)
+		else:
+			boss.global_position = Vector3(0, 1.0, 0)
 		
 	boss.tree_exited.connect(_on_enemy_defeated)
 	enemies_alive += 1
-	print("🚨 BOSS SPAWN: Sang Boss Utama lahir di posisi: ", boss.global_position)
+	print("🚨 BOSS SPAWN AMAN: Sang Boss Utama lahir di posisi jauh: ", boss.global_position)
 
 func _on_enemy_defeated():
 	if not is_inside_tree():

@@ -177,7 +177,7 @@ func pasang_visual_senjata(nama_barang: String) -> void:
 	# ========================================================
 	var player = get_parent()
 	if player and "speed" in player:
-		player.speed = 50.0
+		player.speed = 35.0
 		
 		if nama_barang == "katana":
 			if player.has_method("apply_speed_boost"):

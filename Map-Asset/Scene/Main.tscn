@@ -11,7 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://0jag52u11qae" path="res://Scene/item_slot.tscn" id="8_qi4r4"]
 [ext_resource type="PackedScene" uid="uid://yumr8c4f0j58" path="res://LevelGUI.tscn" id="9_f7oih"]
 [ext_resource type="PackedScene" uid="uid://bx8fw0c6oehwr" path="res://wave_ui.tscn" id="11_nl0vn"]
+[ext_resource type="Script" uid="uid://dleaugxk0tnwr" path="res://boss_health_ui.gd" id="12_4uyis"]
 [ext_resource type="PackedScene" uid="uid://carkkis1fay4q" path="res://forge_ui.tscn" id="12_m7yu5"]
+[ext_resource type="PackedScene" uid="uid://bubwdestq2uks" path="res://boss_health_ui.tscn" id="13_m7yu5"]
 
 [sub_resource type="Environment" id="Environment_qi4r4"]
 background_mode = 1
@@ -41,6 +43,8 @@ dead_scene = ExtResource("3_qi4r4")
 
 [node name="GUI" type="CanvasLayer" parent="." unique_id=2122856101]
 
+[node name="CoinHUD" parent="GUI" unique_id=1413814855 instance=ExtResource("6_o1ivj")]
+
 [node name="ItemSlot" parent="GUI" unique_id=733294834 instance=ExtResource("8_qi4r4")]
 offset_left = -555.0
 offset_top = 124.0
@@ -53,14 +57,19 @@ offset_top = 19.0
 offset_right = -19.0
 offset_bottom = 59.0
 
-[node name="CoinHUD" parent="GUI" unique_id=1413814855 instance=ExtResource("6_o1ivj")]
-
 [node name="GameUI" parent="GUI" unique_id=651630163 instance=ExtResource("7_xhust")]
 mouse_filter = 2
 
 [node name="Control" parent="GUI" unique_id=898299092 instance=ExtResource("9_f7oih")]
 
 [node name="WaveUI" parent="GUI" unique_id=293765340 instance=ExtResource("11_nl0vn")]
+
+[node name="BossHealthUI" parent="GUI" unique_id=511585497 instance=ExtResource("13_m7yu5")]
+offset_left = -44.0
+offset_top = 5.0
+offset_right = -44.0
+offset_bottom = 5.0
+script = ExtResource("12_4uyis")
 
 [node name="ForgeUI" parent="GUI" unique_id=2090259237 instance=ExtResource("12_m7yu5")]
 

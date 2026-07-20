@@ -230,7 +230,7 @@ transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 2.5506306, 0)
 billboard = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_4kxuq")
-frame_progress = 0.041526392
+frame_progress = 0.99786764
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1994943877]
 transform = Transform3D(2.3443997, 0, 0, 0, 3.5608358, 0, 0, 0, 1.9698501, 0, 2.0166688, 0)

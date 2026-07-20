@@ -61,7 +61,8 @@ var slow_multiplier: float = 1.0
 
 # --- AMBIL REFERENSI NODE UI & PRELOAD ---
 @onready var hp_bar: ProgressBar = $EnemyUI/HPBar
-@onready var status_vfx: AnimatedSprite3D = $StatusVFX 
+@onready var status_vfx: AnimatedSprite3D = $StatusVFX
+@onready var animation: AnimatedSprite3D = $AnimatedSprite3D
 
 const DAMAGE_TEXT_3D = preload("res://damage_text.tscn") 
 
@@ -79,6 +80,7 @@ func _ready() -> void:
 	current_hp = ambil_max_hp()
 	posisi_patroli = global_position
 	player_node = get_node_or_null("/root/Main/CharacterBody3D")
+	animation.play("default")
 	
 	if hp_bar:
 		hp_bar.max_value = ambil_max_hp()

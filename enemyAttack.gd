@@ -5,10 +5,12 @@ extends Area3D
 @export var max_lifetime: float = 5.0 # Detik maksimal sebelum peluru ilang sendiri
 
 var velocity: Vector3 = Vector3.ZERO
+@onready var bullet_animation: AnimatedSprite3D = $AnimatedSprite3D
 
 func _ready() -> void:
 	# Hubungkan signal tabrakan secara internal lewat kode
 	body_entered.connect(_on_body_entered)
+	bullet_animation.play("new_animation")
 	
 	# Pengaman: Hancurkan peluru otomatis kalau gak kena apa-apa setelah beberapa detik
 	await get_tree().create_timer(max_lifetime).timeout

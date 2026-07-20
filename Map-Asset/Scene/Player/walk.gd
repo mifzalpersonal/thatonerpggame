@@ -3,7 +3,7 @@
 # ==============================================================================
 extends CharacterBody3D
 
-@export var speed := 50.0
+@export var speed := 35.0
 # --- TAMBAHAN STATUS UNTUK POTION ---
 @export var max_hp: float = 100.0
 var current_hp: float = 100.0
