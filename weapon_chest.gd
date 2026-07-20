@@ -68,7 +68,7 @@ func buka_peti() -> void:
 	hasil_gacha.nama_senjata = senjata_terpilih
 	
 	# Masukkan senjata ke dunia game
-	get_tree().current_scene.add_child(hasil_gacha)
+	get_parent().add_child(hasil_gacha)
 	
 	# 🔥 SOLUSI 2: Samakan rotasi 3D (Basis) senjata agar persis menghadap sesuai arah peti
 	hasil_gacha.global_transform.basis = global_transform.basis

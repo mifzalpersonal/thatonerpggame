@@ -86,9 +86,9 @@ func start_wave():
 		print("Peringatan: Belum ada Spawn Points untuk Wave!")
 		return
 		
-	# 🔥 SKENARIO LOCK BOSS: AKTIF DI LEVEL 3 PADA WAVE MAKSIMAL
-	#if GameManager.current_level == 3 and GameManager.current_wave == GameManager.MAX_WAVES:
-	if GameManager.current_level == 1 and GameManager.current_wave:
+	# 🔥 SKENARIO LOCK BOSS: AKTIF DI LEVEL 3 PADA WAVE MAKSIMAL spawn boss jing
+	if GameManager.current_level == 3 and GameManager.current_wave == GameManager.MAX_WAVES:
+	#if GameManager.current_level == 1 and GameManager.current_wave:
 		print("🚨 PERINGATAN: KONDISI BOSS TERPENUHI! SPAWNING THE BOSS!")
 		spawn_boss()
 		return # Berhenti di sini agar kroco biasa tidak keluar
