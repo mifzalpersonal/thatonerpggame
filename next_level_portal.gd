@@ -22,6 +22,17 @@ func _ready():
 	current_state = PortalState.START_WAVE # Pengaman: Selalu reset status ke awal saat scene di-load
 	enemies_alive = 0                      # Pengaman: Bersihkan hitungan sisa musuh lama
 	
+	# 🔥 AUTO-DETEKSI TITIK SPAWN:
+	# Kode ini bakal otomatis nyari node 'WaveManager' yang bertetangga ama portal
+	var wave_manager = get_parent().get_node_or_null("WaveManager")
+	if wave_manager:
+		spawn_points.clear() # Bersihkan isi array bawaan inspector dulu
+		for child in wave_manager.get_children():
+			spawn_points.append(child) # Masukkan semua node anak (EnemySpawnWave) ke sistem
+		print("🤖 PORTAL AUTOMATION: Sukses mendaftarkan ", spawn_points.size(), " titik spawn musuh secara otomatis!")
+	else:
+		print("🚨 PORTAL ERROR: Node bernama 'WaveManager' tidak ditemukan di bawah parent!")
+	
 	# Hubungkan signal bawaan Area3D
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
@@ -86,21 +97,24 @@ func start_wave():
 		print("Peringatan: Belum ada Spawn Points untuk Wave!")
 		return
 		
-	# 🔥 SKENARIO LOCK BOSS: AKTIF DI LEVEL 3 PADA WAVE MAKSIMAL spawn boss jing
-	if GameManager.current_level == 3 and GameManager.current_wave == GameManager.MAX_WAVES:
-	#if GameManager.current_level == 1 and GameManager.current_wave:
-		print("🚨 PERINGATAN: KONDISI BOSS TERPENUHI! SPAWNING THE BOSS!")
+	# SKENARIO LOCK BOSS: AKTIF DI LEVEL 3 PADA WAVE MAKSIMAL
+	if GameManager.current_level >= 4 and GameManager.current_level % 3 != 0 and GameManager.current_wave == GameManager.MAX_WAVES:
+		print("🚨 PERINGATAN: KONDISI BOSS DI LUAR KELIPATAN 3 TERPENUHI! SPAWNING THE BOSS!")
 		spawn_boss()
-		return # Berhenti di sini agar kroco biasa tidak keluar
+		return # Mengunci siklus agar kroco biasa tidak keluar lagi
 	
-	# 🔥 SPAWN KROCO PELAN-PELAN PAKE JEDA
-	var total_enemies = GameManager.current_wave * 3
+	# 🔥 PERBAIKAN TOTAL: Ganti perkaliannya biar wave 1 langsung keluar rame!
+	# Misal kita ganti jadi dikali 10. Wave 1 = 10 musuh, Wave 2 = 20 musuh, dst.
+	var total_enemies = GameManager.current_wave * 10
+	
 	for i in range(total_enemies):
 		if not is_inside_tree() or current_state != PortalState.FIGHTING:
 			return
 			
 		spawn_enemy()
-		await get_tree().create_timer(0.8).timeout
+		
+		# 🔥 PERBAIKAN JEDA: Pangkas jeda spawn dari 0.8s jadi 0.15s biar langsung rilis beruntun cepat
+		await get_tree().create_timer(0.15).timeout
 
 # REVISI SPAWN KROCO: Logika acak 50/50
 func spawn_enemy():

@@ -7,6 +7,9 @@
 
 [node name="RoomA" type="Node3D" unique_id=1901342513]
 
+[node name="EnemySpawnNatural3" type="Marker3D" parent="." unique_id=2111417392 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.513, 5, 26.322784)
+
 [node name="EnemySpawnNatural" type="Marker3D" parent="." unique_id=1007758133 groups=["NaturalSpawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
 
@@ -102,3 +105,99 @@ transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, 
 
 [node name="Marker3D4" type="Marker3D" parent="ChestSpawner" unique_id=899004937]
 transform = Transform3D(-4.3711385e-08, 0, 0.99999994, 0, 1, 0, -0.99999994, 0, -4.3711385e-08, -215.69038, 3, 3.7016144)
+
+[node name="EnemySpawnNatural4" type="Marker3D" parent="." unique_id=1091150214 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3144913, 5, 26.322784)
+
+[node name="EnemySpawnNatural5" type="Marker3D" parent="." unique_id=1261706246 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 66.10877, 5, -17.801552)
+
+[node name="EnemySpawnNatural6" type="Marker3D" parent="." unique_id=1723700532 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.37157, 5, -17.801552)
+
+[node name="EnemySpawnNatural7" type="Marker3D" parent="." unique_id=500418170 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 96.37157, 5, 18.650494)
+
+[node name="EnemySpawnNatural8" type="Marker3D" parent="." unique_id=2045688152 groups=["NaturalSpawner"]]
+transform = Transform3D(0.96229076, -0.23291892, -0.14051792, 0.20815817, 0.9630596, -0.1708403, 0.17511907, 0.13514808, 0.97522736, 49.583443, 5, 13.250479)
+
+[node name="EnemySpawnNatural9" type="Marker3D" parent="." unique_id=222612855 groups=["NaturalSpawner"]]
+transform = Transform3D(0.96229076, -0.23291892, -0.14051792, 0.20815817, 0.9630596, -0.1708403, 0.17511907, 0.13514808, 0.97522736, 73.26971, 5, 102.71698)
+
+[node name="EnemySpawnNatural10" type="Marker3D" parent="." unique_id=1001081239 groups=["NaturalSpawner"]]
+transform = Transform3D(0.96229076, -0.23291892, -0.14051792, 0.20815817, 0.9630596, -0.1708403, 0.17511907, 0.13514808, 0.97522736, 95.73885, 5, 82.30536)
+
+[node name="EnemySpawnNatural11" type="Marker3D" parent="." unique_id=2046513018 groups=["NaturalSpawner"]]
+transform = Transform3D(0.96229076, -0.23291892, -0.14051792, 0.20815817, 0.9630596, -0.1708403, 0.17511907, 0.13514808, 0.97522736, 3.0237503, 5, 102.71698)
+
+[node name="EnemySpawnNatural12" type="Marker3D" parent="." unique_id=809910575 groups=["NaturalSpawner"]]
+transform = Transform3D(0.96229076, -0.23291892, -0.14051792, 0.20815817, 0.9630596, -0.1708403, 0.17511907, 0.13514808, 0.97522736, -34.210556, 5, 82.55454)
+
+[node name="EnemySpawnNatural13" type="Marker3D" parent="." unique_id=1927355054 groups=["NaturalSpawner"]]
+transform = Transform3D(0.96229076, -0.23291892, -0.14051792, 0.20815817, 0.9630596, -0.1708403, 0.17511907, 0.13514808, 0.97522736, -211.80566, 5, 82.55454)
+
+[node name="EnemySpawnNatural14" type="Marker3D" parent="." unique_id=676963584 groups=["NaturalSpawner"]]
+transform = Transform3D(0.96229076, -0.23291892, -0.14051792, 0.20815817, 0.9630596, -0.1708403, 0.17511907, 0.13514808, 0.97522736, -189.63507, 5, 63.40708)
+
+[node name="EnemySpawnNatural15" type="Marker3D" parent="." unique_id=197390236 groups=["NaturalSpawner"]]
+transform = Transform3D(0.96229076, -0.23291892, -0.14051792, 0.20815817, 0.9630596, -0.1708403, 0.17511907, 0.13514808, 0.97522736, -189.63507, 5, -8.5792465)
+
+[node name="EnemySpawnNatural16" type="Marker3D" parent="." unique_id=1305150450 groups=["NaturalSpawner"]]
+transform = Transform3D(0.96229076, -0.23291892, -0.14051792, 0.20815817, 0.9630596, -0.1708403, 0.17511907, 0.13514808, 0.97522736, -103.94023, 5, 0.6473694)
+
+[node name="EnemySpawnNatural17" type="Marker3D" parent="." unique_id=1534471063 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.05925, 5, 9.139175)
+
+[node name="EnemySpawnNatural18" type="Marker3D" parent="." unique_id=549141258 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.05925, 5, 105.31437)
+
+[node name="EnemySpawnNatural19" type="Marker3D" parent="." unique_id=1636749257 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 89.17607, 5, 59.10498)
+
+[node name="EnemySpawnNatural20" type="Marker3D" parent="." unique_id=1324851400 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 93.98638, 5, -9.705902)
+
+[node name="EnemySpawnNatural21" type="Marker3D" parent="." unique_id=1740763828 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 92.92404, 5, 9.139175)
+
+[node name="EnemySpawnNatural22" type="Marker3D" parent="." unique_id=752317331 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.136475, 5, -27.134155)
+
+[node name="EnemySpawnNatural23" type="Marker3D" parent="." unique_id=324817701 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.284073, 5, -32.59192)
+
+[node name="EnemySpawnNatural24" type="Marker3D" parent="." unique_id=860401622 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.596912, 5, -63.692444)
+
+[node name="EnemySpawnNatural25" type="Marker3D" parent="." unique_id=657453510 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.904232, 5, 77.19757)
+
+[node name="EnemySpawnNatural26" type="Marker3D" parent="." unique_id=1473459381 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.223629, 5, 99.658035)
+
+[node name="EnemySpawnNatural27" type="Marker3D" parent="." unique_id=660273258 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -87.871994, 5, 6.3011475)
+
+[node name="EnemySpawnNatural28" type="Marker3D" parent="." unique_id=1816648057 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -72.59836, 5, -12.08963)
+
+[node name="EnemySpawnNatural29" type="Marker3D" parent="." unique_id=533150112 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -108.12805, 5, -18.18435)
+
+[node name="EnemySpawnNatural30" type="Marker3D" parent="." unique_id=1083280171 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -194.48648, 5, 26.322784)
+
+[node name="EnemySpawnNatural31" type="Marker3D" parent="." unique_id=886462455 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -193.26921, 5, -4.375389)
+
+[node name="EnemySpawnNatural32" type="Marker3D" parent="." unique_id=909677574 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -143.83542, 5, -3.7290268)
+
+[node name="EnemySpawnNatural33" type="Marker3D" parent="." unique_id=1896960042 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -194.54669, 5, 80.919304)
+
+[node name="EnemySpawnNatural34" type="Marker3D" parent="." unique_id=300778000 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -181.88248, 5, 65.163994)
+
+[node name="EnemySpawnNatural35" type="Marker3D" parent="." unique_id=910839026 groups=["NaturalSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -194.86623, 5, -11.270657)

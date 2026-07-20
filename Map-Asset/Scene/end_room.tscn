@@ -40,6 +40,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6493483, 23.748455)
 [node name="EnemySpawnWave3" type="Node3D" parent="WaveManager" unique_id=223944648 groups=["WaveSpawner"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.19531536, -24.412914)
 
+[node name="EnemySpawnWave4" type="Node3D" parent="WaveManager" unique_id=2106756329 groups=["WaveSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -66.11734, 1.0112877, 0)
+
+[node name="EnemySpawnWave5" type="Node3D" parent="WaveManager" unique_id=905231856 groups=["WaveSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.124182, 1.0112877, 35.39051)
+
+[node name="EnemySpawnWave6" type="Node3D" parent="WaveManager" unique_id=1783928568 groups=["WaveSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.124182, 1.0112877, -34.596344)
+
+[node name="EnemySpawnWave7" type="Node3D" parent="WaveManager" unique_id=216078099 groups=["WaveSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -37.487534, 1.0112877, -34.596344)
+
+[node name="EnemySpawnWave8" type="Node3D" parent="WaveManager" unique_id=942042065 groups=["WaveSpawner"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.30887, 1.0112877, -34.596344)
+
 [node name="GridMap" type="GridMap" parent="." unique_id=2042394664]
 mesh_library = ExtResource("4_c4syj")
 cell_size = Vector3(4, 2, 4)
