@@ -10,6 +10,7 @@ func _ready():
 	start_arrow.visible = false
 	credits_arrow.visible = false
 	quit_arrow.visible = false
+	MusicManager.playBGM("res://main_menu_model.tscn")
 
 # =================================================================
 # FUNGSI KLIK TOMBOL (SIGNAL: pressed)

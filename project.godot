@@ -22,6 +22,8 @@ SceneChanger="*uid://ben4pnu5ggbi4"
 GameManager="*uid://ctp7jv1htq3d8"
 CoinManager="*uid://cctxm0flj330p"
 ShopUI="*uid://rsne4t7e3i73"
+MusicManager="*uid://cme8h72j60x0g"
+Events="*uid://co7p3w1k3f3as"
 
 [display]
 

@@ -136,7 +136,7 @@ theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxEmpty_q8xwb")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_xv8wr")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_lxma4")
-text = "Creadits"
+text = "Credits"
 alignment = 0
 
 [node name="Control" type="Control" parent="VBoxContainer/Credits" unique_id=572382684]
@@ -198,21 +198,6 @@ sprite_frames = SubResource("SpriteFrames_13myp")
 autoplay = "default"
 frame_progress = 0.17455687
 speed_scale = 2.0
-
-[node name="Button" type="Button" parent="." unique_id=862204609]
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -105.0
-offset_top = -99.0
-offset_right = -41.0
-offset_bottom = -35.0
-grow_horizontal = 0
-grow_vertical = 0
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1231468375]
 texture_filter = 1

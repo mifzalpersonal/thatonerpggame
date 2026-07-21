@@ -5,6 +5,7 @@ extends Area3D
 @export var wave_enemy_2: PackedScene # Slot untuk Kroco 2 (e.g. enemy2.tscn)
 @export var boss_scene: PackedScene   # Slot untuk BOSS.tscn
 @export var spawn_points: Array = [] # Diisi otomatis secara sakti oleh Generator
+#@export_file("res://music/figth-boss.wav") var new_track_path: String
 
 @onready var ui_layer = $CanvasLayer
 @onready var ui_label = $CanvasLayer/Panel/ConfirmLabel
@@ -76,6 +77,9 @@ func _on_yes_pressed():
 		# MUNCULKAN UI WAVE SAAT TOMBOL YES DIKLIK (FIGHTING DIMULAI)
 		get_tree().call_group("UI_Wave", "set_visible", true)
 		get_tree().call_group("UI_Wave", "update_wave_ui")
+		
+		#if new_track_path != "":
+			#Events.music_change_requested.emit(new_track_path)
 		
 		start_wave()
 	elif current_state == PortalState.NEXT_LEVEL:

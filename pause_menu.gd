@@ -1,7 +1,10 @@
 extends Control
 
+var mute = preload("res://GUI/Asset/audio_button2.png")
+var unmute = preload("res://GUI/Asset/audio_button1.png")
+
 func _ready():
-	hide()
+	hide()	
 
 func _unhandled_input(event):
 	if event.is_action_pressed("Menu"):
@@ -54,3 +57,12 @@ func _on_main_menu_button_pressed():
 		current_scene.queue_free()
 		
 	SceneChanger.change_scene_to("res://main_menu_model.tscn")
+
+func _on_button_toggled(toggled_on: bool) -> void:
+	Events.mute_toggled.emit(toggled_on)
+	if toggled_on:
+		$Button.icon = mute
+		print("mute")
+	else:
+		$Button.icon = unmute
+		print("unmute")

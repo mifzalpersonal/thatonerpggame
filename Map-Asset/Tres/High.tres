@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b7uqyj4v3dp44" path="res://MapBaru_1.png" id="2_fhvge"]
 [ext_resource type="Texture2D" uid="uid://c3w32oykgjq6l" path="res://MapBaru_2.png" id="3_amoud"]
 [ext_resource type="Texture2D" uid="uid://ca7eygbcgsyxw" path="res://MapBaru_3.png" id="4_p0k3v"]
-[ext_resource type="Texture2D" uid="uid://476bkb0udvpb" path="res://MapBaru_4.png" id="5_2pa73"]
+[ext_resource type="Texture2D" uid="uid://5ebiy0wdycxr" path="res://MapBaru_4.png" id="5_2pa73"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_quxeh"]
 resource_name = "material_2"

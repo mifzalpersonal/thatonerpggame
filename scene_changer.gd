@@ -21,6 +21,8 @@ func change_scene_to(target_scene_path: String):
 	# Catat waktu awal saat loading dimulai
 	var start_time = Time.get_ticks_msec()
 	
+	MusicManager.playBGM(target_scene_path)
+	
 	# 2. LOGIKA PERCEPATAN UNTUK REGENERASI MAP
 	if target_scene_path == "REGENERATE_MAP" or target_scene_path == GameManager.generator_scene_path:
 		if GameManager.main_scene != null:
