@@ -3,7 +3,8 @@ extends AudioStreamPlayer
 var BGM = {
 	"res://main_menu_model.tscn": preload("res://music/main-menu.wav"),
 	"res://Scene/lobby.tscn": preload("res://music/main-menu.wav"),
-	"res://Map-Asset/Scene/Main.tscn": preload("res://music/in-game.wav")
+	#"res://Map-Asset/Scene/Main.tscn": preload("res://music/in-game.wav")
+	"res://Map-Asset/Scene/Main.tscn": preload("res://music/figth-boss.wav")
 }
 
 func _ready() -> void:
@@ -23,12 +24,12 @@ func playBGM(scene_path: String):
 			stream = target_music
 			play()
 
-#func playBossMusic(file_path: String) -> void:
-	#var target_music = load(file_path)
-	#
-	#if stream != target_music:
-		#stream = target_music
-		#play()
+func playBossMusic(file_path: String) -> void:
+	var target_music = load(file_path)
+	
+	if stream != target_music:
+		stream = target_music
+		play()
 
 func _on_mute_requested(should_mute: bool) -> void:
 	AudioServer.set_bus_mute(0, should_mute)

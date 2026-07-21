@@ -27,6 +27,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.156, 3, -3.181)
 wave_enemy_1 = ExtResource("3_iekss")
 wave_enemy_2 = ExtResource("4_r0sv3")
 boss_scene = ExtResource("5_c4eby")
+new_track_path = "uid://bn76ue7dsyx8"
 
 [node name="WaveManager" type="Node3D" parent="." unique_id=1891604444]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -31, 2.2437897, 0)
