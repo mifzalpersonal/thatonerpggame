@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bo07xgieq47kv"]
 
 [ext_resource type="Script" uid="uid://bavquxgrkncy4" path="res://hugs.gd" id="1_81u70"]
-[ext_resource type="PackedScene" uid="uid://dpocnwltgh0ph" path="res://Weapon-Asset/Huges/sword3.gltf" id="1_fbicv"]
-[ext_resource type="AudioStream" uid="uid://bq7qxmtt2ovis" path="res://afuckingaudiodir/448009__kneeling__cleaver.mp3" id="3_nodu4"]
+[ext_resource type="PackedScene" uid="uid://hinjj08kbp1d" path="res://Weapon-Asset/Huges/sword3.gltf" id="1_fbicv"]
+[ext_resource type="AudioStream" uid="uid://d3kxlyonc5b7n" path="res://afuckingaudiodir/448009__kneeling__cleaver.mp3" id="3_nodu4"]
 
 [sub_resource type="Animation" id="Animation_8ih5n"]
 resource_name = "Attack"
@@ -47,7 +47,7 @@ script = ExtResource("1_81u70")
 transform = Transform3D(-1.09278474e-07, 2.5, 0, -2.5, -1.09278474e-07, 0, 0, 0, 2.5, 0, 0, 0)
 
 [node name="Muzzle" type="Marker3D" parent="." unique_id=300133184]
-transform = Transform3D(0.99999624, 0.0027506317, 0, -0.0027506317, 0.99999624, 0, 0, 0, 1, 3, 0, -1.5)
+transform = Transform3D(0.99999624, 0.0027506317, 0, -0.0027506317, 0.99999624, 0, 0, 0, 1, 0, 0, -1.5)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1349271122]
 libraries/ = SubResource("AnimationLibrary_81u70")

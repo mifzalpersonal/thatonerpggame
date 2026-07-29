@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://jgihwahecd2h" path="res://ArtileriEnemy.gd" id="1_kmytd"]
 [ext_resource type="Texture2D" uid="uid://3fbdhijhrhry" path="res://Character-Asset/Enemy/Wisp/Enemy_type_flying_idle_animated-Sheet.png" id="2_h3uvd"]
-[ext_resource type="Texture2D" uid="uid://vc86re2bf3vr" path="res://VFX/Fire/FireDamageIndikator-sheet.png" id="2_kmytd"]
-[ext_resource type="Texture2D" uid="uid://36vgbh18ffvh" path="res://VFX/Fire/FireDamageIndikator2-sheet.png" id="3_y8bpv"]
-[ext_resource type="Texture2D" uid="uid://el5fbpyvxr7s" path="res://VFX/Fire/FireDamageIndikator3-sheet.png" id="4_bbcg7"]
-[ext_resource type="Texture2D" uid="uid://d3mqfecw1vll8" path="res://VFX/Fire/FireDamageIndikator.png" id="5_yepmc"]
+[ext_resource type="Texture2D" uid="uid://chxa78lymu5ya" path="res://VFX/Fire/FireDamageIndikator-sheet.png" id="2_kmytd"]
+[ext_resource type="Texture2D" uid="uid://dvqspyuyyte02" path="res://VFX/Fire/FireDamageIndikator2-sheet.png" id="3_y8bpv"]
+[ext_resource type="Texture2D" uid="uid://lmtu7rhtf65g" path="res://VFX/Fire/FireDamageIndikator3-sheet.png" id="4_bbcg7"]
+[ext_resource type="Texture2D" uid="uid://cwrq0uoog5rjm" path="res://VFX/Fire/FireDamageIndikator.png" id="5_yepmc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d0n0i"]
 atlas = ExtResource("2_kmytd")

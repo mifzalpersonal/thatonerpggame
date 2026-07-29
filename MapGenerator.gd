@@ -20,6 +20,9 @@ func _ready():
 	generate_level()
 
 func generate_level():
+	# 🔥 1. SAPU BERSIH SEMUA MUSUH LAMA SEBELUM GENERATE LEVEL BARU!
+	hapus_semua_musuh_lama()
+	
 	wave_spawn_points.clear()
 	
 	var total_rooms = GameManager.current_level * 2 + 2
@@ -99,7 +102,7 @@ func generate_level():
 	
 	wave_spawn_points.clear()
 	
-	# 🔥 LOCK VERSI LOKAL: Jalankan free roam scanner musuh alami 50/50 secara bersih
+	# 🔥 LOCK VERSI LOKAL: Jalankan free roam scanner musuh alami secara bersih
 	_scan_natural_spawners(self)
 	
 	var semua_spawner_di_game = get_tree().get_nodes_in_group("WaveSpawner")
@@ -122,6 +125,17 @@ func generate_level():
 	else:
 		push_error("Error Fatal: Tidak menemukan node 'IntractivePortal' di dalam EndRoom!")
 		GameManager.map_generation_complete.emit()
+
+# 🔥 FUNGSI SAPU BERSIH MUSUH LAMA (Mencegah Lag / Accumulation)
+func hapus_semua_musuh_lama() -> void:
+	var musuh_lama = get_tree().get_nodes_in_group("Enemy")
+	var jumlah_terhapus = 0
+	for enemy in musuh_lama:
+		if is_instance_valid(enemy):
+			enemy.queue_free()
+			jumlah_terhapus += 1
+	if jumlah_terhapus > 0:
+		print("🧹 CLEANUP: Berhasil membasmi ", jumlah_terhapus, " musuh sisa dari level sebelumnya!")
 
 # 🔥 INTEGRASI FUNGSI GACHA SPAWN CHEST DARI COMMIT BARU
 func coba_spawn_chest_di_ruangan(ruangan: Node3D) -> void:
@@ -181,27 +195,47 @@ func _dapatkan_batas_z_gridmap(gridmap: GridMap) -> Dictionary:
 		
 	return batas
 
-func _scan_natural_spawners(node: Node):
-	if node and node is Node3D:
-		if node.is_in_group("NaturalSpawner"):
-			spawn_natural_monster(node.global_position)
-
-	if node:
-		for child in node.get_children():
-			_scan_natural_spawners(child)
-
-func spawn_natural_monster(spawn_pos: Vector3):
+# 🔥 SCANNER & LIMITER DINAMIS (Naik Sesuai Level)
+# 🔥 SCANNER & LIMITER DINAMIS (Base Level 1 = 50 Musuh)
+func _scan_natural_spawners(_unused_node: Node = null):
 	if natural_enemy_1 == null or natural_enemy_2 == null:
 		push_error("Generator Error: Slot musuh natural 1 atau 2 belum diisi di Inspector!")
 		return
 		
-	var terpilih_scene: PackedScene
-	if randf() < 0.5:
-		terpilih_scene = natural_enemy_1
-	else:
-		terpilih_scene = natural_enemy_2
+	var daftar_spawner = get_tree().get_nodes_in_group("NaturalSpawner")
+	print("🐾 SCANNER FREE ROAM: Ditemukan ", daftar_spawner.size(), " titik NaturalSpawner.")
+	
+	# 🔥 RUMUS LIMITER BARU:
+	# Level 1 = 50 ekor | Level 2 = 55 ekor | Level 3 = 60 ekor ... dst.
+	var base_limit = 200
+	var bonus_per_level = (GameManager.current_level - 1) * 20
+	var max_musuh_free_roam = base_limit + bonus_per_level
+	
+	print("📈 LIMITER LEVEL ", GameManager.current_level, ": Maksimal ", max_musuh_free_roam, " musuh liar di map.")
+	
+	var count = 0
+	daftar_spawner.shuffle()
+	
+	for spawner in daftar_spawner:
+		if spawner is Node3D and spawner.is_inside_tree():
+			if count >= max_musuh_free_roam:
+				print("🛑 LIMITER FREE ROAM: Kuota musuh liar level ", GameManager.current_level, " sudah penuh (", max_musuh_free_roam, " ekor).")
+				break
+				
+			spawn_natural_monster(spawner.global_position)
+			count += 1
+
+func spawn_natural_monster(spawn_pos: Vector3):
+	var terpilih_scene: PackedScene = natural_enemy_1 if randf() < 0.5 else natural_enemy_2
+	if terpilih_scene == null: return
 		
 	var natural_enemy = terpilih_scene.instantiate()
+	
+	# Pastikan musuh masuk ke group "Enemy" biar gampang di-cleanup & dibatasi!
+	if not natural_enemy.is_in_group("Enemy"):
+		natural_enemy.add_to_group("Enemy")
+		
 	get_tree().current_scene.add_child(natural_enemy)
 	natural_enemy.global_position = spawn_pos
+	
 	print("🐾 FREE ROAM: Sukses spawn musuh acak di posisi: ", spawn_pos)

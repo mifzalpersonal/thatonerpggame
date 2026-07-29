@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://d1a6c51etyihf"]
 
 [ext_resource type="Script" uid="uid://kwjfn63ax2ll" path="res://NatureWeapon.gd" id="1_3o0rl"]
-[ext_resource type="PackedScene" uid="uid://ufejau7o76ww" path="res://Weapon-Asset/sword_slim/nature_ver/Sword2.gltf" id="1_33k4j"]
+[ext_resource type="PackedScene" uid="uid://fjxhhmanonp8" path="res://Weapon-Asset/sword_slim/nature_ver/Sword2.gltf" id="1_33k4j"]
 [ext_resource type="AudioStream" uid="uid://bhn15qvhalh33" path="res://afuckingaudiodir/513739__daleonfire__sword-schwing.wav" id="3_2my27"]
 [ext_resource type="AudioStream" uid="uid://ujqh5utjuqtb" path="res://afuckingaudiodir/swooshtrim.mp3" id="4_w13hh"]
 
@@ -48,7 +48,7 @@ script = ExtResource("1_3o0rl")
 transform = Transform3D(-1.7484555e-07, 4, 0, -4, -1.7484555e-07, 0, 0, 0, 4, 0, 0, 0)
 
 [node name="Muzzle" type="Marker3D" parent="." unique_id=850963753]
-transform = Transform3D(0.99999624, 0.0027506317, 0, -0.0027506317, 0.99999624, 0, 0, 0, 1, 2, 0, -1.5)
+transform = Transform3D(0.99999624, 0.0027506317, 0, -0.0027506317, 0.99999624, 0, 0, 0, 1, 0, 0, -1.5)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1912659702]
 libraries/ = SubResource("AnimationLibrary_3o0rl")

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://10o11jts6ry1"]
 
-[ext_resource type="PackedScene" uid="uid://bmelynuygtgeu" path="res://Weapon-Asset/sword_slim/Sword1.gltf" id="1_n61fb"]
+[ext_resource type="PackedScene" uid="uid://bk6nlxq4miuin" path="res://Weapon-Asset/sword_slim/Sword1.gltf" id="1_n61fb"]
 [ext_resource type="Script" uid="uid://c3ikcancvpe5v" path="res://sword_slim.gd" id="1_u7log"]
 [ext_resource type="AudioStream" uid="uid://dnmga7alvvgp5" path="res://afuckingaudiodir/118792__lmbubec__1_knife_slash_a.wav" id="3_rigwf"]
 [ext_resource type="AudioStream" uid="uid://ujqh5utjuqtb" path="res://afuckingaudiodir/swooshtrim.mp3" id="4_7umlm"]
@@ -49,7 +49,7 @@ script = ExtResource("1_u7log")
 transform = Transform3D(-1.09278474e-07, 2.5, 0, -2.5, -1.09278474e-07, 0, 0, 0, 2.5, 0, 0, 0)
 
 [node name="Muzzle" type="Marker3D" parent="." unique_id=1594499758]
-transform = Transform3D(0.99999624, 0.0027506317, 0, -0.0027506317, 0.99999624, 0, 0, 0, 1, 2, 0, -0.75)
+transform = Transform3D(0.99999624, 0.0027506317, 0, -0.0027506317, 0.99999624, 0, 0, 0, 1, 0, 0, -0.75)
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=881752222]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.21221745, 2.7832334, 4.453072)

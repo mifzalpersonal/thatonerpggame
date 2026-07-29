@@ -16,7 +16,7 @@ var MASTER_ITEMS: Array[Dictionary] = [
 	{"id": "speed_boots", "name": "Speed Potion", "price": 100, "desc": "Speed +10%", "rarity": "common", "icon_path": "res://Speed.png"},
 	{"id": "atk_buff", "name": "Attack Potion", "price": 100, "desc": "Attack +50", "rarity": "rare", "icon_path": "res://atk.png"},
 	{"id": "atk_speed_buff", "name": "Attack Speed Potion", "price": 100, "desc": "Atk Speed +15%", "rarity": "rare", "icon_path": "res://Atkspeed.png"},
-	{"id": "hugs", "name": "Hugs", "price": 100, "desc": "Buka senjata Hugs standar", "rarity": "common", "icon_path": "res://SlashVFX-Asset/Demo/TextMesh Pro/Sprites/EmojiOne.png"},
+	{"id": "hugs", "name": "Hugs", "price": 100, "desc": "Buka senjata Hugs standar", "rarity": "common", "icon_path": "res://sword33.png"},
 	{"id": "bow", "name": "BowAce", "price": 255, "desc": "Buka senjata Bow", "rarity": "rare", "icon_path": "res://bowace.png"},
 	{"id": "wp_fire", "name": "Hugs Fire", "price": 333, "desc": "Buka Hugs Fire (DoT Burn)", "rarity": "rare", "icon_path": "res://sword3.png"},
 	{"id": "wp_nature", "name": "Sword Slim Nature", "price": 300, "desc": "Buka Nature (Efek Slow)", "rarity": "rare", "icon_path": "res://Sword2.png"},
@@ -27,7 +27,7 @@ var MASTER_ITEMS: Array[Dictionary] = [
 var isi_toko_level_ini: Array[Dictionary] = []
 
 # --- VARIABEL: SISTEM CURRENCY & REROLL DINAMIS ---
-var total_currency: int = 99999 
+var total_currency: int = 0
 const HARGA_REROLL_BASE: int = 10     # Harga awal setiap ganti toko baru
 var harga_reroll_sekarang: int = 10   # Harga berjalan yang akan naik dikali 2
 const MAX_HARGA_REROLL: int = 200     # Batas harga maksimal reroll

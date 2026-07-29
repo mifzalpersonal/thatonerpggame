@@ -166,8 +166,8 @@ func spawn_boss():
 	var boss = boss_scene.instantiate()
 	get_tree().current_scene.add_child(boss)
 	
-	if new_track_path != "":
-		Events.music_change_requested.emit(new_track_path)
+	#if new_track_path != "":
+		#Events.music_change_requested.emit(new_track_path)
 	
 	# 🔥 DILAHIRKAN JAUH: Cari titik spawn acak dari map generator, jangan nempel di player!
 	var valid_wave_points: Array = []
